@@ -5,10 +5,10 @@ import com.khanhisdev.movieservice.dto.Response.ObjectResponse;
 import com.khanhisdev.movieservice.service.MovieService;
 import com.khanhisdev.movieservice.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/api/v1/movie")
 public class MovieController {
