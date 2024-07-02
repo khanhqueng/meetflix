@@ -29,4 +29,5 @@ public class MovieDto {
     private String urlImage;
     private List<CategoryResponseDto> categories;
 
+
 }

@@ -31,9 +31,7 @@ public class Movie {
     private List<String> director;
     private List<String> actors;
     private String urlImage;
-    @ManyToMany(cascade = {
-            CascadeType.ALL
-    })
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "movie_category",
             joinColumns= @JoinColumn( name = "movie_id") ,
             inverseJoinColumns = @JoinColumn(name="category_id")

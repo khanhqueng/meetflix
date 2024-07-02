@@ -1,0 +1,4 @@
+- pipeline.id: user-service
+  path.config: "/usr/share/logstash/pipeline/user-service.conf"
+- pipeline.id: movie-service
+  path.config: "/usr/share/logstash/pipeline/movie-service.conf"

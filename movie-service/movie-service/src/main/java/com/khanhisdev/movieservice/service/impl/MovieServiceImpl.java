@@ -1,6 +1,8 @@
 package com.khanhisdev.movieservice.service.impl;
 
+import com.khanhisdev.movieservice.dto.Mapper.CategoryMapper;
 import com.khanhisdev.movieservice.dto.Mapper.MovieMapper;
+import com.khanhisdev.movieservice.dto.Message.CategoryResponseDto;
 import com.khanhisdev.movieservice.dto.Model.MovieDto;
 import com.khanhisdev.movieservice.dto.Response.ObjectResponse;
 import com.khanhisdev.movieservice.entity.Category;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +33,8 @@ public class MovieServiceImpl implements MovieService {
     private MovieMapper mapper;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     @Override
     public MovieDto saveMovie(MovieDto movieDto) {
@@ -39,6 +44,25 @@ public class MovieServiceImpl implements MovieService {
             throw new ResourceDuplicateException("Movie", "name", movieDto.getName());
 
         }else{
+            List<Category> categoryList= categoryRepository.findAll();
+            List<CategoryResponseDto > categoryNeedCheck= movieDto.getCategories();
+            List<CategoryResponseDto> listWillBeUpdated= new ArrayList<>();
+            boolean flag=false;
+            for(int i =0;i<categoryNeedCheck.size();i++){
+                flag=false;
+                for(int j=0;j<categoryList.size();j++){
+                    if (categoryNeedCheck.get(i).equals(categoryList.get(j))) {
+                        listWillBeUpdated.add(categoryMapper.mapToDto(categoryList.get(j)));
+                        flag= true;
+                        break;
+                    };
+                }
+                if(flag== false) {
+                    Category category = categoryRepository.save(categoryMapper.mapToEntity(categoryNeedCheck.get(i)));
+                    listWillBeUpdated.add(categoryMapper.mapToDto(category));
+                }
+            }
+        movieDto.setCategories(listWillBeUpdated);
         Movie newMovie= movieRepository.save(mapper.mapToEntity(movieDto));
         return mapper.mapToDto(newMovie);
         }
