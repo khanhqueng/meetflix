@@ -7,11 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class APIResponseDto {
     private UserDto userDto;
-    private MovieDto movieDto;
+    private List<MovieDto> movieDto;
 }

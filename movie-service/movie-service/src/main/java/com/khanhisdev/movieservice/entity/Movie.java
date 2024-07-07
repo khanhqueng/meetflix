@@ -24,7 +24,7 @@ public class Movie {
     private Long id;
     @Column(unique = true)
     private String name;
-
+    private String country;
     private String description;
     // by minutes
     private int durationMin;

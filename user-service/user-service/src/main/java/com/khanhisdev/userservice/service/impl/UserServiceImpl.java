@@ -4,6 +4,7 @@ import com.khanhisdev.userservice.dto.Mapper.UserMapper;
 import com.khanhisdev.userservice.dto.Model.MovieDto;
 import com.khanhisdev.userservice.dto.Model.UserDto;
 import com.khanhisdev.userservice.dto.Response.APIResponseDto;
+import com.khanhisdev.userservice.entity.LikedMovie;
 import com.khanhisdev.userservice.entity.Role;
 import com.khanhisdev.userservice.entity.User;
 import com.khanhisdev.userservice.exception.ResourceDuplicateException;
@@ -14,6 +15,7 @@ import com.khanhisdev.userservice.service.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -54,18 +58,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public APIResponseDto getUserById(Long id) {
         User user = this.userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-        MovieDto movieDto= webClient.get()
-                .uri("http://localhost:8091/api/v1/movie/"+ user.getMovieId())
+        List<Long> ids = user.getMovieId().stream().map(LikedMovie::getMovieId).toList();
+        String result = ids.stream()
+                .map(String::valueOf) // Convert Long to String
+                .collect(Collectors.joining(","));
+        List<MovieDto> movieDtoList= webClient.get()
+                .uri("http://localhost:8091/api/v1/movie/ids?ids="+ result)
                 .retrieve()
-                .bodyToMono(MovieDto.class)
+                .bodyToFlux(MovieDto.class)
+                .collectList()
                 .block();
-        APIResponseDto apiResponseDto= new APIResponseDto(mapper.mapToDto(user),movieDto);
+        APIResponseDto apiResponseDto= new APIResponseDto(mapper.mapToDto(user),movieDtoList);
         return apiResponseDto;
     }
 
     @Override
     public UserDto getUserByUsername(String userName) {
-        User user = this.userRepository.findByUsername(userName);
+        User user = this.userRepository.findByUsername(userName).orElseThrow(()->new UsernameNotFoundException("User not found with username: "+userName));
         return this.mapper.mapToDto(user);
     }
 }

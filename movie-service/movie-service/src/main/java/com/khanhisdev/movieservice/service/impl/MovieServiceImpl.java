@@ -12,8 +12,6 @@ import com.khanhisdev.movieservice.exception.ResourceNotFoundException;
 import com.khanhisdev.movieservice.repository.CategoryRepository;
 import com.khanhisdev.movieservice.repository.MovieRepository;
 import com.khanhisdev.movieservice.service.MovieService;
-import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +28,7 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieRepository movieRepository;
     @Autowired
-    private MovieMapper mapper;
+    private MovieMapper movieMapper;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -63,15 +61,15 @@ public class MovieServiceImpl implements MovieService {
                 }
             }
         movieDto.setCategories(listWillBeUpdated);
-        Movie newMovie= movieRepository.save(mapper.mapToEntity(movieDto));
-        return mapper.mapToDto(newMovie);
+        Movie newMovie= movieRepository.save(movieMapper.mapToEntity(movieDto));
+        return movieMapper.mapToDto(newMovie);
         }
     }
 
     @Override
-    public MovieDto getMovieByName(Long id) {
+    public MovieDto getMovieById(Long id) {
         Movie movie= movieRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Movie","name",id));
-        return mapper.mapToDto(movie);
+        return movieMapper.mapToDto(movie);
 
     }
 
@@ -85,11 +83,16 @@ public class MovieServiceImpl implements MovieService {
 
         Page<Movie> movies= movieRepository.findAll(pageable);
         List<Movie> movieList= movies.getContent();
-        List<MovieDto> content= movieList.stream().map(movie -> mapper.mapToDto(movie)).collect(Collectors.toList());
+        List<MovieDto> content= movieList.stream().map(movie -> movieMapper.mapToDto(movie)).collect(Collectors.toList());
         return new ObjectResponse<MovieDto>(
             content, movies.getNumber(),movies.getSize(),movies.getTotalElements(),movies.getTotalPages(),movies.isLast()
         );
 
+    }
+
+    @Override
+    public List<MovieDto> getMoviesByIds(List<Long> ids) {
+        return movieRepository.findAllByIdIn(ids).stream().map(movie -> movieMapper.mapToDto(movie)).collect(Collectors.toList());
     }
 
 

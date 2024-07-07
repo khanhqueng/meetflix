@@ -1,11 +1,11 @@
 version: '3.8'
 services:
-#  betflix-zipkin:
-#    container_name: harbe-zipkin
-#    image: openzipkin/zipkin
-#    restart: unless-stopped
-#    ports:
-#      - "9411:9411"
+  betflix-zipkin:
+    container_name: betflix-zipkin
+    image: openzipkin/zipkin
+    restart: unless-stopped
+    ports:
+      - "9411:9411"
 
   betflix-rabbitmq:
     container_name: betflix-rabbitmq

@@ -9,6 +9,9 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/movie")
 public class MovieController {
@@ -20,7 +23,7 @@ public class MovieController {
     }
     @GetMapping("{id}")
     public ResponseEntity<MovieDto> getMovieById(@PathVariable("id") Long id){
-        return new ResponseEntity<>(movieService.getMovieByName(id), HttpStatus.OK);
+        return new ResponseEntity<>(movieService.getMovieById(id), HttpStatus.OK);
     }
     @GetMapping
     public ObjectResponse<MovieDto> getAllMovies(
@@ -30,6 +33,10 @@ public class MovieController {
             @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
     ){
         return movieService.getAllMovies(pageNo, pageSize, sortBy, sortDir);
+    }
+    @GetMapping("/ids")
+    public ResponseEntity<List<MovieDto>> getMoviesByIds(@RequestParam List<Long> ids){
+        return new ResponseEntity<>(movieService.getMoviesByIds(ids), HttpStatus.OK);
     }
 
 }

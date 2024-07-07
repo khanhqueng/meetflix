@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -31,7 +32,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     )
     private Set<Role> roles;
-    private String movieId;
+    @OneToMany(mappedBy = "userId", cascade =CascadeType.ALL)
+    private List<LikedMovie> movieId;
 
 
 }
