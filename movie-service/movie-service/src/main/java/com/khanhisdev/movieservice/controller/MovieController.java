@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/movie")
+@RequestMapping("/movie")
 public class MovieController {
     @Autowired
     private MovieService movieService;

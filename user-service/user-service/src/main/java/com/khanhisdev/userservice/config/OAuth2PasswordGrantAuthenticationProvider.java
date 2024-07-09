@@ -56,7 +56,6 @@ public class OAuth2PasswordGrantAuthenticationProvider implements Authentication
 
         // Check user credentials
         String username = passwordGrantAuthenticationToken.getUsername();
-        System.out.println(username);
         String password = passwordGrantAuthenticationToken.getPassword();
 
         Authentication credentialsAuthentication;

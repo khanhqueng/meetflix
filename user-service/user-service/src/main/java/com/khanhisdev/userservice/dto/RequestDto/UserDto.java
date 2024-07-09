@@ -1,7 +1,6 @@
-package com.khanhisdev.userservice.dto.Model;
+package com.khanhisdev.userservice.dto.RequestDto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data

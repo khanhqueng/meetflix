@@ -84,6 +84,7 @@ public class AuthorizationServerConfig {
                 .authorizeHttpRequests((authorize)->
                         authorize.requestMatchers(HttpMethod.GET, "/user/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/**").permitAll()
+                                .requestMatchers("/comment/**").permitAll()
                                 .anyRequest().authenticated()
 
                 )

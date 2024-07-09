@@ -6,9 +6,11 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import com.khanhisdev.gatewayservice.utils.CustomHeaders;
+@Component
 @RequiredArgsConstructor
 public class GatewayFilters implements GlobalFilter {
     private final JwtDecoder jwtDecoder;

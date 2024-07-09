@@ -46,6 +46,8 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.POST, "api/oauth2/v1/token").permitAll()
                         .pathMatchers(HttpMethod.GET, "api/auth/signup").permitAll()
                         .pathMatchers(HttpMethod.GET, "api/v1/user/**").hasAuthority("SCOPE_USER")
+                        .pathMatchers(HttpMethod.GET, "api/v1/movie/**").hasAuthority("SCOPE_USER")
+
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

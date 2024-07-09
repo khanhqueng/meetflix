@@ -34,6 +34,7 @@ public class User {
     private Set<Role> roles;
     @OneToMany(mappedBy = "userId", cascade =CascadeType.ALL)
     private List<LikedMovie> movieId;
-
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
 }

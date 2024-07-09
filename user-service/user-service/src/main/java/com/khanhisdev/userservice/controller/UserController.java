@@ -1,8 +1,9 @@
 package com.khanhisdev.userservice.controller;
 
-import com.khanhisdev.userservice.dto.Model.UserDto;
-import com.khanhisdev.userservice.dto.Response.APIResponseDto;
+import com.khanhisdev.userservice.dto.RequestDto.UserDto;
+import com.khanhisdev.userservice.dto.ResponseDto.APIResponseDto;
 import com.khanhisdev.userservice.service.UserService;
+import com.khanhisdev.userservice.utils.CustomHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ public class UserController {
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
-    @GetMapping("{id}")
-    public ResponseEntity<APIResponseDto> getUserById(@PathVariable("id") Long id){
+    @GetMapping
+    public ResponseEntity<APIResponseDto> getUserById(@RequestHeader(CustomHeaders.X_AUTH_USER_ID) Long id){
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.CREATED);
     }
 }

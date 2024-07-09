@@ -1,6 +1,6 @@
 package com.khanhisdev.userservice.dto.Mapper;
 
-import com.khanhisdev.userservice.dto.Model.UserDto;
+import com.khanhisdev.userservice.dto.RequestDto.UserDto;
 import com.khanhisdev.userservice.entity.User;
 import lombok.Getter;
 import lombok.Setter;

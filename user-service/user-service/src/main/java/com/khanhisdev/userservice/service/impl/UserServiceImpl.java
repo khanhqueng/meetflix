@@ -1,9 +1,9 @@
 package com.khanhisdev.userservice.service.impl;
 
 import com.khanhisdev.userservice.dto.Mapper.UserMapper;
-import com.khanhisdev.userservice.dto.Model.MovieDto;
-import com.khanhisdev.userservice.dto.Model.UserDto;
-import com.khanhisdev.userservice.dto.Response.APIResponseDto;
+import com.khanhisdev.userservice.dto.RequestDto.MovieDto;
+import com.khanhisdev.userservice.dto.RequestDto.UserDto;
+import com.khanhisdev.userservice.dto.ResponseDto.APIResponseDto;
 import com.khanhisdev.userservice.entity.LikedMovie;
 import com.khanhisdev.userservice.entity.Role;
 import com.khanhisdev.userservice.entity.User;
@@ -13,18 +13,14 @@ import com.khanhisdev.userservice.repository.RoleRepository;
 import com.khanhisdev.userservice.repository.UserRepository;
 import com.khanhisdev.userservice.service.UserService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -63,7 +59,7 @@ public class UserServiceImpl implements UserService {
                 .map(String::valueOf) // Convert Long to String
                 .collect(Collectors.joining(","));
         List<MovieDto> movieDtoList= webClient.get()
-                .uri("http://localhost:8091/api/v1/movie/ids?ids="+ result)
+                .uri("http://localhost:8091/movie/ids?ids="+ result)
                 .retrieve()
                 .bodyToFlux(MovieDto.class)
                 .collectList()

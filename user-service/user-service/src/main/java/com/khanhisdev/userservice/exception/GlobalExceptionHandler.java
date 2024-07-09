@@ -1,6 +1,6 @@
 package com.khanhisdev.userservice.exception;
 
-import com.khanhisdev.userservice.dto.Response.ErrorDetails;
+import com.khanhisdev.userservice.dto.ResponseDto.ErrorDetails;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -41,7 +41,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 
                                                                   HttpHeaders headers,
@@ -55,6 +54,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
 
 
 

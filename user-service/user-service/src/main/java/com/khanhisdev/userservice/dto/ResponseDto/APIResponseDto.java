@@ -1,7 +1,7 @@
-package com.khanhisdev.userservice.dto.Response;
+package com.khanhisdev.userservice.dto.ResponseDto;
 
-import com.khanhisdev.userservice.dto.Model.MovieDto;
-import com.khanhisdev.userservice.dto.Model.UserDto;
+import com.khanhisdev.userservice.dto.RequestDto.MovieDto;
+import com.khanhisdev.userservice.dto.RequestDto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

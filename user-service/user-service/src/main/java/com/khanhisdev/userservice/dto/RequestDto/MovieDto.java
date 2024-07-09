@@ -1,7 +1,5 @@
-package com.khanhisdev.userservice.dto.Model;
+package com.khanhisdev.userservice.dto.RequestDto;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

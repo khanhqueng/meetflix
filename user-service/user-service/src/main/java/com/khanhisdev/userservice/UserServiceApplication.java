@@ -1,5 +1,7 @@
 package com.khanhisdev.userservice;
 
+import com.khanhisdev.userservice.dto.ResponseDto.CommentResponseDto;
+import com.khanhisdev.userservice.entity.Comment;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +16,11 @@ public class UserServiceApplication {
 	}
 	@Bean
 	public ModelMapper modelMapper(){
-		return new ModelMapper();
+		ModelMapper mapper= new ModelMapper();
+		mapper.typeMap(Comment.class, CommentResponseDto.class).addMappings(map->{
+			map.map(src->src.getUserId().getUsername(), CommentResponseDto::setUsername);
+		});
+		return mapper;
 	}
 
 	public static void main(String[] args) {
