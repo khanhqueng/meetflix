@@ -1,8 +1,8 @@
 package com.khanhisdev.movieservice.dto.Mapper;
 
-import com.khanhisdev.movieservice.dto.Model.MovieDto;
+import com.khanhisdev.movieservice.dto.RequestDto.MovieDto;
+import com.khanhisdev.movieservice.dto.Response.MovieResponseDto;
 import com.khanhisdev.movieservice.entity.Movie;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
@@ -23,6 +23,10 @@ public class MovieMapper {
     public MovieDto mapToDto(Movie movie){
         MovieDto movieDto= mapper.map(movie, MovieDto.class);
         return movieDto;
+    }
+    public MovieResponseDto mapToResponseDto(Movie movie){
+        MovieResponseDto movieResponseDto= mapper.map(movie, MovieResponseDto.class);
+        return movieResponseDto;
     }
 
 }

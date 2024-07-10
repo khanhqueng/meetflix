@@ -11,7 +11,7 @@ public class MessageController {
     @Value("${spring.boot.message}")
     private String message;
 
-    @GetMapping("/user/message")
+    @GetMapping("/message")
     public String getMessage(){
         return message;
     }

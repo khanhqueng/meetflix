@@ -1,6 +1,5 @@
 package com.khanhisdev.movieservice.dto.Response;
 
-import com.khanhisdev.movieservice.dto.Model.MovieDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

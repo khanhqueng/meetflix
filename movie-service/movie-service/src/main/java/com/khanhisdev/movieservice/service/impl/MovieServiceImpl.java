@@ -3,7 +3,8 @@ package com.khanhisdev.movieservice.service.impl;
 import com.khanhisdev.movieservice.dto.Mapper.CategoryMapper;
 import com.khanhisdev.movieservice.dto.Mapper.MovieMapper;
 import com.khanhisdev.movieservice.dto.Message.CategoryResponseDto;
-import com.khanhisdev.movieservice.dto.Model.MovieDto;
+import com.khanhisdev.movieservice.dto.RequestDto.MovieDto;
+import com.khanhisdev.movieservice.dto.Response.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.Response.ObjectResponse;
 import com.khanhisdev.movieservice.entity.Category;
 import com.khanhisdev.movieservice.entity.Movie;
@@ -35,7 +36,7 @@ public class MovieServiceImpl implements MovieService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public MovieDto saveMovie(MovieDto movieDto) {
+    public MovieResponseDto saveMovie(MovieDto movieDto) {
         List<Category> categories= categoryRepository.findAll();
         Movie movie = movieRepository.findByName(movieDto.getName());
         if(movie != null){
@@ -62,19 +63,19 @@ public class MovieServiceImpl implements MovieService {
             }
         movieDto.setCategories(listWillBeUpdated);
         Movie newMovie= movieRepository.save(movieMapper.mapToEntity(movieDto));
-        return movieMapper.mapToDto(newMovie);
+        return movieMapper.mapToResponseDto(newMovie);
         }
     }
 
     @Override
-    public MovieDto getMovieById(Long id) {
+    public MovieResponseDto getMovieById(Long id) {
         Movie movie= movieRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Movie","name",id));
-        return movieMapper.mapToDto(movie);
+        return movieMapper.mapToResponseDto(movie);
 
     }
 
     @Override
-    public ObjectResponse<MovieDto> getAllMovies(int pageNo, int pageSize, String sortBy, String sortDir) {
+    public ObjectResponse<MovieResponseDto> getAllMovies(int pageNo, int pageSize, String sortBy, String sortDir) {
         // create sort
         Sort sort =sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
@@ -83,16 +84,16 @@ public class MovieServiceImpl implements MovieService {
 
         Page<Movie> movies= movieRepository.findAll(pageable);
         List<Movie> movieList= movies.getContent();
-        List<MovieDto> content= movieList.stream().map(movie -> movieMapper.mapToDto(movie)).collect(Collectors.toList());
-        return new ObjectResponse<MovieDto>(
+        List<MovieResponseDto> content= movieList.stream().map(movie -> movieMapper.mapToResponseDto(movie)).collect(Collectors.toList());
+        return new ObjectResponse<MovieResponseDto>(
             content, movies.getNumber(),movies.getSize(),movies.getTotalElements(),movies.getTotalPages(),movies.isLast()
         );
 
     }
 
     @Override
-    public List<MovieDto> getMoviesByIds(List<Long> ids) {
-        return movieRepository.findAllByIdIn(ids).stream().map(movie -> movieMapper.mapToDto(movie)).collect(Collectors.toList());
+    public List<MovieResponseDto> getMoviesByIds(List<Long> ids) {
+        return movieRepository.findAllByIdIn(ids).stream().map(movie -> movieMapper.mapToResponseDto(movie)).collect(Collectors.toList());
     }
 
 

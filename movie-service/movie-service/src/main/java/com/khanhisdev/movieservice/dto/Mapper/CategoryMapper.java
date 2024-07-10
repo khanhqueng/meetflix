@@ -1,9 +1,7 @@
 package com.khanhisdev.movieservice.dto.Mapper;
 
 import com.khanhisdev.movieservice.dto.Message.CategoryResponseDto;
-import com.khanhisdev.movieservice.dto.Model.MovieDto;
 import com.khanhisdev.movieservice.entity.Category;
-import com.khanhisdev.movieservice.entity.Movie;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;

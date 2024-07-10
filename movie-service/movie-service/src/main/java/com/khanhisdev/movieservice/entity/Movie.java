@@ -37,6 +37,8 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name="category_id")
     )
     private Set<Category> categories;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<Showtime> showtimeList;
 
 
 

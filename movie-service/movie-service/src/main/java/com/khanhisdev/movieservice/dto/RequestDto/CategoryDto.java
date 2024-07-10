@@ -1,13 +1,11 @@
-package com.khanhisdev.movieservice.dto.Model;
+package com.khanhisdev.movieservice.dto.RequestDto;
 
 import com.khanhisdev.movieservice.dto.Message.MovieResponseDto;
-import com.khanhisdev.movieservice.entity.Movie;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
