@@ -1,6 +1,6 @@
 package com.khanhisdev.movieservice.controller;
 
-import com.khanhisdev.movieservice.dto.RequestDto.MovieDto;
+import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
 import com.khanhisdev.movieservice.dto.Response.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.Response.ObjectResponse;
 import com.khanhisdev.movieservice.service.MovieService;
@@ -16,10 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/movie")
 public class MovieController {
+
     @Autowired
     private MovieService movieService;
     @PostMapping
-    public ResponseEntity<MovieResponseDto> createMovie(@Valid @RequestBody MovieDto movieDto){
+    public ResponseEntity<MovieResponseDto> createMovie(@Valid @RequestBody MovieRequestDto movieDto){
         return new ResponseEntity<>(movieService.saveMovie(movieDto), HttpStatus.CREATED);
     }
     @GetMapping("{id}")

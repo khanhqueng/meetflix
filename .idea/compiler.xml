@@ -10,6 +10,7 @@
         <module name="config-server" />
         <module name="movie-service" />
         <module name="user-service" />
+        <module name="order-service" />
         <module name="service-registry" />
         <module name="gateway-service" />
       </profile>
@@ -20,6 +21,7 @@
       <module name="config-server" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="movie-service" options="-parameters" />
+      <module name="order-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>

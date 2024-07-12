@@ -1,6 +1,6 @@
 package com.khanhisdev.movieservice.dto.RequestDto;
 
-import com.khanhisdev.movieservice.dto.Message.CategoryResponseDto;
+import com.khanhisdev.movieservice.dto.Message.CategoryMessage;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieDto {
+public class MovieRequestDto {
     @NotEmpty(message = "Name movie cannot be empty")
     private String name;
     @NotEmpty(message = "Description movie cannot be empty")
@@ -25,7 +25,7 @@ public class MovieDto {
     private List<String> director;
     private List<String> actors;
     private String urlImage;
-    private List<CategoryResponseDto> categories;
+    private List<CategoryMessage> categories;
 
 
 }

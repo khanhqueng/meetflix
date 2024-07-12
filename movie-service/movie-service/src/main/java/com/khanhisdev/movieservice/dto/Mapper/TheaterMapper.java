@@ -1,8 +1,6 @@
 package com.khanhisdev.movieservice.dto.Mapper;
 
-import com.khanhisdev.movieservice.dto.RequestDto.MovieDto;
-import com.khanhisdev.movieservice.dto.RequestDto.TheaterDto;
-import com.khanhisdev.movieservice.entity.Movie;
+import com.khanhisdev.movieservice.dto.RequestDto.TheaterRequestDto;
 import com.khanhisdev.movieservice.entity.Theater;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,13 +14,13 @@ import org.springframework.stereotype.Component;
 public class TheaterMapper {
     @Autowired
     private ModelMapper mapper;
-    public Theater mapToEntity(TheaterDto theaterDto){
-        Theater theater= mapper.map(theaterDto, Theater.class);
+    public Theater mapToEntity(TheaterRequestDto theaterRequestDto){
+        Theater theater= mapper.map(theaterRequestDto, Theater.class);
         return theater;
 
     }
-    public TheaterDto mapToDto(Theater theater){
-        TheaterDto theaterDto= mapper.map(theater, TheaterDto.class);
-        return theaterDto;
+    public TheaterRequestDto mapToDto(Theater theater){
+        TheaterRequestDto theaterRequestDto = mapper.map(theater, TheaterRequestDto.class);
+        return theaterRequestDto;
     }
 }

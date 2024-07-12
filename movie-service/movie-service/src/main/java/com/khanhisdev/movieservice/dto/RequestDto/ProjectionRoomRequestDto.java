@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectionRoomDto {
+public class ProjectionRoomRequestDto {
     private int number;
-
+    private int seats;
 }

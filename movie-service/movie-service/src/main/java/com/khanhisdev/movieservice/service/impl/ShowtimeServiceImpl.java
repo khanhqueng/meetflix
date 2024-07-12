@@ -1,8 +1,7 @@
 package com.khanhisdev.movieservice.service.impl;
 
 import com.khanhisdev.movieservice.dto.Mapper.ShowtimeMapper;
-import com.khanhisdev.movieservice.dto.Mapper.TheaterMapper;
-import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeDto;
+import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeRequestDto;
 import com.khanhisdev.movieservice.dto.Response.ShowtimeResponseDto;
 import com.khanhisdev.movieservice.entity.Movie;
 import com.khanhisdev.movieservice.entity.ProjectionRoom;
@@ -16,12 +15,9 @@ import com.khanhisdev.movieservice.repository.ShowtimeRepository;
 import com.khanhisdev.movieservice.repository.TheaterRepository;
 import com.khanhisdev.movieservice.service.ShowtimeService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,11 +30,11 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     private TheaterRepository theaterRepository;
     private ShowtimeMapper mapper;
     @Override
-    public ShowtimeResponseDto addShowtime(ShowtimeDto showtimeDto, Long movieId, Long theaterId, Long projectionRoomId) {
+    public ShowtimeResponseDto addShowtime(ShowtimeRequestDto showtimeRequestDto, Long movieId, Long theaterId, Long projectionRoomId) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(()-> new ResourceNotFoundException("Movie","id",movieId));
         Theater theater = theaterRepository.findById(theaterId).orElseThrow(()-> new ResourceNotFoundException("Theater","id",theaterId));
         ProjectionRoom projectionRoom = projectionRoomRepository.findById(projectionRoomId).orElseThrow(()-> new ResourceNotFoundException("ProjectionRoom","id",projectionRoomId));
-        List<Showtime> showtime= showtimeRepository.findByDateAndProjectionRoomId(showtimeDto.getDate(), projectionRoomId);
+        List<Showtime> showtime= showtimeRepository.findByDateAndProjectionRoomId(showtimeRequestDto.getDate(), projectionRoomId);
         int hourOfMovie= movie.getDurationMin()/60;
         int minutesOfMovie= movie.getDurationMin()%60;
         for(Showtime time: showtime){
@@ -57,7 +53,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
                 flatTimeMinutes+=60;
                 flatTimeHours-=1;
             }
-            String[] inputParts= showtimeDto.getTime().split(":");
+            String[] inputParts= showtimeRequestDto.getTime().split(":");
             int inputHours= Integer.parseInt(inputParts[0]);
             int inputMinutes= Integer.parseInt(inputParts[1]);
            if(flatTimeHours< inputHours && inputHours<floorTimeHours){
@@ -71,7 +67,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             }
 
         }
-        Showtime newShowtime= mapper.mapToEntity(showtimeDto);
+        Showtime newShowtime= mapper.mapToEntity(showtimeRequestDto);
         newShowtime.setTheater(theater);
         newShowtime.setMovie(movie);
         newShowtime.setProjectionRoom(projectionRoom);
@@ -97,11 +93,11 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     }
 
     @Override
-    public ShowtimeResponseDto updateShowtime(Long showtimeId, ShowtimeDto showtimeDto) {
+    public ShowtimeResponseDto updateShowtime(Long showtimeId, ShowtimeRequestDto showtimeRequestDto) {
         Showtime showtime= showtimeRepository.findById(showtimeId).orElseThrow(()-> new ResourceNotFoundException("Showtime", "id", showtimeId));
         Movie movie= showtime.getMovie();
 
-        List<Showtime> showtimeList= showtimeRepository.findByDateAndProjectionRoomId(showtimeDto.getDate(), showtime.getProjectionRoom().getId());
+        List<Showtime> showtimeList= showtimeRepository.findByDateAndProjectionRoomId(showtimeRequestDto.getDate(), showtime.getProjectionRoom().getId());
         int hourOfMovie= movie.getDurationMin()/60;
         int minutesOfMovie= movie.getDurationMin()%60;
         for(Showtime time: showtimeList){
@@ -121,7 +117,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
                 flatTimeMinutes+=60;
                 flatTimeHours-=1;
             }
-            String[] inputParts= showtimeDto.getTime().split(":");
+            String[] inputParts= showtimeRequestDto.getTime().split(":");
             int inputHours= Integer.parseInt(inputParts[0]);
             int inputMinutes= Integer.parseInt(inputParts[1]);
             if(flatTimeHours< inputHours && inputHours<floorTimeHours){
@@ -135,8 +131,8 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             }
 
         }
-        showtime.setTime(showtimeDto.getTime());
-        showtime.setDate(showtimeDto.getDate());
+        showtime.setTime(showtimeRequestDto.getTime());
+        showtime.setDate(showtimeRequestDto.getDate());
         return mapper.mapToResponseDto(showtimeRepository.save(showtime));
     }
 

@@ -1,8 +1,6 @@
 package com.khanhisdev.movieservice.dto.Response;
 
-import com.khanhisdev.movieservice.dto.Message.CategoryResponseDto;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
+import com.khanhisdev.movieservice.dto.Message.CategoryMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +21,5 @@ public class MovieResponseDto {
     private List<String> director;
     private List<String> actors;
     private String urlImage;
-    private List<CategoryResponseDto> categories;
+    private List<CategoryMessage> categories;
 }

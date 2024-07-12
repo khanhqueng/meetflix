@@ -1,18 +1,17 @@
 package com.khanhisdev.movieservice.dto.RequestDto;
 
-import com.khanhisdev.movieservice.entity.ProjectionRoom;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TheaterDto {
-    private String name;
-    private List<ProjectionRoomDto> projectionRoomList;
+public class ShowtimeRequestDto {
+    private LocalDate date;
+    private String time;
 }

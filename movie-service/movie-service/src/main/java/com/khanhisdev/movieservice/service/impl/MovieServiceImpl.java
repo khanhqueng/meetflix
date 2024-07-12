@@ -2,8 +2,8 @@ package com.khanhisdev.movieservice.service.impl;
 
 import com.khanhisdev.movieservice.dto.Mapper.CategoryMapper;
 import com.khanhisdev.movieservice.dto.Mapper.MovieMapper;
-import com.khanhisdev.movieservice.dto.Message.CategoryResponseDto;
-import com.khanhisdev.movieservice.dto.RequestDto.MovieDto;
+import com.khanhisdev.movieservice.dto.Message.CategoryMessage;
+import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
 import com.khanhisdev.movieservice.dto.Response.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.Response.ObjectResponse;
 import com.khanhisdev.movieservice.entity.Category;
@@ -36,7 +36,7 @@ public class MovieServiceImpl implements MovieService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public MovieResponseDto saveMovie(MovieDto movieDto) {
+    public MovieResponseDto saveMovie(MovieRequestDto movieDto) {
         List<Category> categories= categoryRepository.findAll();
         Movie movie = movieRepository.findByName(movieDto.getName());
         if(movie != null){
@@ -44,8 +44,8 @@ public class MovieServiceImpl implements MovieService {
 
         }else{
             List<Category> categoryList= categoryRepository.findAll();
-            List<CategoryResponseDto > categoryNeedCheck= movieDto.getCategories();
-            List<CategoryResponseDto> listWillBeUpdated= new ArrayList<>();
+            List<CategoryMessage> categoryNeedCheck= movieDto.getCategories();
+            List<CategoryMessage> listWillBeUpdated= new ArrayList<>();
             boolean flag=false;
             for(int i =0;i<categoryNeedCheck.size();i++){
                 flag=false;

@@ -1,15 +1,13 @@
 package com.khanhisdev.movieservice.service.impl;
 
 import com.khanhisdev.movieservice.dto.Mapper.TheaterMapper;
-import com.khanhisdev.movieservice.dto.RequestDto.TheaterDto;
+import com.khanhisdev.movieservice.dto.RequestDto.TheaterRequestDto;
 import com.khanhisdev.movieservice.entity.Theater;
 import com.khanhisdev.movieservice.exception.ResourceDuplicateException;
 import com.khanhisdev.movieservice.exception.ResourceNotFoundException;
 import com.khanhisdev.movieservice.repository.TheaterRepository;
 import com.khanhisdev.movieservice.service.TheaterService;
-import com.sun.jdi.request.DuplicateRequestException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,30 +18,30 @@ public class TheaterServiceImpl implements TheaterService {
     private TheaterRepository theaterRepository;
     private TheaterMapper mapper;
     @Override
-    public List<TheaterDto> getAllTheaters() {
+    public List<TheaterRequestDto> getAllTheaters() {
         return theaterRepository.findAll().stream().map(theater -> mapper.mapToDto(theater)).toList();
     }
 
     @Override
-    public TheaterDto getTheaterById(Long id) {
+    public TheaterRequestDto getTheaterById(Long id) {
 
         return mapper.mapToDto(theaterRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Theater","id",id)));
     }
 
     @Override
-    public TheaterDto createTheater(TheaterDto theaterDto) {
-        if(theaterRepository.existsByName(theaterDto.getName())){
-            throw new ResourceDuplicateException("Theater", "name", theaterDto.getName());
+    public TheaterRequestDto createTheater(TheaterRequestDto theaterRequestDto) {
+        if(theaterRepository.existsByName(theaterRequestDto.getName())){
+            throw new ResourceDuplicateException("Theater", "name", theaterRequestDto.getName());
         }
-        Theater theater= mapper.mapToEntity(theaterDto);
+        Theater theater= mapper.mapToEntity(theaterRequestDto);
         theater.getProjectionRoomList().forEach(projectionRoom -> projectionRoom.setTheater(theater));
         return mapper.mapToDto(theaterRepository.save(theater));
     }
 
     @Override
-    public TheaterDto updateTheater(TheaterDto theaterDto, Long id) {
+    public TheaterRequestDto updateTheater(TheaterRequestDto theaterRequestDto, Long id) {
         Theater theater= theaterRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Theater", "id", id));
-        theater.setName(theaterDto.getName());
+        theater.setName(theaterRequestDto.getName());
         return mapper.mapToDto(theater);
     }
 

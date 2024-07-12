@@ -1,13 +1,13 @@
 package com.khanhisdev.movieservice.service;
 
-import com.khanhisdev.movieservice.dto.RequestDto.TheaterDto;
+import com.khanhisdev.movieservice.dto.RequestDto.TheaterRequestDto;
 
 import java.util.List;
 
 public interface TheaterService {
-    List<TheaterDto> getAllTheaters();
-    TheaterDto getTheaterById(Long id);
-    TheaterDto createTheater(TheaterDto theaterDto);
-    TheaterDto updateTheater(TheaterDto theaterDto, Long id);
+    List<TheaterRequestDto> getAllTheaters();
+    TheaterRequestDto getTheaterById(Long id);
+    TheaterRequestDto createTheater(TheaterRequestDto theaterRequestDto);
+    TheaterRequestDto updateTheater(TheaterRequestDto theaterRequestDto, Long id);
     void deleteTheater(Long id);
 }

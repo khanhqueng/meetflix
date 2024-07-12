@@ -1,7 +1,6 @@
 package com.khanhisdev.movieservice.controller;
 
-import com.khanhisdev.movieservice.dto.RequestDto.MovieDto;
-import com.khanhisdev.movieservice.dto.RequestDto.TheaterDto;
+import com.khanhisdev.movieservice.dto.RequestDto.TheaterRequestDto;
 import com.khanhisdev.movieservice.service.TheaterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ public class TheaterController {
     @Autowired
     private TheaterService theaterService;
     @PostMapping
-    public ResponseEntity<TheaterDto> createTheater(@RequestBody TheaterDto theaterDto){
-        return new ResponseEntity<>(theaterService.createTheater(theaterDto), HttpStatus.CREATED);
+    public ResponseEntity<TheaterRequestDto> createTheater(@RequestBody TheaterRequestDto theaterRequestDto){
+        return new ResponseEntity<>(theaterService.createTheater(theaterRequestDto), HttpStatus.CREATED);
     }
 }

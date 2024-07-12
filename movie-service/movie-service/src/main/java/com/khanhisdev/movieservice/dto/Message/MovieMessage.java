@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieResponseDto {
+public class MovieMessage {
     private Long id;
     private String name;
     private String description;

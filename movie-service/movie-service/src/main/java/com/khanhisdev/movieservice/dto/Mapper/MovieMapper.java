@@ -1,6 +1,6 @@
 package com.khanhisdev.movieservice.dto.Mapper;
 
-import com.khanhisdev.movieservice.dto.RequestDto.MovieDto;
+import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
 import com.khanhisdev.movieservice.dto.Response.MovieResponseDto;
 import com.khanhisdev.movieservice.entity.Movie;
 import lombok.Getter;
@@ -15,13 +15,13 @@ import org.springframework.stereotype.Component;
 public class MovieMapper {
     @Autowired
     private ModelMapper mapper;
-    public Movie mapToEntity(MovieDto movieDto){
+    public Movie mapToEntity(MovieRequestDto movieDto){
         Movie movie= mapper.map(movieDto, Movie.class);
         return movie;
 
     }
-    public MovieDto mapToDto(Movie movie){
-        MovieDto movieDto= mapper.map(movie, MovieDto.class);
+    public MovieRequestDto mapToDto(Movie movie){
+        MovieRequestDto movieDto= mapper.map(movie, MovieRequestDto.class);
         return movieDto;
     }
     public MovieResponseDto mapToResponseDto(Movie movie){

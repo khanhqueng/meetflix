@@ -13,5 +13,5 @@ import java.util.List;
 
 @Repository
 public interface ProjectionRoomRepository extends JpaRepository<ProjectionRoom,Long> {
-
+    List<ProjectionRoom> findByTheaterId(Long theaterId);
 }

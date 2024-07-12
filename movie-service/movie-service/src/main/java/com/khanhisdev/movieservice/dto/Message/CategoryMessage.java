@@ -10,8 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryResponseDto {
-    private Long id;
+public class CategoryMessage {
     private String name;
     private String thumbnailUrl;
     private String url_key;

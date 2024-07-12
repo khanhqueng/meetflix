@@ -12,6 +12,13 @@ services:
     image: rabbitmq
     ports:
       - "5672:5672"
+  betflix-redis:
+    container_name: betflix-redis
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - betflix-network
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1
     container_name: elasticsearch

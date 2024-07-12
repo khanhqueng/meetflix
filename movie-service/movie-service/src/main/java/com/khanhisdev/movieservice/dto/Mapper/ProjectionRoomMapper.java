@@ -1,8 +1,7 @@
 package com.khanhisdev.movieservice.dto.Mapper;
 
-import com.khanhisdev.movieservice.dto.RequestDto.MovieDto;
-import com.khanhisdev.movieservice.dto.RequestDto.ProjectionRoomDto;
-import com.khanhisdev.movieservice.entity.Movie;
+import com.khanhisdev.movieservice.dto.RequestDto.ProjectionRoomRequestDto;
+import com.khanhisdev.movieservice.dto.Response.ProjectionRoomResponseDto;
 import com.khanhisdev.movieservice.entity.ProjectionRoom;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,13 +15,17 @@ import org.springframework.stereotype.Component;
 public class ProjectionRoomMapper {
     @Autowired
     private ModelMapper mapper;
-    public ProjectionRoom mapToEntity(ProjectionRoomDto projectionRoomDto){
-        ProjectionRoom projectionRoom= mapper.map(projectionRoomDto, ProjectionRoom.class);
+    public ProjectionRoom mapToEntity(ProjectionRoomRequestDto projectionRoomRequestDto){
+        ProjectionRoom projectionRoom= mapper.map(projectionRoomRequestDto, ProjectionRoom.class);
         return projectionRoom;
 
     }
-    public ProjectionRoomDto mapToDto(ProjectionRoom projectionRoom){
-        ProjectionRoomDto projectionRoomDto= mapper.map(projectionRoom, ProjectionRoomDto.class);
-        return projectionRoomDto;
+    public ProjectionRoomRequestDto mapToDto(ProjectionRoom projectionRoom){
+        ProjectionRoomRequestDto projectionRoomRequestDto = mapper.map(projectionRoom, ProjectionRoomRequestDto.class);
+        return projectionRoomRequestDto;
+    }
+    public ProjectionRoomResponseDto mapToResponseDto(ProjectionRoom projectionRoom){
+        ProjectionRoomResponseDto projectionRoomResponseDto = mapper.map(projectionRoom, ProjectionRoomResponseDto.class);
+        return projectionRoomResponseDto;
     }
 }
