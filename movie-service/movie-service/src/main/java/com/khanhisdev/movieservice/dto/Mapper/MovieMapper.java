@@ -1,7 +1,7 @@
 package com.khanhisdev.movieservice.dto.Mapper;
 
 import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
-import com.khanhisdev.movieservice.dto.Response.MovieResponseDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.MovieResponseDto;
 import com.khanhisdev.movieservice.entity.Movie;
 import lombok.Getter;
 import lombok.Setter;

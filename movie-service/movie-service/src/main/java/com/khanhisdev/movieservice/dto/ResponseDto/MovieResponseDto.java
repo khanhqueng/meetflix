@@ -1,4 +1,4 @@
-package com.khanhisdev.movieservice.dto.Response;
+package com.khanhisdev.movieservice.dto.ResponseDto;
 
 import com.khanhisdev.movieservice.dto.Message.CategoryMessage;
 import lombok.AllArgsConstructor;

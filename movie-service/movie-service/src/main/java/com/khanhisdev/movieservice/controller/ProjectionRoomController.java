@@ -1,7 +1,7 @@
 package com.khanhisdev.movieservice.controller;
 
 import com.khanhisdev.movieservice.dto.RequestDto.ProjectionRoomRequestDto;
-import com.khanhisdev.movieservice.dto.Response.ProjectionRoomResponseDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ProjectionRoomResponseDto;
 import com.khanhisdev.movieservice.service.ProjectionRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

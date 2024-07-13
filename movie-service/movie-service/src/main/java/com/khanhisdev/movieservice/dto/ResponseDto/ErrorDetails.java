@@ -1,4 +1,4 @@
-package com.khanhisdev.movieservice.dto.Response;
+package com.khanhisdev.movieservice.dto.ResponseDto;
 
 import java.util.Date;
 

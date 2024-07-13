@@ -1,7 +1,7 @@
 package com.khanhisdev.movieservice.dto.Mapper;
 
 import com.khanhisdev.movieservice.dto.RequestDto.ProjectionRoomRequestDto;
-import com.khanhisdev.movieservice.dto.Response.ProjectionRoomResponseDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ProjectionRoomResponseDto;
 import com.khanhisdev.movieservice.entity.ProjectionRoom;
 import lombok.Getter;
 import lombok.Setter;

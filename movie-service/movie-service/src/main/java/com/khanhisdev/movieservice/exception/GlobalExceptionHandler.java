@@ -1,6 +1,6 @@
 package com.khanhisdev.movieservice.exception;
 
-import com.khanhisdev.movieservice.dto.Response.ErrorDetails;
+import com.khanhisdev.movieservice.dto.ResponseDto.ErrorDetails;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

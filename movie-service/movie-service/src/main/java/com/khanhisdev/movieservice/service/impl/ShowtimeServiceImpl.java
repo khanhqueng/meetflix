@@ -1,8 +1,10 @@
 package com.khanhisdev.movieservice.service.impl;
 
 import com.khanhisdev.movieservice.dto.Mapper.ShowtimeMapper;
+import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeForOrderRequest;
 import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeRequestDto;
-import com.khanhisdev.movieservice.dto.Response.ShowtimeResponseDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeForOrderDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeResponseDto;
 import com.khanhisdev.movieservice.entity.Movie;
 import com.khanhisdev.movieservice.entity.ProjectionRoom;
 import com.khanhisdev.movieservice.entity.Showtime;
@@ -18,6 +20,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -134,6 +137,21 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         showtime.setTime(showtimeRequestDto.getTime());
         showtime.setDate(showtimeRequestDto.getDate());
         return mapper.mapToResponseDto(showtimeRepository.save(showtime));
+    }
+
+    @Override
+    public List<ShowtimeForOrderDto> getShowtimeFromOrder(List<ShowtimeForOrderRequest> showtimeList) {
+        List<ShowtimeForOrderDto> response= new ArrayList<>();
+        for(ShowtimeForOrderRequest request: showtimeList){
+            Showtime showtime= showtimeRepository.findByTimeAndProjectionRoomId(request.getTime(), request.getRoomId()).orElseThrow(
+                    ()-> new ResourceNotFoundException("Showtime", "Time or RoomId", request.getRoomId())
+            );
+            ShowtimeForOrderDto showtimeForOrderDto= mapper.mapToResponseOrderDto(showtime);
+            showtimeForOrderDto.setSeats(request.getSeatsOrdered());
+            response.add(showtimeForOrderDto);
+        }
+
+        return response;
     }
 
     @Override

@@ -1,7 +1,8 @@
 package com.khanhisdev.movieservice.dto.Mapper;
 
 import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeRequestDto;
-import com.khanhisdev.movieservice.dto.Response.ShowtimeResponseDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeForOrderDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeResponseDto;
 import com.khanhisdev.movieservice.entity.Showtime;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,10 @@ public class ShowtimeMapper {
     }
     public ShowtimeResponseDto mapToResponseDto(Showtime showtime){
         ShowtimeResponseDto showtimeResponseDto= mapper.map(showtime, ShowtimeResponseDto.class);
+        return showtimeResponseDto;
+    }
+    public ShowtimeForOrderDto mapToResponseOrderDto(Showtime showtime){
+        ShowtimeForOrderDto showtimeResponseDto= mapper.map(showtime, ShowtimeForOrderDto.class);
         return showtimeResponseDto;
     }
 }

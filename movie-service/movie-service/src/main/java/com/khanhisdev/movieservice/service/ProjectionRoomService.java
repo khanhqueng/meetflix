@@ -1,8 +1,7 @@
 package com.khanhisdev.movieservice.service;
 
 import com.khanhisdev.movieservice.dto.RequestDto.ProjectionRoomRequestDto;
-import com.khanhisdev.movieservice.dto.Response.ProjectionRoomResponseDto;
-import com.khanhisdev.movieservice.entity.ProjectionRoom;
+import com.khanhisdev.movieservice.dto.ResponseDto.ProjectionRoomResponseDto;
 
 import java.util.List;
 

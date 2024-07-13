@@ -1,8 +1,8 @@
 package com.khanhisdev.movieservice.controller;
 
 import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
-import com.khanhisdev.movieservice.dto.Response.MovieResponseDto;
-import com.khanhisdev.movieservice.dto.Response.ObjectResponse;
+import com.khanhisdev.movieservice.dto.ResponseDto.MovieResponseDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ObjectResponse;
 import com.khanhisdev.movieservice.service.MovieService;
 import com.khanhisdev.movieservice.utils.AppConstants;
 import jakarta.validation.Valid;

@@ -1,7 +1,9 @@
 package com.khanhisdev.movieservice.controller;
 
+import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeForOrderRequest;
 import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeRequestDto;
-import com.khanhisdev.movieservice.dto.Response.ShowtimeResponseDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeForOrderDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeResponseDto;
 import com.khanhisdev.movieservice.service.ShowtimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,10 @@ public class ShowtimeController {
     @GetMapping("/movie/{id}")
     public ResponseEntity<List<ShowtimeResponseDto>> getByMovieId(@PathVariable(name = "id") Long id){
         return new ResponseEntity<>(showtimeService.getAllShowtimeByMovieId(id), HttpStatus.OK) ;
+    }
+    @PostMapping("/order")
+    public ResponseEntity<List<ShowtimeForOrderDto>> getShowtimeFromOrder(@RequestBody List<ShowtimeForOrderRequest> requests){
+        return new ResponseEntity<>(showtimeService.getShowtimeFromOrder(requests),HttpStatus.OK);
     }
     @GetMapping("/room/{id}")
     public ResponseEntity<List<ShowtimeResponseDto>> getByRoomId(@PathVariable(name = "id") Long id){

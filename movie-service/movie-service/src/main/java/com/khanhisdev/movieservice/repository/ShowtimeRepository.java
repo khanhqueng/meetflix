@@ -6,10 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime,Long> {
     List<Showtime> findByDateAndProjectionRoomId(LocalDate date, Long id);
     List<Showtime> findByMovieId(Long id);
     List<Showtime> findByProjectionRoomId(Long id);
+    Optional<Showtime> findByTimeAndProjectionRoomId(String time, Long RoomId);
 }

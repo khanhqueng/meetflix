@@ -2,7 +2,7 @@ package com.khanhisdev.movieservice.service.impl;
 
 import com.khanhisdev.movieservice.dto.Mapper.ProjectionRoomMapper;
 import com.khanhisdev.movieservice.dto.RequestDto.ProjectionRoomRequestDto;
-import com.khanhisdev.movieservice.dto.Response.ProjectionRoomResponseDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ProjectionRoomResponseDto;
 import com.khanhisdev.movieservice.entity.ProjectionRoom;
 import com.khanhisdev.movieservice.entity.Theater;
 import com.khanhisdev.movieservice.exception.ResourceNotFoundException;
