@@ -1,79 +1,97 @@
 version: '3.8'
-services:
-  betflix-zipkin:
-    container_name: betflix-zipkin
-    image: openzipkin/zipkin
-    restart: unless-stopped
-    ports:
-      - "9411:9411"
+name: betflix
 
-  betflix-rabbitmq:
-    container_name: betflix-rabbitmq
-    image: rabbitmq
-    ports:
-      - "5672:5672"
-  betflix-redis:
-    container_name: betflix-redis
-    image: redis
-    ports:
-      - "6379:6379"
-    networks:
-      - betflix-network
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1
-    container_name: elasticsearch
+services:
+  service-registry:
+    container_name: service-registry
+    image: service-registry
     restart: unless-stopped
+    build:
+      context: ./service-registry/service-registry
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: service-registry
     environment:
-      node.name: es-node
-      cluster.name: docker-cluster
-      discovery.type: single-node
-      bootstrap.memory_lock: true
-      ES_JAVA_OPTS: -Xms1g -Xmx1g
-      xpack.license.self_generated.type: basic
-      xpack.security.enabled: true
+      SPRING_PROFILES_ACTIVE: prod
     ports:
-      - "9200:9200"
-      - "9300:9300"
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - "8761:8761"
     networks:
       - betflix-network
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.5.1
-    container_name: kibana
+  user-service:
+    container_name: user-service
+    image: user-service
     restart: unless-stopped
-    volumes:
-      - ./docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-    ports:
-      - "5601:5601"
-    depends_on:
-      - elasticsearch
-    networks:
-      - betflix-network
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.5.1
-    container_name: logstash
-    restart: unless-stopped
-    volumes:
-      - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./docker/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
-      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline/
-    ports:
-      - "5044:5044"
-      - "5000:5000/tcp"
-      - "5000:5000/udp"
-      - "5001:5001/tcp"
-      - "5001:5001/udp"
-      - "9600:9600"
+    build:
+      context: ./user-service/user-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: user-service
     environment:
-      LS_JAVA_OPTS: -Xmx256m -Xms256m
-    depends_on:
-      - elasticsearch
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8092:8092"
     networks:
       - betflix-network
-volumes:
-  esdata:
-    driver: local
+  gateway-service:
+    container_name: gateway-service
+    image: gateway-service
+    restart: unless-stopped
+    build:
+      context: ./gateway-service/gateway-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: gateway-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "9090:9090"
+    networks:
+      - betflix-network
+  movie-service:
+    container_name: movie-service
+    image: movie-service
+    restart: unless-stopped
+    build:
+      context: ./movie-service/movie-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: movie-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8091:8091"
+    networks:
+      - betflix-network
+  order-service:
+    container_name: order-service
+    image: order-service
+    restart: unless-stopped
+    build:
+      context: ./order-service/order-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: order-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8093:8093"
+    networks:
+      - betflix-network
+  config-server:
+    container_name: config-server
+    image: config-server
+    restart: unless-stopped
+    build:
+      context: ./config-server/config-server
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: config-server
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8888:8888"
+    networks:
+      - betflix-network
 networks:
   betflix-network:
-      driver: bridge
+    external: true

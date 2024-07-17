@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  betflix-zipkin:
+    container_name: betflix-zipkin
+    image: openzipkin/zipkin
+    restart: unless-stopped
+    ports:
+      - "9411:9411"
+
+  betflix-rabbitmq:
+    container_name: betflix-rabbitmq
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+  betflix-redis:
+    container_name: betflix-redis
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - betflix-network
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1
+    container_name: elasticsearch
+    restart: unless-stopped
+    environment:
+      node.name: es-node
+      cluster.name: docker-cluster
+      discovery.type: single-node
+      bootstrap.memory_lock: true
+      ES_JAVA_OPTS: -Xms1g -Xmx1g
+      xpack.license.self_generated.type: basic
+      xpack.security.enabled: true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - betflix-network
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.5.1
+    container_name: kibana
+    restart: unless-stopped
+    volumes:
+      - ./docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - betflix-network
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.5.1
+    container_name: logstash
+    restart: unless-stopped
+    volumes:
+      - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./docker/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline/
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "5001:5001/tcp"
+      - "5001:5001/udp"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: -Xmx256m -Xms256m
+    depends_on:
+      - elasticsearch
+    networks:
+      - betflix-network
+  betflix-mysql:
+    image: mysql:5.7.40
+    container_name: betflix-mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_USER=quangkhanh
+      - MYSQL_PASSWORD=2882004
+      - MYSQL_ROOT_PASSWORD=quangkhanh
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - betflix-network
+volumes:
+  esdata:
+    driver: local
+networks:
+  betflix-network:
+    external: true
