@@ -1,6 +1,7 @@
 package com.khanhisdev.userservice.dto.Mapper;
 
 import com.khanhisdev.userservice.dto.RequestDto.UserDto;
+import com.khanhisdev.userservice.dto.ResponseDto.UserResponseDto;
 import com.khanhisdev.userservice.entity.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +22,9 @@ public class UserMapper {
         UserDto userDto= mapper.map(user, UserDto.class);
         return userDto;
     }
+    public UserResponseDto mapToResponseDto(User user){
+        UserResponseDto userResponseDto= mapper.map(user, UserResponseDto.class);
+        return userResponseDto;
+    }
+
 }

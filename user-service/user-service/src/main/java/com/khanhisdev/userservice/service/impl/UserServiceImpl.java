@@ -4,6 +4,7 @@ import com.khanhisdev.userservice.dto.Mapper.UserMapper;
 import com.khanhisdev.userservice.dto.RequestDto.MovieDto;
 import com.khanhisdev.userservice.dto.RequestDto.UserDto;
 import com.khanhisdev.userservice.dto.ResponseDto.APIResponseDto;
+import com.khanhisdev.userservice.dto.ResponseDto.UserResponseDto;
 import com.khanhisdev.userservice.entity.LikedMovie;
 import com.khanhisdev.userservice.entity.Role;
 import com.khanhisdev.userservice.entity.User;
@@ -12,8 +13,6 @@ import com.khanhisdev.userservice.exception.ResourceNotFoundException;
 import com.khanhisdev.userservice.repository.RoleRepository;
 import com.khanhisdev.userservice.repository.UserRepository;
 import com.khanhisdev.userservice.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,5 +79,21 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserByUsername(String userName) {
         User user = this.userRepository.findByUsername(userName).orElseThrow(()->new UsernameNotFoundException("User not found with username: "+userName));
         return this.mapper.mapToDto(user);
+    }
+
+    @Override
+    public UserResponseDto userLikeMovie(Long userId, Long movieId) {
+        User user= userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User","id",userId));
+        List<LikedMovie> likedMovies= new ArrayList<>();
+        LikedMovie likedMovie = new LikedMovie();
+        likedMovie.setMovieId(movieId);
+        likedMovie.setUserId(user);
+        likedMovies.add(likedMovie);
+        user.setMovieId(likedMovies);
+        UserResponseDto response=  mapper.mapToResponseDto(userRepository.save(user));
+        List<Long> movies= new ArrayList<>();
+        movies.add(movieId);
+        response.setMovie_ids(movies);
+        return response;
     }
 }

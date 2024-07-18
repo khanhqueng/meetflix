@@ -2,6 +2,8 @@ package com.khanhisdev.userservice.controller;
 
 import com.khanhisdev.userservice.dto.RequestDto.UserDto;
 import com.khanhisdev.userservice.dto.ResponseDto.APIResponseDto;
+import com.khanhisdev.userservice.dto.ResponseDto.UserResponseDto;
+import com.khanhisdev.userservice.entity.LikedMovie;
 import com.khanhisdev.userservice.service.UserService;
 import com.khanhisdev.userservice.utils.CustomHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +23,9 @@ public class UserController {
     @GetMapping
     public ResponseEntity<APIResponseDto> getUserById(@RequestHeader(CustomHeaders.X_AUTH_USER_ID) Long id){
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.CREATED);
+    }
+    @PutMapping("/likeMovie/{id}")
+    public ResponseEntity<UserResponseDto> likeMovie(@RequestHeader(CustomHeaders.X_AUTH_USER_ID) Long id,@PathVariable(name = "id") Long movieId){
+        return new ResponseEntity<>(userService.userLikeMovie(id,movieId), HttpStatus.OK);
     }
 }
