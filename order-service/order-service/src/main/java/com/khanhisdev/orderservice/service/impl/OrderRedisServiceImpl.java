@@ -9,6 +9,7 @@ import com.khanhisdev.orderservice.service.OrderRedisService;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
@@ -23,6 +24,8 @@ import java.util.Map;
 
 @Service
 public class OrderRedisServiceImpl extends BaseRedisServiceImpl<String,String,Object> implements OrderRedisService{
+    @Value("${movie.host}")
+    private String movie_hostname;
     @Autowired
     private WebClient webClient;
 
@@ -77,7 +80,7 @@ public class OrderRedisServiceImpl extends BaseRedisServiceImpl<String,String,Ob
         }
 
         List<ShowtimeForOrderDto> response= webClient.post()
-                .uri("http://localhost:8091/showtime/order")
+                .uri("http://"+movie_hostname+ ":8091/showtime/order")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(getTicketRequests)
                 .retrieve()

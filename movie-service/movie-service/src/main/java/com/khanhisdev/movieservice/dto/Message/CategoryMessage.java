@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryMessage {
+    private Long id;
     private String name;
     private String thumbnailUrl;
     private String url_key;

@@ -13,6 +13,9 @@ import com.khanhisdev.userservice.repository.RoleRepository;
 import com.khanhisdev.userservice.repository.UserRepository;
 import com.khanhisdev.userservice.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,14 +28,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class UserServiceImpl implements UserService {
-
+    @Value("${movie.host}")
+    private String movie_hostname;
+    @Autowired
     private UserRepository userRepository;
-
+    @Autowired
     private UserMapper mapper;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     private WebClient webClient;
+    @Autowired
     private RoleRepository roleRepository;
     @Override
     public UserDto createUser(UserDto userDto){
@@ -59,7 +66,7 @@ public class UserServiceImpl implements UserService {
                 .map(String::valueOf) // Convert Long to String
                 .collect(Collectors.joining(","));
         List<MovieDto> movieDtoList= webClient.get()
-                .uri("http://localhost:8091/movie/ids?ids="+ result)
+                .uri("http://"+movie_hostname+":8091/movie/ids?ids="+ result)
                 .retrieve()
                 .bodyToFlux(MovieDto.class)
                 .collectList()

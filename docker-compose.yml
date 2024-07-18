@@ -28,6 +28,7 @@ services:
         SERVICE_NAME: user-service
     environment:
       SPRING_PROFILES_ACTIVE: prod
+      MOVIE_HOSTNAME: movie-service
     ports:
       - "8092:8092"
     networks:
@@ -73,6 +74,7 @@ services:
         SERVICE_NAME: order-service
     environment:
       SPRING_PROFILES_ACTIVE: prod
+      MOVIE_HOSTNAME: movie-service
     ports:
       - "8093:8093"
     networks:
