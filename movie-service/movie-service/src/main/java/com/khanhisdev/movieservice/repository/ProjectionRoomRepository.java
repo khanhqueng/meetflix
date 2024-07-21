@@ -10,8 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProjectionRoomRepository extends JpaRepository<ProjectionRoom,Long> {
     List<ProjectionRoom> findByTheaterId(Long theaterId);
+    Optional<ProjectionRoom> findByTheaterIdAndId(Long theaterId,Long id);
 }

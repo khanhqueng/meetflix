@@ -12,6 +12,7 @@ import com.khanhisdev.movieservice.exception.ResourceDuplicateException;
 import com.khanhisdev.movieservice.exception.ResourceNotFoundException;
 import com.khanhisdev.movieservice.repository.CategoryRepository;
 import com.khanhisdev.movieservice.repository.MovieRepository;
+import com.khanhisdev.movieservice.repository.TheaterRepository;
 import com.khanhisdev.movieservice.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,7 +35,8 @@ public class MovieServiceImpl implements MovieService {
     private CategoryRepository categoryRepository;
     @Autowired
     private CategoryMapper categoryMapper;
-
+    @Autowired
+    private TheaterRepository theaterRepository;
     @Override
     public MovieResponseDto saveMovie(MovieRequestDto movieDto) {
         List<Category> categories= categoryRepository.findAll();
@@ -89,6 +91,13 @@ public class MovieServiceImpl implements MovieService {
             content, movies.getNumber(),movies.getSize(),movies.getTotalElements(),movies.getTotalPages(),movies.isLast()
         );
 
+    }
+
+    @Override
+    public List<MovieResponseDto> getAllMoviesFromTheater(Long theaterId) {
+        if( !theaterRepository.existsById(theaterId)) throw new ResourceNotFoundException("Theater","id",theaterId);
+        List<Movie> movies= movieRepository.findByShowtimeListTheaterId(theaterId);
+        return movies.stream().map(movie -> movieMapper.mapToResponseDto(movie)).collect(Collectors.toList());
     }
 
     @Override

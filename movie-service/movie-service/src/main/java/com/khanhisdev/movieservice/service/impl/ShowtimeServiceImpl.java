@@ -36,7 +36,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     public ShowtimeResponseDto addShowtime(ShowtimeRequestDto showtimeRequestDto, Long movieId, Long theaterId, Long projectionRoomId) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(()-> new ResourceNotFoundException("Movie","id",movieId));
         Theater theater = theaterRepository.findById(theaterId).orElseThrow(()-> new ResourceNotFoundException("Theater","id",theaterId));
-        ProjectionRoom projectionRoom = projectionRoomRepository.findById(projectionRoomId).orElseThrow(()-> new ResourceNotFoundException("ProjectionRoom","id",projectionRoomId));
+        ProjectionRoom projectionRoom = projectionRoomRepository.findByTheaterIdAndId(theaterId,projectionRoomId).orElseThrow(()-> new ResourceNotFoundException("ProjectionRoom with theater","id",projectionRoomId));
         List<Showtime> showtime= showtimeRepository.findByDateAndProjectionRoomId(showtimeRequestDto.getDate(), projectionRoomId);
         int hourOfMovie= movie.getDurationMin()/60;
         int minutesOfMovie= movie.getDurationMin()%60;

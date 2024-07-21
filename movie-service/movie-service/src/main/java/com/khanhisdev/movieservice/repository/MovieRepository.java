@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Movie findByName(String name);
+    List<Movie> findByShowtimeListTheaterId(Long theaterId);
     List<Movie> findAllByIdIn(List<Long> ids);
 }

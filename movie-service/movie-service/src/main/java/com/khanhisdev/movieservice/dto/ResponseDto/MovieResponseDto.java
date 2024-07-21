@@ -1,6 +1,8 @@
 package com.khanhisdev.movieservice.dto.ResponseDto;
 
 import com.khanhisdev.movieservice.dto.Message.CategoryMessage;
+import com.khanhisdev.movieservice.entity.Actor;
+import com.khanhisdev.movieservice.entity.Director;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,8 +20,8 @@ public class MovieResponseDto {
     private String description;
     // by minutes
     private int durationMin;
-    private List<String> director;
-    private List<String> actors;
+    private List<Director> director;
+    private List<Actor> actors;
     private String urlImage;
     private List<CategoryMessage> categories;
 }

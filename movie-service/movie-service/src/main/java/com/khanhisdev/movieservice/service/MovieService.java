@@ -10,5 +10,6 @@ public interface MovieService {
     MovieResponseDto saveMovie(MovieRequestDto movieDto);
     MovieResponseDto getMovieById(Long id);
     ObjectResponse<MovieResponseDto> getAllMovies(int pageNo, int pageSize,String sortBy,String sortDir);
+    List<MovieResponseDto> getAllMoviesFromTheater(Long theaterId);
     List<MovieResponseDto>  getMoviesByIds(List<Long > ids);
 }

@@ -40,5 +40,10 @@ public class MovieController {
     public ResponseEntity<List<MovieResponseDto>> getMoviesByIds(@RequestParam List<Long> ids){
         return new ResponseEntity<>(movieService.getMoviesByIds(ids), HttpStatus.OK);
     }
+    @GetMapping("/theater/{id}")
+    public ResponseEntity<List<MovieResponseDto>> getMoviesByTheater(@PathVariable(name = "id") Long theaterId){
+        return new ResponseEntity<>(movieService.getAllMoviesFromTheater(theaterId), HttpStatus.OK);
+    }
+
 
 }

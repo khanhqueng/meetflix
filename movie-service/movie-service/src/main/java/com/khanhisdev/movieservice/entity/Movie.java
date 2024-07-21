@@ -28,8 +28,18 @@ public class Movie {
     private String description;
     // by minutes
     private int durationMin;
-    private List<String> director;
-    private List<String> actors;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name="movie_director",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "director_id")
+    )
+    private Set<Director> director;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name="movie_actor",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    private List<Actor> actors;
     private String urlImage;
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "movie_category",

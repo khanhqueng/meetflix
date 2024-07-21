@@ -1,6 +1,8 @@
 package com.khanhisdev.movieservice.dto.RequestDto;
 
 import com.khanhisdev.movieservice.dto.Message.CategoryMessage;
+import com.khanhisdev.movieservice.entity.Actor;
+import com.khanhisdev.movieservice.entity.Director;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -22,8 +24,8 @@ public class MovieRequestDto {
     // by minutes
     @Positive(message = "Duration movie cannot be negative")
     private int durationMin;
-    private List<String> director;
-    private List<String> actors;
+    private List<Director> director;
+    private List<Actor> actors;
     private String urlImage;
     private List<CategoryMessage> categories;
 
