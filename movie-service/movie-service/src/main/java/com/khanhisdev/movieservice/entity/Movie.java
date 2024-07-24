@@ -1,11 +1,9 @@
 package com.khanhisdev.movieservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -46,7 +44,7 @@ public class Movie {
             joinColumns= @JoinColumn( name = "movie_id") ,
             inverseJoinColumns = @JoinColumn(name="category_id")
     )
-    private Set<Category> categories;
+    private Set<Category> categories= new HashSet<>();
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Showtime> showtimeList;
 

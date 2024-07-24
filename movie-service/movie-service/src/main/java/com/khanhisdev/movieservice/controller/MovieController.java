@@ -3,6 +3,8 @@ package com.khanhisdev.movieservice.controller;
 import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ObjectResponse;
+import com.khanhisdev.movieservice.entity.Movie;
+import com.khanhisdev.movieservice.repository.MovieRepository;
 import com.khanhisdev.movieservice.service.MovieService;
 import com.khanhisdev.movieservice.utils.AppConstants;
 import jakarta.validation.Valid;
@@ -19,6 +21,8 @@ public class MovieController {
 
     @Autowired
     private MovieService movieService;
+    @Autowired
+    private MovieRepository movieRepository;
     @PostMapping
     public ResponseEntity<MovieResponseDto> createMovie(@Valid @RequestBody MovieRequestDto movieDto){
         return new ResponseEntity<>(movieService.saveMovie(movieDto), HttpStatus.CREATED);
@@ -43,6 +47,11 @@ public class MovieController {
     @GetMapping("/theater/{id}")
     public ResponseEntity<List<MovieResponseDto>> getMoviesByTheater(@PathVariable(name = "id") Long theaterId){
         return new ResponseEntity<>(movieService.getAllMoviesFromTheater(theaterId), HttpStatus.OK);
+    }
+    @GetMapping("/raw/{id}")
+    public Movie getRaw(@PathVariable(name="id") Long id){
+        Movie movie = movieRepository.findById(id).get();
+        return movie;
     }
 
 
