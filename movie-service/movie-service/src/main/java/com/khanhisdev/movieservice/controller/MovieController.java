@@ -48,11 +48,7 @@ public class MovieController {
     public ResponseEntity<List<MovieResponseDto>> getMoviesByTheater(@PathVariable(name = "id") Long theaterId){
         return new ResponseEntity<>(movieService.getAllMoviesFromTheater(theaterId), HttpStatus.OK);
     }
-    @GetMapping("/raw/{id}")
-    public Movie getRaw(@PathVariable(name="id") Long id){
-        Movie movie = movieRepository.findById(id).get();
-        return movie;
-    }
+
 
 
 }
