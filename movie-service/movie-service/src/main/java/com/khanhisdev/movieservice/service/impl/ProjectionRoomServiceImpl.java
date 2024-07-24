@@ -11,11 +11,13 @@ import com.khanhisdev.movieservice.repository.TheaterRepository;
 import com.khanhisdev.movieservice.service.ProjectionRoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class ProjectionRoomServiceImpl implements ProjectionRoomService {
     private ProjectionRoomRepository projectionRoomRepository;
     private TheaterRepository theaterRepository;
