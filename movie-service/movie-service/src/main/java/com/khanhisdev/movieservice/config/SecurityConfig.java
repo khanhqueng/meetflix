@@ -34,7 +34,8 @@ public class SecurityConfig {
                 csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz ->
                         authz.
-                                requestMatchers(HttpMethod.GET, "/movie/**").permitAll()
+                                requestMatchers("/actuator/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/movie/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/showtime/**").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/showtime/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/theater/**").permitAll()

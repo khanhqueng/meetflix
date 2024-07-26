@@ -82,7 +82,9 @@ public class AuthorizationServerConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize)->
-                        authorize.requestMatchers(HttpMethod.GET, "/user/**").permitAll()
+                        authorize
+                                .requestMatchers("/actuator/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/user/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/**").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/user/**").permitAll()
                                 .requestMatchers("/comment/**").permitAll()
