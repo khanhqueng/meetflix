@@ -1,0 +1,30 @@
+global:
+  scrape_interval: 10s
+  evaluation_interval: 10s
+scrape_configs:
+  - job_name: 'betflix-user-service'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['host.docker.internal:8092']
+        labels:
+          application: 'User Service Application'
+  - job_name: 'betflix-movie-service'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'host.docker.internal:8091' ]
+        labels:
+          application: 'Movie Service Application'
+  - job_name: 'betflix-order-service'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'host.docker.internal:8093' ]
+        labels:
+          application: 'Order Service Application'
+  - job_name: 'betflix-gateway-service'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'host.docker.internal:9091' ]
+        labels:
+          application: 'Gateway Service Application'
+
+
