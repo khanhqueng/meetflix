@@ -150,7 +150,7 @@
           <td align="left" bgcolor="#ffffff"
               style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
             <p style="margin: 0;">
-              Bạn đã đặt vé cho bộ phim thành công, đây là chỗ ngồi của bạn:
+              Bạn đã đặt vé cho bộ phim ${movieName} thành công, đây là chỗ ngồi của bạn:
             </p>
           </td>
         </tr>
@@ -163,7 +163,10 @@
                     <tr>
                       <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
                         <div style="display: inline-block; padding: 16px 36px; font-family: Tahoma,sans-serif; font-size: 26px; color: white; font-weight: bold; text-decoration: none; border-radius: 6px;">
-                          <h1>${seat}</h1>
+                          <h3>Chỗ ngồi : ${seat}</h3>
+                          <h3>Rạp : ${theaterName}</h3>
+                          <h3>Phòng chiếu : ${roomName}</h3>
+                          <h3>Xuất chiếu : ${showtime}</h3>
                         </div>
                       </td>
                     </tr>

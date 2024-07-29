@@ -17,5 +17,8 @@ public class AddTicketRequest {
     private Long theaterId;
     private Long projectionRoomId;
     private List<String> seats;
+    private String movieName;
+    private String theaterName;
+    private String roomName;
 
 }

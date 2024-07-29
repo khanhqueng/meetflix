@@ -22,10 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -97,5 +94,11 @@ public class UserServiceImpl implements UserService {
         movies.add(movieId);
         response.setMovie_ids(movies);
         return response;
+    }
+
+    @Override
+    public String getEmailByUserId(Long id) {
+       User user= userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "id", id));
+       return user.getEmail();
     }
 }
