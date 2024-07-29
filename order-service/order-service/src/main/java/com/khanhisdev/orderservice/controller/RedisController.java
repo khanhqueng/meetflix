@@ -3,22 +3,20 @@ package com.khanhisdev.orderservice.controller;
 import com.khanhisdev.orderservice.dto.Request.AddTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.DeleteTicketRequest;
 import com.khanhisdev.orderservice.dto.Response.ShowtimeForOrderDto;
-import com.khanhisdev.orderservice.service.BaseRedisService;
-import com.khanhisdev.orderservice.service.OrderRedisService;
+import com.khanhisdev.orderservice.service.OrderService;
 import com.khanhisdev.orderservice.utils.CustomHeaders;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.lang.model.element.Name;
 import java.util.List;
 
 @RestController
 @RequestMapping("/order")
 @AllArgsConstructor
 public class RedisController {
-    private final OrderRedisService redisService;
+    private final OrderService redisService;
     @PostMapping("/test")
     public void set(){
         redisService.set("hello", "khanh");

@@ -24,6 +24,10 @@ public class UserController {
     public ResponseEntity<APIResponseDto> getUserById(@RequestHeader(CustomHeaders.X_AUTH_USER_ID) Long id){
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.CREATED);
     }
+    @GetMapping("{id}")
+    public ResponseEntity<String> getUsername(@PathVariable(name = "id") Long id){
+        return new ResponseEntity<>(userService.getEmailByUserId(id), HttpStatus.OK) ;
+    }
     @PutMapping("/likeMovie/{id}")
     public ResponseEntity<UserResponseDto> likeMovie(@RequestHeader(CustomHeaders.X_AUTH_USER_ID) Long id,@PathVariable(name = "id") Long movieId){
         return new ResponseEntity<>(userService.userLikeMovie(id,movieId), HttpStatus.OK);

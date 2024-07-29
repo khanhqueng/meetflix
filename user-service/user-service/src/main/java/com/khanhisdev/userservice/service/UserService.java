@@ -10,4 +10,5 @@ public interface UserService {
     APIResponseDto getUserById(Long id);
     UserDto getUserByUsername(String userName);
     UserResponseDto userLikeMovie(Long userId, Long movieId);
+    String getEmailByUserId(Long id);
 }

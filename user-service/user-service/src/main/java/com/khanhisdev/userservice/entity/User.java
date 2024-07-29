@@ -22,8 +22,10 @@ public class User {
     private Long id;
     @Column(unique = true, nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
     private boolean isActive;
+    @Column(nullable = false)
     private String email;
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
