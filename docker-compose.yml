@@ -1,0 +1,116 @@
+version: '3.8'
+name: betflix
+
+services:
+  service-registry:
+    container_name: service-registry
+    image: service-registry
+    restart: unless-stopped
+    build:
+      context: ./service-registry/service-registry
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: service-registry
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8761:8761"
+    networks:
+      - betflix-network
+  user-service:
+    container_name: user-service
+    image: user-service
+    restart: unless-stopped
+    build:
+      context: ./user-service/user-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: user-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      MOVIE_HOSTNAME: movie-service
+    ports:
+      - "8092:8092"
+    networks:
+      - betflix-network
+  gateway-service:
+    container_name: gateway-service
+    image: gateway-service
+    restart: unless-stopped
+    build:
+      context: ./gateway-service/gateway-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: gateway-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "9091:9091"
+    networks:
+      - betflix-network
+  movie-service:
+    container_name: movie-service
+    image: movie-service
+    restart: unless-stopped
+    build:
+      context: ./movie-service/movie-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: movie-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8091:8091"
+    networks:
+      - betflix-network
+  order-service:
+    container_name: order-service
+    image: order-service
+    restart: unless-stopped
+    build:
+      context: ./order-service/order-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: order-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      MOVIE_HOSTNAME: movie-service
+      USER_HOSTNAME: user-service
+    ports:
+      - "8093:8093"
+    networks:
+      - betflix-network
+  config-server:
+    container_name: config-server
+    image: config-server
+    restart: unless-stopped
+    build:
+      context: ./config-server/config-server
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: config-server
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8888:8888"
+    networks:
+      - betflix-network
+  email-service:
+    container_name: email-service
+    image: email-service
+    restart: unless-stopped
+    build:
+      context: ./email-service/email-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: email-service
+    environment:
+      RABBITMQ_HOSTNAME: betflix-rabbitmq
+
+    ports:
+      - "8095:8095"
+    networks:
+      - betflix-network
+networks:
+  betflix-network:
+    external: true

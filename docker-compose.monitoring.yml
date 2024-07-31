@@ -1,0 +1,33 @@
+version: '3.8'
+name: betflix-monitor
+
+services:
+  betflix-monitor-prometheus:
+    container_name: betflix-monitor-prometheus
+    image: prom/prometheus
+    restart: unless-stopped
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      -
+      - "9090:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - betflix-network
+  betflix-monitor-grafana:
+    container_name: betflix-monitor-grafana
+    image: grafana/grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - betflix-network
+volumes:
+  prometheus:
+    driver: local
+networks:
+  betflix-network:
+    external: true
