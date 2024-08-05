@@ -1,7 +1,0 @@
-com\khanhisdev\gatewayservice\exception\AccessDeniedExceptionHandler.class
-com\khanhisdev\gatewayservice\config\SecurityConfig.class
-com\khanhisdev\gatewayservice\exception\AuthenticationExceptionHandler.class
-com\khanhisdev\gatewayservice\filter\GatewayFilters.class
-com\khanhisdev\gatewayservice\GatewayServiceApplication.class
-com\khanhisdev\gatewayservice\exception\ProblemDetailsBuilder.class
-com\khanhisdev\gatewayservice\utils\CustomHeaders.class
