@@ -1,7 +1,0 @@
-com\khanhisdev\emailservice\service\EmailSenderService.class
-com\khanhisdev\emailservice\config\RabbitMQConfig.class
-com\khanhisdev\emailservice\service\impl\EmailSenderServiceImpl.class
-com\khanhisdev\emailservice\dto\message\EmailContent.class
-com\khanhisdev\emailservice\EmailServiceApplication.class
-com\khanhisdev\emailservice\consumer\OrderConsumer.class
-com\khanhisdev\emailservice\dto\message\OrderEvent.class
