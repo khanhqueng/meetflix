@@ -1,0 +1,7 @@
+D:\Springboot-microservices\email-service\email-service\src\main\java\com\khanhisdev\emailservice\consumer\OrderConsumer.java
+D:\Springboot-microservices\email-service\email-service\src\main\java\com\khanhisdev\emailservice\dto\message\EmailContent.java
+D:\Springboot-microservices\email-service\email-service\src\main\java\com\khanhisdev\emailservice\EmailServiceApplication.java
+D:\Springboot-microservices\email-service\email-service\src\main\java\com\khanhisdev\emailservice\dto\message\OrderEvent.java
+D:\Springboot-microservices\email-service\email-service\src\main\java\com\khanhisdev\emailservice\service\EmailSenderService.java
+D:\Springboot-microservices\email-service\email-service\src\main\java\com\khanhisdev\emailservice\config\RabbitMQConfig.java
+D:\Springboot-microservices\email-service\email-service\src\main\java\com\khanhisdev\emailservice\service\impl\EmailSenderServiceImpl.java
