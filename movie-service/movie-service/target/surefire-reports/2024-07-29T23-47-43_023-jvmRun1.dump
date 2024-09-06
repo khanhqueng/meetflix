@@ -1,0 +1,146 @@
+# Created at 2024-07-29T23:48:30.546
+Thread dump for process (2540@LAPTOP-JUJKPVSP) after 30 seconds shutdown timeout:
+"main" 
+   java.lang.Thread.State: WAITING
+        at java.base@22.0.1/java.lang.Object.wait0(Native Method)
+        at java.base@22.0.1/java.lang.Object.wait(Object.java:375)
+        at java.base@22.0.1/java.lang.Thread.join(Thread.java:2045)
+        at java.base@22.0.1/java.lang.Thread.join(Thread.java:2121)
+        at java.base@22.0.1/java.lang.ApplicationShutdownHooks.runHooks(ApplicationShutdownHooks.java:114)
+        at java.base@22.0.1/java.lang.ApplicationShutdownHooks$1.run(ApplicationShutdownHooks.java:47)
+        at java.base@22.0.1/java.lang.Shutdown.runHooks(Shutdown.java:130)
+        at java.base@22.0.1/java.lang.Shutdown.exit(Shutdown.java:167)
+        at java.base@22.0.1/java.lang.Runtime.exit(Runtime.java:188)
+        at java.base@22.0.1/java.lang.System.exit(System.java:1925)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.acknowledgedExit(ForkedBooter.java:381)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:178)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+
+"Reference Handler" 
+   java.lang.Thread.State: RUNNABLE
+        at java.base@22.0.1/java.lang.ref.Reference.waitForReferencePendingList(Native Method)
+        at java.base@22.0.1/java.lang.ref.Reference.processPendingReferences(Reference.java:246)
+        at java.base@22.0.1/java.lang.ref.Reference$ReferenceHandler.run(Reference.java:208)
+
+"Finalizer" 
+   java.lang.Thread.State: WAITING
+        at java.base@22.0.1/java.lang.Object.wait0(Native Method)
+        at java.base@22.0.1/java.lang.Object.wait(Object.java:375)
+        at java.base@22.0.1/java.lang.Object.wait(Object.java:348)
+        at java.base@22.0.1/java.lang.ref.NativeReferenceQueue.await(NativeReferenceQueue.java:48)
+        at java.base@22.0.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:158)
+        at java.base@22.0.1/java.lang.ref.NativeReferenceQueue.remove(NativeReferenceQueue.java:89)
+        at java.base@22.0.1/java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:173)
+
+"Signal Dispatcher" 
+   java.lang.Thread.State: RUNNABLE
+
+"Attach Listener" 
+   java.lang.Thread.State: RUNNABLE
+
+"Notification Thread" 
+   java.lang.Thread.State: RUNNABLE
+
+"Common-Cleaner" 
+   java.lang.Thread.State: TIMED_WAITING
+        at java.base@22.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+        at java.base@22.0.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+        at java.base@22.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1847)
+        at java.base@22.0.1/java.lang.ref.ReferenceQueue.await(ReferenceQueue.java:71)
+        at java.base@22.0.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:143)
+        at java.base@22.0.1/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:218)
+        at java.base@22.0.1/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:140)
+        at java.base@22.0.1/java.lang.Thread.runWith(Thread.java:1583)
+        at java.base@22.0.1/java.lang.Thread.run(Thread.java:1570)
+        at java.base@22.0.1/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:186)
+
+"Keep-Alive-Timer" 
+   java.lang.Thread.State: TIMED_WAITING
+        at java.base@22.0.1/java.lang.Thread.sleepNanos0(Native Method)
+        at java.base@22.0.1/java.lang.Thread.sleepNanos(Thread.java:491)
+        at java.base@22.0.1/java.lang.Thread.sleep(Thread.java:522)
+        at java.base@22.0.1/sun.net.www.http.KeepAliveCache.run(KeepAliveCache.java:238)
+        at java.base@22.0.1/java.lang.Thread.runWith(Thread.java:1583)
+        at java.base@22.0.1/java.lang.Thread.run(Thread.java:1570)
+        at java.base@22.0.1/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:186)
+
+"logback-appender-LOGSTASH-localhost:5000-2" 
+   java.lang.Thread.State: TIMED_WAITING
+        at java.base@22.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+        at java.base@22.0.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+        at java.base@22.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer.acquire(AbstractQueuedSynchronizer.java:756)
+        at java.base@22.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer.tryAcquireSharedNanos(AbstractQueuedSynchronizer.java:1126)
+        at java.base@22.0.1/java.util.concurrent.CountDownLatch.await(CountDownLatch.java:276)
+        at app//net.logstash.logback.appender.AbstractLogstashTcpSocketAppender$TcpSendingEventHandler.sleepUnlessStopped(AbstractLogstashTcpSocketAppender.java:848)
+        at app//net.logstash.logback.appender.AbstractLogstashTcpSocketAppender$TcpSendingEventHandler.openSocket(AbstractLogstashTcpSocketAppender.java:746)
+        at app//net.logstash.logback.appender.AbstractLogstashTcpSocketAppender$TcpSendingEventHandler.onStart(AbstractLogstashTcpSocketAppender.java:691)
+        at app//net.logstash.logback.appender.AsyncDisruptorAppender$EventClearingEventHandler.onStart(AsyncDisruptorAppender.java:382)
+        at app//net.logstash.logback.encoder.com.lmax.disruptor.BatchEventProcessor.notifyStart(BatchEventProcessor.java:224)
+        at app//net.logstash.logback.encoder.com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:120)
+        at java.base@22.0.1/java.lang.Thread.runWith(Thread.java:1583)
+        at java.base@22.0.1/java.lang.Thread.run(Thread.java:1570)
+
+"mysql-cj-abandoned-connection-cleanup" 
+   java.lang.Thread.State: TIMED_WAITING
+        at java.base@22.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+        at java.base@22.0.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+        at java.base@22.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1847)
+        at java.base@22.0.1/java.lang.ref.ReferenceQueue.await(ReferenceQueue.java:71)
+        at java.base@22.0.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:143)
+        at java.base@22.0.1/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:218)
+        at app//com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.run(AbandonedConnectionCleanupThread.java:93)
+        at java.base@22.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+        at java.base@22.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+        at java.base@22.0.1/java.lang.Thread.runWith(Thread.java:1583)
+        at java.base@22.0.1/java.lang.Thread.run(Thread.java:1570)
+
+"boundedElastic-evictor-1" 
+   java.lang.Thread.State: TIMED_WAITING
+        at java.base@22.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+        at java.base@22.0.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+        at java.base@22.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1758)
+        at java.base@22.0.1/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+        at java.base@22.0.1/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+        at java.base@22.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+        at java.base@22.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+        at java.base@22.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+        at java.base@22.0.1/java.lang.Thread.runWith(Thread.java:1583)
+        at java.base@22.0.1/java.lang.Thread.run(Thread.java:1570)
+
+"surefire-forkedjvm-last-ditch-daemon-shutdown-thread-30s" 
+   java.lang.Thread.State: RUNNABLE
+        at java.management@22.0.1/sun.management.ThreadImpl.getThreadInfo1(Native Method)
+        at java.management@22.0.1/sun.management.ThreadImpl.getThreadInfo(ThreadImpl.java:187)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.generateThreadDump(ForkedBooter.java:579)
+        at app//org.apache.maven.surefire.booter.ForkedBooter.access$600(ForkedBooter.java:79)
+        at app//org.apache.maven.surefire.booter.ForkedBooter$7.run(ForkedBooter.java:424)
+        at java.base@22.0.1/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+        at java.base@22.0.1/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+        at java.base@22.0.1/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+        at java.base@22.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+        at java.base@22.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+        at java.base@22.0.1/java.lang.Thread.runWith(Thread.java:1583)
+        at java.base@22.0.1/java.lang.Thread.run(Thread.java:1570)
+
+"SpringApplicationShutdownHook" 
+   java.lang.Thread.State: TIMED_WAITING
+        at java.base@22.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+        at java.base@22.0.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:410)
+        at app//net.logstash.logback.appender.AsyncDisruptorAppender.stop(AsyncDisruptorAppender.java:457)
+        at app//net.logstash.logback.appender.AbstractLogstashTcpSocketAppender.stop(AbstractLogstashTcpSocketAppender.java:1087)
+        at app//ch.qos.logback.core.spi.AppenderAttachableImpl.detachAndStopAllAppenders(AppenderAttachableImpl.java:107)
+        at app//ch.qos.logback.classic.Logger.detachAndStopAllAppenders(Logger.java:209)
+        at app//ch.qos.logback.classic.Logger.recursiveReset(Logger.java:333)
+        at app//ch.qos.logback.classic.LoggerContext.reset(LoggerContext.java:363)
+        at app//ch.qos.logback.classic.LoggerContext.stop(LoggerContext.java:343)
+        at app//org.springframework.boot.logging.logback.LogbackLoggingSystem.lambda$getShutdownHandler$2(LogbackLoggingSystem.java:386)
+        at app//org.springframework.boot.logging.logback.LogbackLoggingSystem$$Lambda/0x000001eb1b369398.run(Unknown Source)
+        at app//org.springframework.boot.SpringApplicationShutdownHook$$Lambda/0x000001eb1bfca658.accept(Unknown Source)
+        at java.base@22.0.1/java.lang.Iterable.forEach(Iterable.java:75)
+        at app//org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+        at java.base@22.0.1/java.lang.Thread.runWith(Thread.java:1583)
+        at java.base@22.0.1/java.lang.Thread.run(Thread.java:1570)
+
+
+

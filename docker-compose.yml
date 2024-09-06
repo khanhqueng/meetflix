@@ -75,6 +75,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       MOVIE_HOSTNAME: movie-service
+      USER_HOSTNAME: user-service
     ports:
       - "8093:8093"
     networks:
@@ -92,6 +93,22 @@ services:
       SPRING_PROFILES_ACTIVE: prod
     ports:
       - "8888:8888"
+    networks:
+      - betflix-network
+  email-service:
+    container_name: email-service
+    image: email-service
+    restart: unless-stopped
+    build:
+      context: ./email-service/email-service
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: email-service
+    environment:
+      RABBITMQ_HOSTNAME: betflix-rabbitmq
+
+    ports:
+      - "8095:8095"
     networks:
       - betflix-network
 networks:

@@ -40,7 +40,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/showtime/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/theater/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/showtime/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/movie/**").hasAuthority("SCOPE_USER")
+                                .requestMatchers(HttpMethod.POST, "/movie/**").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/movie/**").permitAll()
 
 
                         .anyRequest()

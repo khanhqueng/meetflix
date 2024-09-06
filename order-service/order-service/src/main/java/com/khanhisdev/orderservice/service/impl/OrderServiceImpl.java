@@ -1,13 +1,14 @@
 package com.khanhisdev.orderservice.service.impl;
 
+import com.khanhisdev.orderservice.dto.Message.EmailContent;
+import com.khanhisdev.orderservice.dto.Message.OrderEvent;
 import com.khanhisdev.orderservice.dto.Request.AddTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.DeleteTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.GetTicketRequest;
 import com.khanhisdev.orderservice.dto.Response.ShowtimeForOrderDto;
 import com.khanhisdev.orderservice.exception.ResourceNotFoundException;
-import com.khanhisdev.orderservice.service.OrderRedisService;
-import lombok.AllArgsConstructor;
-import lombok.val;
+import com.khanhisdev.orderservice.publisher.OrderProducer;
+import com.khanhisdev.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.HashOperations;
@@ -15,21 +16,23 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class OrderRedisServiceImpl extends BaseRedisServiceImpl<String,String,Object> implements OrderRedisService{
+public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object> implements OrderService {
     @Value("${movie.host}")
     private String movie_hostname;
+    @Value("${user.host}")
+    private String user_hostname;
     @Autowired
     private WebClient webClient;
+    @Autowired
+    private OrderProducer producer;
 
-    public OrderRedisServiceImpl(RedisTemplate<String, Object> redisTemplate, HashOperations<String, String, Object> hashOperations) {
+    public OrderServiceImpl(RedisTemplate<String, Object> redisTemplate, HashOperations<String, String, Object> hashOperations) {
         super(redisTemplate, hashOperations);
     }
 
@@ -49,7 +52,26 @@ public class OrderRedisServiceImpl extends BaseRedisServiceImpl<String,String,Ob
         }
         this.hashSet(key,fieldKey,seatsNeedOrder);
         this.setTimeToLive(key, 30);
+        //Get Email of User from User Id
+        String email= webClient.get()
+                .uri("http://"+user_hostname+ ":8092/user/"+ userId)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
 
+        // Set content Email and send to message queue
+        OrderEvent orderEvent= new OrderEvent();
+        orderEvent.setStatus("PENDING");
+        orderEvent.setMessage("Email is in pending status");
+        EmailContent emailContent= new EmailContent();
+        emailContent.setDesEmail(email);
+        emailContent.setNameMovie(addTicketRequest.getMovieName());
+        emailContent.setNameRoom(addTicketRequest.getRoomName());
+        emailContent.setShowtime(addTicketRequest.getShowtime());
+        emailContent.setNameTheater(addTicketRequest.getTheaterName());
+        emailContent.setSeats(addTicketRequest.getSeats());
+        orderEvent.setContent(emailContent);
+        producer.sendMessage(orderEvent);
     }
 
     @Override

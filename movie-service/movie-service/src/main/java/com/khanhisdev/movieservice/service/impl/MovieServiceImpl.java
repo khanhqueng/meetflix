@@ -4,8 +4,10 @@ import com.khanhisdev.movieservice.dto.Mapper.CategoryMapper;
 import com.khanhisdev.movieservice.dto.Mapper.MovieMapper;
 import com.khanhisdev.movieservice.dto.Message.CategoryMessage;
 import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
+import com.khanhisdev.movieservice.dto.RequestDto.UserRatingDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ObjectResponse;
+import com.khanhisdev.movieservice.dto.ResponseDto.RatingPointResponseDto;
 import com.khanhisdev.movieservice.entity.Actor;
 import com.khanhisdev.movieservice.entity.Category;
 import com.khanhisdev.movieservice.entity.Director;
@@ -25,8 +27,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,51 +53,37 @@ public class MovieServiceImpl implements MovieService {
 
         }else{
             // handle Category check
-            List<Category> categoryList= categoryRepository.findAll();
-            List<CategoryMessage> categoryNeedCheck= movieDto.getCategories();
-            List<CategoryMessage> listWillBeUpdated= new ArrayList<>();
-            boolean flag=false;
-            for(int i =0;i<categoryNeedCheck.size();i++){
-                flag=false;
-                for(int j=0;j<categoryList.size();j++){
-                    if (categoryNeedCheck.get(i).equals(categoryList.get(j))) {
-                        listWillBeUpdated.add(categoryMapper.mapToDto(categoryList.get(j)));
-                        flag= true;
-                        break;
-                    };
+            Set<Category> categories= new HashSet<>();
+            for(CategoryMessage category: movieDto.getCategories()){
+                if(categoryRepository.existsByName(category.getName())){
+                    categories.add(categoryRepository.findByName(category.getName()));
+                    continue;
                 }
-                if(!flag) {
-                    Category category = categoryRepository.save(categoryMapper.mapToEntity(categoryNeedCheck.get(i)));
-                    listWillBeUpdated.add(categoryMapper.mapToDto(category));
-                }
+                categories.add(categoryMapper.mapToEntity(category));
             }
-            List<Director> directors= new ArrayList<>();
-            // handle Director check
+
+            Set<Director> directors= new HashSet<>();
             for(Director director: movieDto.getDirector()){
-                if(directorRepository.findByName(director.getName()).isPresent()){
-                    directors.add(directorRepository.findByName(director.getName()).get());
+                if(directorRepository.existsByName(director.getName())){
+                    directors.add(directorRepository.findByName(director.getName()));
+                    continue;
                 }
-                else {
-                    directors.add(directorRepository.save(director));
-
-                }
+                directors.add(director);
             }
-            List<Actor> actors= new ArrayList<>();
-            // handle Actor check
+
+            Set<Actor> actors= new HashSet<>();
             for(Actor actor: movieDto.getActors()){
-                if(actorRepository.findByName(actor.getName()).isPresent()){
-                    actors.add(actorRepository.findByName(actor.getName()).get());
+                if(actorRepository.existsByName(actor.getName())){
+                    actors.add(actorRepository.findByName(actor.getName()));
+                    continue;
                 }
-                else {
-                    actors.add(actorRepository.save(actor));
-
-                }
+                actors.add(actor);
             }
-            movieDto.setDirector(directors);
-            movieDto.setActors(actors);
-            movieDto.setCategories(listWillBeUpdated);
-            Movie newMovie= movieRepository.save(movieMapper.mapToEntity(movieDto));
-            return movieMapper.mapToResponseDto(newMovie);
+            Movie newMovie= movieMapper.mapToEntity(movieDto);
+            newMovie.setActors(actors);
+            newMovie.setCategories(categories);
+            newMovie.setDirector(directors);
+            return movieMapper.mapToResponseDto(movieRepository.save(newMovie));
         }
     }
 
@@ -134,6 +125,21 @@ public class MovieServiceImpl implements MovieService {
     @Transactional(readOnly = true)
     public List<MovieResponseDto> getMoviesByIds(List<Long> ids) {
         return movieRepository.findAllByIdIn(ids).stream().map(movie -> movieMapper.mapToResponseDto(movie)).collect(Collectors.toList());
+    }
+
+    @Override
+    public RatingPointResponseDto ratingMovie(UserRatingDto userRatingDto) {
+        Movie movie= movieRepository.findById(userRatingDto.getMovieId()).orElseThrow(
+                ()-> new ResourceNotFoundException("Movie", "id", userRatingDto.getMovieId())
+        );
+        Double totalScore= movie.getRatingPoint().doubleValue() * movie.getRatings();
+        Double newScore= totalScore + userRatingDto.getRating_point().doubleValue();
+        Integer newRatings= movie.getRatings()+1;
+        Double newRatingPoint= newScore/newRatings;
+        movie.setRatings(newRatings);
+        movie.setRatingPoint(BigDecimal.valueOf(newRatingPoint));
+        Movie updatedMovie= movieRepository.save(movie);
+        return new RatingPointResponseDto(updatedMovie.getId(),updatedMovie.getRatingPoint());
     }
 
 

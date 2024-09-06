@@ -18,7 +18,6 @@ public class BaseRedisServiceImpl<K,F,V> implements BaseRedisService<K,F,V> {
     private final HashOperations<K,F,V> hashOperations;
 
 
-
     @Override
     public void set(K key, V value) {
         redisTemplate.opsForValue().set(key,value);
