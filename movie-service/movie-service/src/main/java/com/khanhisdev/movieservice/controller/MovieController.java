@@ -1,8 +1,10 @@
 package com.khanhisdev.movieservice.controller;
 
 import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
+import com.khanhisdev.movieservice.dto.RequestDto.UserRatingDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ObjectResponse;
+import com.khanhisdev.movieservice.dto.ResponseDto.RatingPointResponseDto;
 import com.khanhisdev.movieservice.entity.Movie;
 import com.khanhisdev.movieservice.repository.MovieRepository;
 import com.khanhisdev.movieservice.service.MovieService;
@@ -47,6 +49,10 @@ public class MovieController {
     @GetMapping("/theater/{id}")
     public ResponseEntity<List<MovieResponseDto>> getMoviesByTheater(@PathVariable(name = "id") Long theaterId){
         return new ResponseEntity<>(movieService.getAllMoviesFromTheater(theaterId), HttpStatus.OK);
+    }
+    @PutMapping("/rating")
+    public ResponseEntity<RatingPointResponseDto> ratingMovie(@RequestBody UserRatingDto request){
+        return new ResponseEntity<>(movieService.ratingMovie(request), HttpStatus.OK);
     }
 
 

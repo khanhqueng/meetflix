@@ -1,8 +1,10 @@
 package com.khanhisdev.movieservice.service;
 
 import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
+import com.khanhisdev.movieservice.dto.RequestDto.UserRatingDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ObjectResponse;
+import com.khanhisdev.movieservice.dto.ResponseDto.RatingPointResponseDto;
 
 import java.util.List;
 
@@ -12,4 +14,5 @@ public interface MovieService {
     ObjectResponse<MovieResponseDto> getAllMovies(int pageNo, int pageSize,String sortBy,String sortDir);
     List<MovieResponseDto> getAllMoviesFromTheater(Long theaterId);
     List<MovieResponseDto>  getMoviesByIds(List<Long > ids);
+    RatingPointResponseDto ratingMovie(UserRatingDto userRatingDto);
 }
