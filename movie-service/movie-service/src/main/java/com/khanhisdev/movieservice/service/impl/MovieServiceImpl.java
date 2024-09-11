@@ -142,5 +142,20 @@ public class MovieServiceImpl implements MovieService {
         return new RatingPointResponseDto(updatedMovie.getId(),updatedMovie.getRatingPoint());
     }
 
+    @Override
+    public ObjectResponse<MovieResponseDto> findMoviesByFullSearchText(String keyword, int pageNo, int pageSize, String sortBy, String sortDir) {
+        Sort sort =sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        //create pageable instance
+        Pageable pageable= PageRequest.of(pageNo,pageSize,sort);
+
+        Page<Movie> page= movieRepository.findMoviesBySearchText(keyword,pageable);
+        List<Movie> movies= page.getContent();
+        List<MovieResponseDto> content= movies.stream().map(movie -> movieMapper.mapToResponseDto(movie)).collect(Collectors.toList());
+        return new ObjectResponse<MovieResponseDto>(
+                content, page.getNumber(),page.getSize(),page.getTotalElements(),page.getTotalPages(),page.isLast()
+        );
+    }
+
 
 }

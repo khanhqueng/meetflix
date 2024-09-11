@@ -34,13 +34,13 @@ public class MovieController {
         return new ResponseEntity<>(movieService.getMovieById(id), HttpStatus.OK);
     }
     @GetMapping
-    public ObjectResponse<MovieResponseDto> getAllMovies(
+    public ResponseEntity<ObjectResponse<MovieResponseDto>> getAllMovies(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
     ){
-        return movieService.getAllMovies(pageNo, pageSize, sortBy, sortDir);
+        return new ResponseEntity<>(movieService.getAllMovies(pageNo, pageSize, sortBy, sortDir), HttpStatus.OK) ;
     }
     @GetMapping("/ids")
     public ResponseEntity<List<MovieResponseDto>> getMoviesByIds(@RequestParam List<Long> ids){
@@ -53,6 +53,17 @@ public class MovieController {
     @PutMapping("/rating")
     public ResponseEntity<RatingPointResponseDto> ratingMovie(@RequestBody UserRatingDto request){
         return new ResponseEntity<>(movieService.ratingMovie(request), HttpStatus.OK);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<ObjectResponse<MovieResponseDto>> getMovieBySearch(
+            @RequestParam(name = "searchText") String searchText,
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
+            ){
+        return new ResponseEntity<>(movieService.findMoviesByFullSearchText(searchText,pageNo, pageSize, sortBy, sortDir), HttpStatus.OK);
+
     }
 
 
