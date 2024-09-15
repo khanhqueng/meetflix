@@ -17,6 +17,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findByShowtimeListTheaterId(Long theaterId);
     List<Movie> findAllByIdIn(List<Long> ids);
     // No need Native query
+    // Use Jpql
     @Query(
             value = "SELECT DISTINCT m FROM Movie m " +
                     "JOIN m.actors a " +
