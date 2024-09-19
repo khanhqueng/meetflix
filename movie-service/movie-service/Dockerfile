@@ -1,8 +1,5 @@
 FROM eclipse-temurin:17-jre-alpine
-ARG SERVICE_NAME
 
-ENV SERVICE_NAME_ENV=${SERVICE_NAME}
+COPY target/movie-service-0.0.1-SNAPSHOT.jar .
 
-COPY target/${SERVICE_NAME}-0.0.1-SNAPSHOT.jar .
-
-ENTRYPOINT java -jar ${SERVICE_NAME_ENV}-0.0.1-SNAPSHOT.jar
+ENTRYPOINT java -jar movie-service-0.0.1-SNAPSHOT.jar
