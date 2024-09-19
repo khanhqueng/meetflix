@@ -4,13 +4,8 @@ name: betflix
 services:
   service-registry:
     container_name: service-registry
-    image: service-registry
+    image: quangkhanh288/service-registry
     restart: unless-stopped
-    build:
-      context: ./service-registry/service-registry
-      dockerfile: Dockerfile
-      args:
-        SERVICE_NAME: service-registry
     environment:
       SPRING_PROFILES_ACTIVE: prod
     ports:
@@ -19,13 +14,8 @@ services:
       - betflix-network
   user-service:
     container_name: user-service
-    image: user-service
+    image: quangkhanh288/user-service
     restart: unless-stopped
-    build:
-      context: ./user-service/user-service
-      dockerfile: Dockerfile
-      args:
-        SERVICE_NAME: user-service
     environment:
       SPRING_PROFILES_ACTIVE: prod
       MOVIE_HOSTNAME: movie-service
@@ -35,13 +25,8 @@ services:
       - betflix-network
   gateway-service:
     container_name: gateway-service
-    image: gateway-service
+    image: quangkhanh288/gateway-service
     restart: unless-stopped
-    build:
-      context: ./gateway-service/gateway-service
-      dockerfile: Dockerfile
-      args:
-        SERVICE_NAME: gateway-service
     environment:
       SPRING_PROFILES_ACTIVE: prod
     ports:
@@ -50,13 +35,9 @@ services:
       - betflix-network
   movie-service:
     container_name: movie-service
-    image: movie-service
+    image: quangkhanh288/movie-service
     restart: unless-stopped
-    build:
-      context: ./movie-service/movie-service
-      dockerfile: Dockerfile
-      args:
-        SERVICE_NAME: movie-service
+
     environment:
       SPRING_PROFILES_ACTIVE: prod
     ports:
@@ -65,13 +46,9 @@ services:
       - betflix-network
   order-service:
     container_name: order-service
-    image: order-service
+    image: quangkhanh288/order-service
     restart: unless-stopped
-    build:
-      context: ./order-service/order-service
-      dockerfile: Dockerfile
-      args:
-        SERVICE_NAME: order-service
+
     environment:
       SPRING_PROFILES_ACTIVE: prod
       MOVIE_HOSTNAME: movie-service
@@ -82,13 +59,8 @@ services:
       - betflix-network
   config-server:
     container_name: config-server
-    image: config-server
+    image: quangkhanh288/config-server
     restart: unless-stopped
-    build:
-      context: ./config-server/config-server
-      dockerfile: Dockerfile
-      args:
-        SERVICE_NAME: config-server
     environment:
       SPRING_PROFILES_ACTIVE: prod
     ports:
@@ -97,16 +69,10 @@ services:
       - betflix-network
   email-service:
     container_name: email-service
-    image: email-service
+    image: quangkhanh288/email-service
     restart: unless-stopped
-    build:
-      context: ./email-service/email-service
-      dockerfile: Dockerfile
-      args:
-        SERVICE_NAME: email-service
     environment:
       RABBITMQ_HOSTNAME: betflix-rabbitmq
-
     ports:
       - "8095:8095"
     networks:
