@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope
 @RestController
 public class MessageController {
-    @Value("${spring.boot.message}")
     private String message;
 
     @GetMapping("/message")
