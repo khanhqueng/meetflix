@@ -1,14 +1,15 @@
-name: Java CI user-service with Maven
+
+name: Java CI movie-service with Maven
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'user-service/user-service/**'
+      - 'movie-service/movie-service/**'
   pull_request:
     branches: [ "main" ]
     paths:
-      - 'user-service/user-service/**'
+      - 'movie-service/movie-service/**'
 
 
 jobs:
@@ -17,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./user-service/user-service
+        working-directory: ./movie-service/movie-service
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -36,6 +37,6 @@ jobs:
       - name: build and push docker image to DockerHub
         uses: docker/build-push-action@v5
         with:
-          context: user-service/user-service
+          context: movie-service/movie-service
           push: true
-          tags: quangkhanh288/user-service:latest
+          tags: quangkhanh288/movie-service:latest
