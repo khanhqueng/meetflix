@@ -1,4 +1,4 @@
-package com.khanhisdev.userservice.config;
+package com.khanhisdev.userservice.config.Oauth2;
 
 import com.khanhisdev.userservice.utils.OAuth2Utils;
 import lombok.RequiredArgsConstructor;

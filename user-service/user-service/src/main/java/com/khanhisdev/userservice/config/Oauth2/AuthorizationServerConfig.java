@@ -1,4 +1,4 @@
-package com.khanhisdev.userservice.config;
+package com.khanhisdev.userservice.config.Oauth2;
 
 import com.khanhisdev.userservice.security.CustomUserDetails;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -7,7 +7,6 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -102,6 +101,8 @@ public class AuthorizationServerConfig {
                 .authorizeHttpRequests((authorize)->
                         authorize
                                 .requestMatchers("/actuator/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/user/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/**").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/user/**").permitAll()

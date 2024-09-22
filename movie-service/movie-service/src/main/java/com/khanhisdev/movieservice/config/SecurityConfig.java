@@ -52,12 +52,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz ->
                         authz.
                                 requestMatchers("/actuator/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/movie/**").hasAuthority("SCOPE_USER")
+                                .requestMatchers(HttpMethod.GET, "/movie/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/showtime/**").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/showtime/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/theater/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/showtime/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/movie/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/movie/**").hasAnyAuthority("SCOPE_USER")
                                 .requestMatchers(HttpMethod.PUT, "/movie/**").permitAll()
 
 

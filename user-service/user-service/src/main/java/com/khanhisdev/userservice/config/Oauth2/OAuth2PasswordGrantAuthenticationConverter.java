@@ -1,4 +1,4 @@
-package com.khanhisdev.userservice.config;
+package com.khanhisdev.userservice.config.Oauth2;
 
 
 import jakarta.servlet.http.HttpServletRequest;
