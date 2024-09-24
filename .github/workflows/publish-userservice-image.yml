@@ -1,4 +1,4 @@
-name: Java CI user-service with Maven
+name: Java CI user-service
 
 on:
   push:

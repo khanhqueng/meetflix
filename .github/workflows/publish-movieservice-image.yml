@@ -1,5 +1,5 @@
 
-name: Java CI movie-service with Maven
+name: Java CI movie-service
 
 on:
   push:

@@ -8,7 +8,7 @@
 
 
 
-name: Java CI config-service with Maven
+name: Java CI config-service
 
 on:
   push:
