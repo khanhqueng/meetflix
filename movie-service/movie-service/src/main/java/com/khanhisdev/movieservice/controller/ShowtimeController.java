@@ -24,11 +24,8 @@ public class ShowtimeController {
     private final ShowtimeService showtimeService;
     @PostMapping
     @Operation(summary = "Create showtime", description = "API for create new showtime for a movie")
-    public ResponseEntity<ShowtimeResponseDto> createShowtime(@RequestBody ShowtimeRequestDto showtimeRequestDto,
-                                                              @RequestParam(name = "movie") Long movieId,
-                                                              @RequestParam(name = "theater") Long theaterId,
-                                                              @RequestParam(name = "projectionRoom") Long roomId){
-        return new ResponseEntity<>(showtimeService.addShowtime(showtimeRequestDto,movieId,theaterId,roomId), HttpStatus.CREATED);
+    public ResponseEntity<ShowtimeResponseDto> createShowtime(@RequestBody ShowtimeRequestDto showtimeRequestDto){
+        return new ResponseEntity<>(showtimeService.addShowtime(showtimeRequestDto), HttpStatus.CREATED);
     }
     @Operation(summary = "Get all showtime by Movie id", description = "API for get all showtime for a movie")
     @GetMapping("/movie/{id}")

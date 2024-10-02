@@ -87,4 +87,9 @@ public class BaseRedisServiceImpl<K,F,V> implements BaseRedisService<K,F,V> {
             hashOperations.delete(key,field);
         }
     }
+
+    @Override
+    public Set<K> getKeyByPattern(K pattern) {
+        return redisTemplate.keys(pattern);
+    }
 }

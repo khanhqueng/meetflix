@@ -2,6 +2,7 @@ package com.khanhisdev.orderservice.service;
 
 import com.khanhisdev.orderservice.dto.Request.AddTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.DeleteTicketRequest;
+import com.khanhisdev.orderservice.dto.Request.GetOrderedSeatsDto;
 import com.khanhisdev.orderservice.dto.Response.ShowtimeForOrderDto;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface OrderService extends BaseRedisService<String,String,Object>{
     void deleteTicketInCart(String userId, DeleteTicketRequest deleteTicketRequest);
     List<ShowtimeForOrderDto> getShowtimeFromCart(String userId);
     void deleteAllTicket(String userId);
-
+    List<String> getAllOrderedSeats(GetOrderedSeatsDto dto);
 }

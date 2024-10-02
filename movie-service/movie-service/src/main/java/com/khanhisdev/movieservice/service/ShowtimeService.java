@@ -9,7 +9,7 @@ import org.springframework.data.util.Pair;
 import java.util.List;
 
 public interface ShowtimeService {
-    ShowtimeResponseDto addShowtime(ShowtimeRequestDto showtimeRequestDto, Long movieId, Long theaterId, Long projectionRoomId);
+    ShowtimeResponseDto addShowtime(ShowtimeRequestDto showtimeRequestDto);
     List<ShowtimeResponseDto> getAllShowtimeByMovieId(Long movieId);
     List<ShowtimeResponseDto> getAllShowtimeByRoomId(Long projectionRoomId);
     ShowtimeResponseDto updateShowtime(Long showtimeId, ShowtimeRequestDto showtimeRequestDto);

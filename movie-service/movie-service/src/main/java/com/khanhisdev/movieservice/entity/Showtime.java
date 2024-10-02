@@ -7,8 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,9 +21,8 @@ public class Showtime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "showtime_id")
     private Long id;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
-    private String time;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime startTime;
     @ManyToOne
     @JoinColumn(name = "movie_id", nullable = false, referencedColumnName = "movie_id")
     private Movie movie;

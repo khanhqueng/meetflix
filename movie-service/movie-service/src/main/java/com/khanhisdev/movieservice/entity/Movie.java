@@ -1,9 +1,11 @@
 package com.khanhisdev.movieservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +29,9 @@ public class Movie {
     private String description;
     // by minutes
     private int durationMin;
+    @Column(name = "release_date")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate releaseDate;
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name="movie_director",
             joinColumns = @JoinColumn(name = "movie_id"),
@@ -46,7 +51,7 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name="category_id")
     )
     private Set<Category> categories= new HashSet<>();
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "movie")
     private List<Showtime> showtimeList;
     @Column(name = "rating_point", columnDefinition="Decimal(10,2) default '0.00'")
     private BigDecimal ratingPoint= BigDecimal.valueOf(0.0);

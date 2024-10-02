@@ -4,6 +4,7 @@ import com.khanhisdev.orderservice.dto.Message.EmailContent;
 import com.khanhisdev.orderservice.dto.Message.OrderEvent;
 import com.khanhisdev.orderservice.dto.Request.AddTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.DeleteTicketRequest;
+import com.khanhisdev.orderservice.dto.Request.GetOrderedSeatsDto;
 import com.khanhisdev.orderservice.dto.Request.GetTicketRequest;
 import com.khanhisdev.orderservice.dto.Response.ShowtimeForOrderDto;
 import com.khanhisdev.orderservice.exception.ResourceNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object> implements OrderService {
@@ -41,11 +43,12 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
         String key= "order:user-"+ userId;
         String fieldKey;
         List<String> seatsNeedOrder= addTicketRequest.getSeats();
-        fieldKey= "TicketInfo_"+ "MovieId:"+ addTicketRequest.getMovieId()+","
-                +"TheaterId:" + addTicketRequest.getTheaterId()+","
-                +"RoomId:"+ addTicketRequest.getProjectionRoomId()+","
-                +"StartTime:"+ addTicketRequest.getShowtime();
+        fieldKey= "TicketInfo_"+"RoomId*"+ addTicketRequest.getProjectionRoomId()+","
+                +"StartTime*"+ addTicketRequest.getShowtime()+","
+                +"MovieId*"+ addTicketRequest.getMovieId()+","
+                +"TheaterId*" + addTicketRequest.getTheaterId();
         if(this.hashExists(key,fieldKey)){
+
             List<String>  seatsOrdered = (List<String>) this.hashGet(key,fieldKey);
             seatsNeedOrder.addAll(seatsOrdered);
 
@@ -60,28 +63,28 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
                 .block();
 
         // Set content Email and send to message queue
-        OrderEvent orderEvent= new OrderEvent();
-        orderEvent.setStatus("PENDING");
-        orderEvent.setMessage("Email is in pending status");
-        EmailContent emailContent= new EmailContent();
-        emailContent.setDesEmail(email);
-        emailContent.setNameMovie(addTicketRequest.getMovieName());
-        emailContent.setNameRoom(addTicketRequest.getRoomName());
-        emailContent.setShowtime(addTicketRequest.getShowtime());
-        emailContent.setNameTheater(addTicketRequest.getTheaterName());
-        emailContent.setSeats(addTicketRequest.getSeats());
-        orderEvent.setContent(emailContent);
-        producer.sendMessage(orderEvent);
+//        OrderEvent orderEvent= new OrderEvent();
+//        orderEvent.setStatus("PENDING");
+//        orderEvent.setMessage("Email is in pending status");
+//        EmailContent emailContent= new EmailContent();
+//        emailContent.setDesEmail(email);
+//        emailContent.setNameMovie(addTicketRequest.getMovieName());
+//        emailContent.setNameRoom(addTicketRequest.getRoomName());
+//        emailContent.setShowtime(addTicketRequest.getShowtime());
+//        emailContent.setNameTheater(addTicketRequest.getTheaterName());
+//        emailContent.setSeats(addTicketRequest.getSeats());
+//        orderEvent.setContent(emailContent);
+//        producer.sendMessage(orderEvent);
     }
 
     @Override
     public void deleteTicketInCart(String userId, DeleteTicketRequest deleteTicketRequest) {
         String key= "order:user-"+ userId;
         String fieldKey;
-        fieldKey= "TicketInfo_"+ "MovieId:"+ deleteTicketRequest.getMovieId()+","
-                +"TheaterId:" + deleteTicketRequest.getTheaterId()+","
-                +"RoomId:"+ deleteTicketRequest.getProjectionRoomId()+","
-                +"StartTime:"+ deleteTicketRequest.getShowtime();
+        fieldKey= "TicketInfo_"+"RoomId:"+ deleteTicketRequest.getProjectionRoomId()+","
+                +"StartTime:"+ deleteTicketRequest.getShowtime()
+                +"MovieId:"+ deleteTicketRequest.getMovieId()+","
+                +"TheaterId:" + deleteTicketRequest.getTheaterId()+",";
         if(!this.hashExists(key,fieldKey)){
             throw new ResourceNotFoundException("Order","id",deleteTicketRequest.getProjectionRoomId());
         }
@@ -117,6 +120,22 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
     public void deleteAllTicket(String userId) {
         String key= "order:user-"+ userId;
         this.delete(key);
+    }
+
+    @Override
+    public List<String> getAllOrderedSeats(GetOrderedSeatsDto dto) {
+        Set<String> keys=this.getKeyByPattern("order:user*");
+        List<String> result= new ArrayList<>();
+        String field= "TicketInfo_"+"RoomId*"+ dto.getProjectionRoomId()+","
+                +"StartTime*"+ dto.getShowtime()+","
+                +"MovieId*"+ dto.getMovieId()+","
+                +"TheaterId*" + dto.getTheaterId();
+        System.out.println(keys);
+        for (String key: keys){
+            List<String> seats= (List<String>) this.hashGet(key, field);
+            result.addAll(seats);
+        }
+        return result;
     }
 
 
