@@ -20,7 +20,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -84,7 +83,6 @@ public class AuthorizationServerConfig  {
     }
 
     @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
@@ -95,10 +93,10 @@ public class AuthorizationServerConfig  {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-//    @Bean
-//    public CorsFilter corsFilter(){
-//        return new CorsFilter();
-//    }
+    @Bean
+    public CustomCorsFilter corsFilter(){
+        return new CustomCorsFilter();
+    }
 
 
 
