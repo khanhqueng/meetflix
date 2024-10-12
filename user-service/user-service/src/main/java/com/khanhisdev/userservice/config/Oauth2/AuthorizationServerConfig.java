@@ -20,6 +20,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -60,7 +61,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-public class AuthorizationServerConfig {
+public class AuthorizationServerConfig  {
     @Value("${issuerURI}")
     private String issuerUri;
     private final UserDetailsService userDetailsService;
@@ -83,23 +84,33 @@ public class AuthorizationServerConfig {
     }
 
     @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
         configuration.setAllowedMethods(List.of("*"));
         configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+//    @Bean
+//    public CorsFilter corsFilter(){
+//        return new CorsFilter();
+//    }
+
+
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize)->
                         authorize
+                                .requestMatchers(HttpMethod.OPTIONS,"/oauth2/v1/**", "/connect/v1/**").permitAll()
+                                .requestMatchers("/oauth2/v1/authorize", "/oauth2/v1/token", "/oauth2/v1/introspect", "/oauth2/v1/revoke",
+                                        "/oauth2/v1/jwks", "/connect/v1/logout", "/connect/v1/userinfo", "/connect/v1/register").permitAll()
                                 .requestMatchers("/actuator/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
@@ -121,8 +132,6 @@ public class AuthorizationServerConfig {
         return AuthorizationServerSettings.builder()
                 .issuer(issuerUri)
                 .authorizationEndpoint("/oauth2/v1/authorize")
-                .deviceAuthorizationEndpoint("/oauth2/v1/device_authorization")
-                .deviceVerificationEndpoint("/oauth2/v1/device_verification")
                 .tokenEndpoint("/oauth2/v1/token")
                 .tokenIntrospectionEndpoint("/oauth2/v1/introspect")
                 .tokenRevocationEndpoint("/oauth2/v1/revoke")
