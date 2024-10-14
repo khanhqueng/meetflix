@@ -17,11 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class RedisController {
     private final OrderService redisService;
-    @PostMapping("/test")
-    public void set(){
-        redisService.set("hello", "khanh");
-
-    }
     @PostMapping
     public ResponseEntity<String> addTicketToOrder(@RequestHeader(CustomHeaders.X_AUTH_USER_ID) String id, @RequestBody AddTicketRequest addTicketRequest){
         redisService.addTicketToCart(id,addTicketRequest);
