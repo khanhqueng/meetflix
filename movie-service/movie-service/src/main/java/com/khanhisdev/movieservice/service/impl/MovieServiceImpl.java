@@ -53,16 +53,7 @@ public class MovieServiceImpl implements MovieService {
             throw new ResourceDuplicateException("Movie", "name", movieDto.getName());
 
         }else{
-            // handle Category check
-            Set<Category> categories= new HashSet<>();
-            for(CategoryMessage category: movieDto.getCategories()){
-                if(categoryRepository.existsByName(category.getName())){
-                    categories.add(categoryRepository.findByName(category.getName()));
-                    continue;
-                }
-                categories.add(categoryMapper.mapToEntity(category));
-            }
-
+            // check director
             Set<Director> directors= new HashSet<>();
             for(Director director: movieDto.getDirector()){
                 if(directorRepository.existsByName(director.getName())){
@@ -71,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
                 }
                 directors.add(director);
             }
-
+            // check actor
             Set<Actor> actors= new HashSet<>();
             for(Actor actor: movieDto.getActors()){
                 if(actorRepository.existsByName(actor.getName())){
@@ -80,6 +71,11 @@ public class MovieServiceImpl implements MovieService {
                 }
                 actors.add(actor);
             }
+            Set<Category> categories = new HashSet<>();
+            movieDto.getCategory_id().forEach(category -> {
+                categories.add(categoryRepository.findById(category).
+                        orElseThrow(()-> new ResourceNotFoundException("Category", "id", category)));
+            });
             Movie newMovie= movieMapper.mapToEntity(movieDto);
             newMovie.setActors(actors);
             newMovie.setCategories(categories);
