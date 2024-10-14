@@ -97,9 +97,6 @@ public class AuthorizationServerConfig  {
     public CustomCorsFilter corsFilter(){
         return new CustomCorsFilter();
     }
-
-
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
