@@ -80,7 +80,7 @@ public class MovieServiceImpl implements MovieService {
             newMovie.setActors(actors);
             newMovie.setCategories(categories);
             newMovie.setDirector(directors);
-            return movieMapper.mapToResponseDto(movieRepository.save(newMovie));
+            return movieMapper.mapToDto(movieRepository.save(newMovie));
         }
     }
 
@@ -88,7 +88,7 @@ public class MovieServiceImpl implements MovieService {
     @Transactional(readOnly = true)
     public MovieResponseDto getMovieById(Long id) {
         Movie movie= movieRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Movie","name",id));
-        return movieMapper.mapToResponseDto(movie);
+        return movieMapper.mapToDto(movie);
 
     }
 
@@ -103,7 +103,7 @@ public class MovieServiceImpl implements MovieService {
 
         Page<Movie> movies= movieRepository.findAll(pageable);
         List<Movie> movieList= movies.getContent();
-        List<MovieResponseDto> content= movieList.stream().map(movie -> movieMapper.mapToResponseDto(movie)).collect(Collectors.toList());
+        List<MovieResponseDto> content= movieList.stream().map(movieMapper::mapToDto).collect(Collectors.toList());
         return new ObjectResponse<MovieResponseDto>(
             content, movies.getNumber(),movies.getSize(),movies.getTotalElements(),movies.getTotalPages(),movies.isLast()
         );
@@ -115,13 +115,13 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieResponseDto> getAllMoviesFromTheater(Long theaterId) {
         if( !theaterRepository.existsById(theaterId)) throw new ResourceNotFoundException("Theater","id",theaterId);
         List<Movie> movies= movieRepository.findByShowtimeListTheaterId(theaterId);
-        return movies.stream().map(movie -> movieMapper.mapToResponseDto(movie)).collect(Collectors.toList());
+        return movies.stream().map(movieMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<MovieResponseDto> getMoviesByIds(List<Long> ids) {
-        return movieRepository.findAllByIdIn(ids).stream().map(movie -> movieMapper.mapToResponseDto(movie)).collect(Collectors.toList());
+        return movieRepository.findAllByIdIn(ids).stream().map(movieMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -148,7 +148,7 @@ public class MovieServiceImpl implements MovieService {
 
         Page<Movie> page= movieRepository.findMoviesBySearchText(keyword,pageable);
         List<Movie> movies= page.getContent();
-        List<MovieResponseDto> content= movies.stream().map(movie -> movieMapper.mapToResponseDto(movie)).collect(Collectors.toList());
+        List<MovieResponseDto> content= movies.stream().map(movieMapper::mapToDto).collect(Collectors.toList());
         return new ObjectResponse<MovieResponseDto>(
                 content, page.getNumber(),page.getSize(),page.getTotalElements(),page.getTotalPages(),page.isLast()
         );

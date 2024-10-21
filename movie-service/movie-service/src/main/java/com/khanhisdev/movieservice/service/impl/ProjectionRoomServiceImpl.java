@@ -26,7 +26,7 @@ public class ProjectionRoomServiceImpl implements ProjectionRoomService {
     public List<ProjectionRoomResponseDto> getAllRoomByTheaterId(Long theaterId) {
         if(!theaterRepository.existsById(theaterId))
             throw new ResourceNotFoundException("Theater","id", theaterId);
-        return projectionRoomRepository.findByTheaterId(theaterId).stream().map(projectionRoom -> mapper.mapToResponseDto(projectionRoom)).toList();
+        return projectionRoomRepository.findByTheaterId(theaterId).stream().map(projectionRoom -> mapper.mapToDto(projectionRoom)).toList();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ProjectionRoomServiceImpl implements ProjectionRoomService {
         Theater theater = theaterRepository.findById(theaterId).orElseThrow(()-> new ResourceNotFoundException("Theater","id", theaterId));
         ProjectionRoom projectionRoom= mapper.mapToEntity(projectionRoomRequestDto);
         projectionRoom.setTheater(theater);
-        return mapper.mapToResponseDto(projectionRoomRepository.save(projectionRoom));
+        return mapper.mapToDto(projectionRoomRepository.save(projectionRoom));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ProjectionRoomServiceImpl implements ProjectionRoomService {
         ProjectionRoom projectionRoom = projectionRoomRepository.findById(roomId).orElseThrow(()-> new ResourceNotFoundException("Room","id", roomId));
         projectionRoom.setNumber(projectionRoomRequestDto.getNumber());
         projectionRoom.setSeats(projectionRoomRequestDto.getSeats());
-        return mapper.mapToResponseDto(projectionRoomRepository.save(projectionRoom));
+        return mapper.mapToDto(projectionRoomRepository.save(projectionRoom));
     }
 
     @Override

@@ -47,4 +47,11 @@ public class ShowtimeController {
     public ResponseEntity<ShowtimeResponseDto> updateShowtime(@PathVariable(name = "id") Long id,@RequestBody ShowtimeRequestDto showtimeRequestDto){
         return new ResponseEntity<>(showtimeService.updateShowtime(id, showtimeRequestDto), HttpStatus.OK) ;
     }
+    @Operation(summary = "Delete showtime", description = "API for delete showtime")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteShowtime(@PathVariable(name = "id") Long id){
+        showtimeService.deleteShowtime(id);
+        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK) ;
+    }
+
 }

@@ -15,6 +15,9 @@ import java.util.Optional;
 public interface ShowtimeRepository extends JpaRepository<Showtime,Long> {
     List<Showtime> findByMovieId(Long id);
     List<Showtime> findByProjectionRoomId(Long id);
-    Boolean existsByStartTimeBetween(LocalDateTime start, LocalDateTime end);
+    Boolean existsByStartTimeBetweenAndTheaterIdAndProjectionRoomId(LocalDateTime start,
+                                                                    LocalDateTime end,
+                                                                    Long theaterId,
+                                                                    Long projectionRoomId);
     Optional<Showtime> findByStartTimeAndProjectionRoomId(LocalDateTime startTime, Long id);
 }

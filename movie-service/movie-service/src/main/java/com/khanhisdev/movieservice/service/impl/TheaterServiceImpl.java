@@ -2,6 +2,7 @@ package com.khanhisdev.movieservice.service.impl;
 
 import com.khanhisdev.movieservice.dto.Mapper.TheaterMapper;
 import com.khanhisdev.movieservice.dto.RequestDto.TheaterRequestDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.TheaterResponseDto;
 import com.khanhisdev.movieservice.entity.Theater;
 import com.khanhisdev.movieservice.exception.ResourceDuplicateException;
 import com.khanhisdev.movieservice.exception.ResourceNotFoundException;
@@ -20,18 +21,18 @@ public class TheaterServiceImpl implements TheaterService {
     private TheaterRepository theaterRepository;
     private TheaterMapper mapper;
     @Override
-    public List<TheaterRequestDto> getAllTheaters() {
+    public List<TheaterResponseDto> getAllTheaters() {
         return theaterRepository.findAll().stream().map(theater -> mapper.mapToDto(theater)).toList();
     }
 
     @Override
-    public TheaterRequestDto getTheaterById(Long id) {
+    public TheaterResponseDto getTheaterById(Long id) {
 
         return mapper.mapToDto(theaterRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Theater","id",id)));
     }
 
     @Override
-    public TheaterRequestDto createTheater(TheaterRequestDto theaterRequestDto) {
+    public TheaterResponseDto createTheater(TheaterRequestDto theaterRequestDto) {
         if(theaterRepository.existsByName(theaterRequestDto.getName())){
             throw new ResourceDuplicateException("Theater", "name", theaterRequestDto.getName());
         }
@@ -41,7 +42,7 @@ public class TheaterServiceImpl implements TheaterService {
     }
 
     @Override
-    public TheaterRequestDto updateTheater(TheaterRequestDto theaterRequestDto, Long id) {
+    public TheaterResponseDto updateTheater(TheaterRequestDto theaterRequestDto, Long id) {
         Theater theater= theaterRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Theater", "id", id));
         theater.setName(theaterRequestDto.getName());
         return mapper.mapToDto(theater);

@@ -1,5 +1,6 @@
 package com.khanhisdev.movieservice.dto.ResponseDto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.khanhisdev.movieservice.dto.Message.CategoryMessage;
 import com.khanhisdev.movieservice.entity.Actor;
 import com.khanhisdev.movieservice.entity.Director;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -18,6 +20,9 @@ public class MovieResponseDto {
     private Long id;
     private String name;
     private String description;
+    private String country;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate releaseDate;
     // by minutes
     private int durationMin;
     private List<Director> director;

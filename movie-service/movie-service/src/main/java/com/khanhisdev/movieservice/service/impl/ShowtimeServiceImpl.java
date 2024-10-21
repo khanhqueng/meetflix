@@ -42,16 +42,19 @@ public class ShowtimeServiceImpl implements ShowtimeService {
                 ()-> new ResourceNotFoundException("Theater","id",showtimeRequestDto.getTheater_id()));
         ProjectionRoom projectionRoom = projectionRoomRepository.findByTheaterIdAndId(showtimeRequestDto.getTheater_id(), showtimeRequestDto.getProjectionRoom_id()).orElseThrow(
                 ()-> new ResourceNotFoundException("ProjectionRoom with theater","id", showtimeRequestDto.getProjectionRoom_id()));
-        if(showtimeRepository.existsByStartTimeBetween(
+
+        if(showtimeRepository.existsByStartTimeBetweenAndTheaterIdAndProjectionRoomId(
                 showtimeRequestDto.getStartTime().minus(Duration.ofMinutes(movie.getDurationMin())),
-                showtimeRequestDto.getStartTime().plus(Duration.ofMinutes(movie.getDurationMin()))
-        ))
+                showtimeRequestDto.getStartTime().plus(Duration.ofMinutes(movie.getDurationMin())),
+                theater.getId(),
+                projectionRoom.getId()
+        ) )
             throw new MovieAPIException(HttpStatus.BAD_REQUEST,"Invalid Showtime");
         Showtime showtime= mapper.mapToEntity(showtimeRequestDto);
         showtime.setMovie(movie);
         showtime.setProjectionRoom(projectionRoom);
         showtime.setTheater(theater);
-        return mapper.mapToResponseDto(showtimeRepository.save(showtime));
+        return mapper.mapToDto(showtimeRepository.save(showtime));
     }
 
     @Override
@@ -60,7 +63,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             throw new ResourceNotFoundException("Movie","id",movieId);
         }
         return showtimeRepository.findByMovieId(movieId).stream()
-                .map(showtime -> mapper.mapToResponseDto(showtime)).toList();
+                .map(showtime -> mapper.mapToDto(showtime)).toList();
     }
 
     @Override
@@ -69,20 +72,22 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             throw new ResourceNotFoundException("ProjectionRoom","id",projectionRoomId);
         }
         return showtimeRepository.findByProjectionRoomId(projectionRoomId).stream()
-                .map(showtime -> mapper.mapToResponseDto(showtime)).toList();
+                .map(showtime -> mapper.mapToDto(showtime)).toList();
     }
 
     @Override
     public ShowtimeResponseDto updateShowtime(Long showtimeId, ShowtimeRequestDto showtimeRequestDto) {
         Showtime showtime= showtimeRepository.findById(showtimeId).orElseThrow(()-> new ResourceNotFoundException("Showtime", "id", showtimeId));
         Movie movie= showtime.getMovie();
-        if(showtimeRepository.existsByStartTimeBetween(
+        if(showtimeRepository.existsByStartTimeBetweenAndTheaterIdAndProjectionRoomId(
                 showtimeRequestDto.getStartTime().minus(Duration.ofMinutes(movie.getDurationMin())),
-                showtimeRequestDto.getStartTime().plus(Duration.ofMinutes(movie.getDurationMin()))
+                showtimeRequestDto.getStartTime().plus(Duration.ofMinutes(movie.getDurationMin())),
+                showtime.getTheater().getId(),
+                showtime.getProjectionRoom().getId()
         ))
             throw new MovieAPIException(HttpStatus.BAD_REQUEST,"Invalid Showtime");
         showtime.setStartTime(showtimeRequestDto.getStartTime());
-        return mapper.mapToResponseDto(showtimeRepository.save(showtime));
+        return mapper.mapToDto(showtimeRepository.save(showtime));
     }
 
     @Override
