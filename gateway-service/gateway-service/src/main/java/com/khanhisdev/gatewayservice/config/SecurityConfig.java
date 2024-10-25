@@ -61,11 +61,52 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(auth -> auth
                         .pathMatchers("/actuator/**").permitAll()
+                        // get access token
                         .pathMatchers(HttpMethod.POST, "api/oauth2/v1/token").permitAll()
-                        .pathMatchers(HttpMethod.GET, "api/auth/signup").permitAll()
-                        .pathMatchers(HttpMethod.GET, "api/v1/user/**").hasAuthority("SCOPE_USER")
-                        .pathMatchers(HttpMethod.GET, "api/v1/movie/**").hasAuthority("SCOPE_USER")
+
+                        // public information
+                        .pathMatchers(HttpMethod.GET, "api/v1/movie/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "api/v1/theater/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "api/v1/projectionRoom/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "api/v1/showtime/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "api/v1/category/**").permitAll()
+                        .pathMatchers(HttpMethod.POST, "api/v1/user/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "api/v1/comment/movie/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "api/v1/seat/**").permitAll()
+
+                        // api for user
+                        // movie
+                        .pathMatchers(HttpMethod.PUT, "api/v1/movie/**").hasAuthority("SCOPE_USER")
+                        // user
                         .pathMatchers(HttpMethod.PUT, "api/v1/user/**").hasAuthority("SCOPE_USER")
+                        .pathMatchers(HttpMethod.GET, "api/v1/user/**").hasAuthority("SCOPE_USER")
+                        // comment
+                        .pathMatchers(HttpMethod.GET, "api/v1/comment/user/**").hasAuthority("SCOPE_USER")
+                        .pathMatchers(HttpMethod.POST, "api/v1/comment/**").hasAuthority("SCOPE_USER")
+                        .pathMatchers(HttpMethod.PUT, "api/v1/comment/**").hasAuthority("SCOPE_USER")
+                        .pathMatchers(HttpMethod.DELETE, "api/v1/comment/**").hasAuthority("SCOPE_USER")
+                        // order
+                        .pathMatchers(HttpMethod.POST, "api/v1/order/**").hasAuthority("SCOPE_USER")
+                        .pathMatchers(HttpMethod.GET, "api/v1/order/**").hasAuthority("SCOPE_USER")
+                        .pathMatchers(HttpMethod.DELETE, "api/v1/order/**").hasAuthority("SCOPE_USER")
+
+                        // api for admin
+                        // movie
+                        .pathMatchers(HttpMethod.POST, "api/v1/movie/**").hasAuthority("SCOPE_ADMIN")
+                        // theater
+                        .pathMatchers(HttpMethod.POST, "api/v1/theater/**").hasAuthority("SCOPE_ADMIN")
+                        .pathMatchers(HttpMethod.PUT, "api/v1/theater/**").hasAuthority("SCOPE_ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "api/v1/theater/**").hasAuthority("SCOPE_ADMIN")
+                        // projection room
+                        .pathMatchers(HttpMethod.POST, "api/v1/projectionRoom/**").hasAuthority("SCOPE_ADMIN")
+                        .pathMatchers(HttpMethod.PUT, "api/v1/projectionRoom/**").hasAuthority("SCOPE_ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "api/v1/projectionRoom/**").hasAuthority("SCOPE_ADMIN")
+                        // showtime
+                        .pathMatchers(HttpMethod.POST, "api/v1/showtime/**").hasAuthority("SCOPE_ADMIN")
+                        .pathMatchers(HttpMethod.PUT, "api/v1/showtime/**").hasAuthority("SCOPE_ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "api/v1/showtime/**").hasAuthority("SCOPE_ADMIN")
+                        // category
+                        .pathMatchers(HttpMethod.POST, "api/v1/category/**").hasAuthority("SCOPE_ADMIN")
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
