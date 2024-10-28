@@ -23,9 +23,10 @@ public class ProjectionRoom {
     private int number;
     private int seats;
     @ManyToOne
-    @JoinColumn(name = "theater_id",referencedColumnName = "theater_id")
+    @JoinColumn(name = "theater_id",referencedColumnName = "theater_id", nullable = false)
     private Theater theater;
     @OneToMany(mappedBy = "projectionRoom")
     private List<Showtime> showtimeList;
-
+    @OneToMany(mappedBy = "projectionRoom", cascade = CascadeType.ALL)
+    private List<Seat> seat;
 }

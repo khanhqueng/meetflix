@@ -15,5 +15,5 @@ import java.util.List;
 public class TheaterResponseDto {
     private Long id;
     private String name;
-    private List<ProjectionRoomRequestDto> projectionRoomList;
+    private List<ProjectionRoomResponseDto> projectionRoomList;
 }

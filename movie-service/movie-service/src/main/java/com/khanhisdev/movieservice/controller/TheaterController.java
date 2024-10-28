@@ -1,6 +1,7 @@
 package com.khanhisdev.movieservice.controller;
 
 import com.khanhisdev.movieservice.dto.RequestDto.TheaterRequestDto;
+import com.khanhisdev.movieservice.dto.RequestDto.TheaterUpdateDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.TheaterResponseDto;
 import com.khanhisdev.movieservice.service.TheaterService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,8 +41,8 @@ public class TheaterController {
 
     @Operation(summary = "Update theater", description = "API for update theater")
     @PutMapping("/{id}")
-    public ResponseEntity<TheaterResponseDto> updateTheater(@RequestBody TheaterRequestDto theaterRequestDto, @PathVariable(name = "id") Long id){
-        return new ResponseEntity<>(theaterService.updateTheater(theaterRequestDto, id), HttpStatus.OK);
+    public ResponseEntity<TheaterResponseDto> updateTheater(@RequestBody TheaterUpdateDto updateDto, @PathVariable(name = "id") Long id){
+        return new ResponseEntity<>(theaterService.updateTheater(updateDto, id), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete theater", description = "API for delete theater")

@@ -10,7 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Mapper
+@Mapper(uses = {ProjectionRoomMapper.class})
 public interface TheaterMapper extends GenericMapper<Theater, TheaterRequestDto, TheaterResponseDto>{
 
 }

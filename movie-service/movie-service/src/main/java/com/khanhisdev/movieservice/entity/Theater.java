@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -23,7 +24,7 @@ public class Theater {
     @Column(unique = true)
     private String name;
     @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
-    private List<ProjectionRoom> projectionRoomList;
+    private List<ProjectionRoom> projectionRoomList= new ArrayList<>();
     @OneToMany(mappedBy = "theater")
     private List<Showtime> showtimeList;
 }
