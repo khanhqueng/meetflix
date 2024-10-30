@@ -41,8 +41,8 @@ public class UserController {
     }
     @Operation(summary = "Get username", description = "API for get username by userId")
     @GetMapping("{id}")
-    public ResponseEntity<String> getUsername(@PathVariable(name = "id") Long id){
-        return new ResponseEntity<>(userService.getEmailByUserId(id), HttpStatus.OK) ;
+    public ResponseEntity<UserResponseDto> getUsername(@PathVariable(name = "id") Long id){
+        return new ResponseEntity<>(userService.getUserByIdAdmin(id), HttpStatus.OK) ;
     }
     @Operation(summary = "Add liked movies to user", description = "API for add liked movie to user")
     @PutMapping("/likeMovie/{id}")
