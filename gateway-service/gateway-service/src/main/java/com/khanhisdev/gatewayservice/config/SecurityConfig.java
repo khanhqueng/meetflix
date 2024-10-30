@@ -91,6 +91,7 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.DELETE, "api/v1/order/**").hasAuthority("SCOPE_USER")
 
                         // api for admin
+                        .pathMatchers(HttpMethod.GET, "api/v1/user/all").hasAuthority("SCOPE_ADMIN")
                         // movie
                         .pathMatchers(HttpMethod.POST, "api/v1/movie/**").hasAuthority("SCOPE_ADMIN")
                         // theater

@@ -103,8 +103,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getEmailByUserId(Long id) {
+    public UserResponseDto getUserByIdAdmin(Long id) {
        User user= userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "id", id));
-       return user.getEmail();
+       return mapper.mapToResponseDto(user);
     }
 }
