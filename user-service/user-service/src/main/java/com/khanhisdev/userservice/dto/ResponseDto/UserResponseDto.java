@@ -14,8 +14,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResponseDto {
+    private Long id;
     private String username;
     private Set<Role> roles;
     private List<Long> movie_ids;
-
+    private String email;
 }

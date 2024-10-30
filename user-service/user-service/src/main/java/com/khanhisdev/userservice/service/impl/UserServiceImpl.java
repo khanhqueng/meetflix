@@ -58,6 +58,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserResponseDto> getAllUser() {
+        List<User> users= userRepository.findAll();
+        return users.stream().map(user -> mapper.mapToResponseDto(user)).toList();
+    }
+
+    @Override
     public APIResponseDto getUserById(Long id) {
         User user = this.userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         List<Long> ids = user.getMovieId().stream().map(LikedMovie::getMovieId).toList();

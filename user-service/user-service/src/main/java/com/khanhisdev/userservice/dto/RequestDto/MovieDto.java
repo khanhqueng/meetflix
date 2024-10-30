@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 @Getter
 @Setter
@@ -15,8 +16,8 @@ public class MovieDto {
     private String name;
     private String description;
     // by minutes
+    private String country;
+    private LocalDate releaseDate;
     private int durationMin;
-    private List<String> director;
-    private List<String> actors;
     private String urlImage;
 }

@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -26,6 +28,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDto> createUser( @Valid @RequestBody UserDto userDto){
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
+    }
+    @Operation(summary = "Get all users", description = "API for get all users")
+    @GetMapping("/all")
+    public ResponseEntity<List<UserResponseDto>> getAllUsers(){
+        return new ResponseEntity<>(userService.getAllUser(), HttpStatus.OK);
     }
     @Operation(summary = "Get user by id", description = "API for get user by id")
     @GetMapping

@@ -8,7 +8,6 @@ import com.khanhisdev.movieservice.utils.MapperUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.mapstruct.Mapper;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

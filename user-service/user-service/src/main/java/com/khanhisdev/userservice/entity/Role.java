@@ -1,5 +1,6 @@
 package com.khanhisdev.userservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,6 +24,10 @@ public class Role {
     private Long id;
 
     private String name;
+
+    @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
+    private Set<User> users;
 
     @Override
     public boolean equals(Object o) {
