@@ -79,7 +79,7 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.PUT, "api/v1/movie/**").hasAuthority("SCOPE_USER")
                         // user
                         .pathMatchers(HttpMethod.PUT, "api/v1/user/**").hasAuthority("SCOPE_USER")
-                        .pathMatchers(HttpMethod.GET, "api/v1/user/**").hasAuthority("SCOPE_USER")
+                        .pathMatchers(HttpMethod.GET, "api/v1/user/**").hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN")
                         // comment
                         .pathMatchers(HttpMethod.GET, "api/v1/comment/user/**").hasAuthority("SCOPE_USER")
                         .pathMatchers(HttpMethod.POST, "api/v1/comment/**").hasAuthority("SCOPE_USER")
