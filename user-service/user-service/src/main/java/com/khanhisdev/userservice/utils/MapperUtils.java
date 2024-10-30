@@ -12,6 +12,7 @@ public abstract class MapperUtils {
         return user.getUsername();
     }
     public List<Long> mapLikedMovieToId(List<LikedMovie> movie){
+        if( movie==null) return null;
         return movie.stream().map(LikedMovie::getMovieId).toList();
     }
 }
