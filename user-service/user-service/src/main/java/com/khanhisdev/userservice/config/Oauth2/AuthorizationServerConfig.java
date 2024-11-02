@@ -109,9 +109,7 @@ public class AuthorizationServerConfig  {
                                 .requestMatchers("/actuator/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/user/**").permitAll()
-                                .requestMatchers(HttpMethod.POST,"/user/**").permitAll()
-                                .requestMatchers(HttpMethod.PUT,"/user/**").permitAll()
+                                .requestMatchers("/user/**").permitAll()
                                 .requestMatchers("/comment/**").permitAll()
                                 .anyRequest().authenticated()
 

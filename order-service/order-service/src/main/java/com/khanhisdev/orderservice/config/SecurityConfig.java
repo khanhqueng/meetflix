@@ -25,11 +25,12 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz ->
-                        authz.
-                                requestMatchers(HttpMethod.GET, "/order/**").permitAll()
+                        authz
                                 .requestMatchers("/actuator/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
+                                .requestMatchers("/order/**").permitAll()
+                                .requestMatchers("/seat/**").permitAll()
                                 .anyRequest()
                                 .authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
