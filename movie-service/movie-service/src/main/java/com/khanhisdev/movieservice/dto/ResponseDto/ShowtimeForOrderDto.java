@@ -16,8 +16,8 @@ import java.util.List;
 public class ShowtimeForOrderDto {
     private Long id;
     private LocalDateTime startTime;
-    private String movieName;
-    private String theaterName;
-    private Integer projectionRoomName;
+    private String movie;
+    private String theater;
+    private Integer projectionRoom;
     private List<String> seats;
 }

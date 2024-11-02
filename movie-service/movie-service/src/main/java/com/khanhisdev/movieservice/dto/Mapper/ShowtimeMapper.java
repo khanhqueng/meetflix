@@ -13,6 +13,5 @@ import org.springframework.stereotype.Component;
 
 @Mapper(uses = {MapperUtils.class})
 public interface ShowtimeMapper extends GenericMapper<Showtime,ShowtimeRequestDto,ShowtimeResponseDto>{
-
     ShowtimeForOrderDto mapToResponseOrderDto(Showtime showtime);
 }

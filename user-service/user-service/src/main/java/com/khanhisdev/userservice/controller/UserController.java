@@ -1,6 +1,7 @@
 package com.khanhisdev.userservice.controller;
 
 import com.khanhisdev.userservice.dto.RequestDto.UserDto;
+import com.khanhisdev.userservice.dto.RequestDto.UserUpdateDto;
 import com.khanhisdev.userservice.dto.ResponseDto.APIResponseDto;
 import com.khanhisdev.userservice.dto.ResponseDto.UserResponseDto;
 import com.khanhisdev.userservice.entity.LikedMovie;
@@ -41,12 +42,27 @@ public class UserController {
     }
     @Operation(summary = "Get username", description = "API for get username by userId")
     @GetMapping("{id}")
-    public ResponseEntity<UserResponseDto> getUsername(@PathVariable(name = "id") Long id){
+    public ResponseEntity<UserResponseDto> getUserByAdmin(@PathVariable(name = "id") Long id){
         return new ResponseEntity<>(userService.getUserByIdAdmin(id), HttpStatus.OK) ;
     }
     @Operation(summary = "Add liked movies to user", description = "API for add liked movie to user")
     @PutMapping("/likeMovie/{id}")
     public ResponseEntity<UserResponseDto> likeMovie(@RequestHeader(CustomHeaders.X_AUTH_USER_ID) Long id,@PathVariable(name = "id") Long movieId){
         return new ResponseEntity<>(userService.userLikeMovie(id,movieId), HttpStatus.OK);
+    }
+    @Operation(summary = "Update user", description = "API for update user")
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable(name = "id") Long userId, @RequestBody UserUpdateDto updateDto){
+        return new ResponseEntity<>(userService.updateUser(userId,updateDto), HttpStatus.OK);
+    }
+    @Operation(summary = "Delete user", description = "API for delete user")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable(name = "id") Long userId){
+        userService.deleteUser(userId);
+        return new ResponseEntity<>("Delete Successfully", HttpStatus.OK);
+    }
+    @GetMapping("/email/{id}")
+    public ResponseEntity<String> getUserEmail(@PathVariable(name = "id") Long userId){
+        return new ResponseEntity<>(userService.getEmailUser(userId), HttpStatus.OK);
     }
 }

@@ -27,7 +27,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz ->
                         authz.
                                 requestMatchers(HttpMethod.GET, "/order/**").permitAll()
-
+                                .requestMatchers("/actuator/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 .anyRequest()
                                 .authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2

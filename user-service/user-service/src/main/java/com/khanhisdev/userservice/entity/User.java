@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -22,11 +23,19 @@ public class User {
     private Long id;
     @Column(unique = true, nullable = false)
     private String username;
+    @Column(name = "avatar")
+    private String avatar;
     @Column(nullable = false)
     private String password;
     private boolean isActive;
     @Column(nullable = false)
     private String email;
+    @Column(name = "dob")
+    private LocalDate birthday;
+    @Column(name = "full-name")
+    private String fullName;
+    @Column(name = "phone")
+    private String phoneNumber;
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
             name = "users_roles",

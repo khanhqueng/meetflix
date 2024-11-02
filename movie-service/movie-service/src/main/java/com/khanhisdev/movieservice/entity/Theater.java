@@ -27,4 +27,6 @@ public class Theater {
     private List<ProjectionRoom> projectionRoomList= new ArrayList<>();
     @OneToMany(mappedBy = "theater")
     private List<Showtime> showtimeList;
+    @Column(name = "address")
+    private String address;
 }

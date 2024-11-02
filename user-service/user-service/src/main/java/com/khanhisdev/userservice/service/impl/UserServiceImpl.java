@@ -3,6 +3,7 @@ package com.khanhisdev.userservice.service.impl;
 import com.khanhisdev.userservice.dto.Mapper.UserMapper;
 import com.khanhisdev.userservice.dto.RequestDto.MovieDto;
 import com.khanhisdev.userservice.dto.RequestDto.UserDto;
+import com.khanhisdev.userservice.dto.RequestDto.UserUpdateDto;
 import com.khanhisdev.userservice.dto.ResponseDto.APIResponseDto;
 import com.khanhisdev.userservice.dto.ResponseDto.UserResponseDto;
 import com.khanhisdev.userservice.entity.LikedMovie;
@@ -81,9 +82,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByUsername(String userName) {
-        User user = this.userRepository.findByUsername(userName).orElseThrow(()->new UsernameNotFoundException("User not found with username: "+userName));
-        return this.mapper.mapToDto(user);
+    public String getEmailUser(Long userId) {
+        User user = this.userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User", "id", userId));
+        return user.getEmail();
     }
 
     @Override
@@ -106,5 +107,30 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto getUserByIdAdmin(Long id) {
        User user= userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "id", id));
        return mapper.mapToResponseDto(user);
+    }
+
+    @Override
+    public UserResponseDto updateUser(Long userId, UserUpdateDto dto) {
+        User user= userRepository.findById(userId).orElseThrow(
+                ()-> new ResourceNotFoundException("User","id", userId)
+        );
+        Set<Role> roles = dto.getRoles().stream().map(role -> roleRepository.findByName(role.getName())
+                .orElseThrow(
+                        ()-> new ResourceNotFoundException("Role", "name", role.getName())
+                )).collect(Collectors.toSet());
+        user.setBirthday(dto.getBirthday());
+        user.setEmail(dto.getEmail());
+        user.setFullName(dto.getFullName());
+        user.setPhoneNumber(dto.getPhoneNumber());
+        user.setRoles(roles);
+        return mapper.mapToResponseDto(userRepository.save(user));
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        User user= userRepository.findById(userId).orElseThrow(
+                ()-> new ResourceNotFoundException("User", "id", userId)
+        );
+        userRepository.delete(user);
     }
 }

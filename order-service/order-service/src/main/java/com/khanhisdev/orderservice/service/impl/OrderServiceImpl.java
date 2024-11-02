@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
         this.setTimeToLive(key, 30);
         //Get Email of User from User Id
         String email= webClient.get()
-                .uri("http://"+user_hostname+ ":8092/user/"+ userId)
+                .uri("http://"+user_hostname+ ":8092/user/email/"+ userId)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -98,8 +99,9 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
         List<GetTicketRequest> getTicketRequests= new ArrayList<>();
         for (Map.Entry<String, Object> entry : showtime.entrySet()) {
             String info= entry.getKey().split("_")[1];
-            String startTime= (info.split(",")[3]).split(":")[1]+":"+(info.split(",")[3]).split(":")[2];
-            Long roomId= Long.valueOf((info.split(",")[2]).split(":")[1]);
+            String[] specificINfo = info.split(",");
+            Long roomId = Long.valueOf(specificINfo[0].split("\\*")[1]);
+            LocalDateTime startTime = LocalDateTime.parse(specificINfo[1].split("\\*")[1]);
             List<String>  seatsOrdered = (List<String>) entry.getValue();
             getTicketRequests.add(new GetTicketRequest(startTime,roomId,seatsOrdered));
         }

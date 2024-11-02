@@ -78,7 +78,7 @@ public class SecurityConfig {
                         // movie
                         .pathMatchers(HttpMethod.PUT, "api/v1/movie/**").hasAuthority("SCOPE_USER")
                         // user
-                        .pathMatchers(HttpMethod.PUT, "api/v1/user/**").hasAuthority("SCOPE_USER")
+                        .pathMatchers(HttpMethod.PUT, "api/v1/user/**").hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN")
                         .pathMatchers(HttpMethod.GET, "api/v1/user/**").hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN")
                         // comment
                         .pathMatchers(HttpMethod.GET, "api/v1/comment/user/**").hasAuthority("SCOPE_USER")
@@ -91,6 +91,7 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.DELETE, "api/v1/order/**").hasAuthority("SCOPE_USER")
 
                         // api for admin
+                        .pathMatchers(HttpMethod.DELETE, "api/v1/user/**").hasAuthority("SCOPE_ADMIN")
                         .pathMatchers(HttpMethod.GET, "api/v1/user/all").hasAuthority("SCOPE_ADMIN")
                         // movie
                         .pathMatchers(HttpMethod.POST, "api/v1/movie/**").hasAuthority("SCOPE_ADMIN")

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,11 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class ShowtimeForOrderDto {
     private Long id;
-    private LocalDate date;
-    private String time;
-    private String movieName;
-    private String theaterName;
-    private Integer projectionRoomName;
+    private LocalDateTime startTime;
+    private String movie;
+    private String theater;
+    private Integer projectionRoom;
     private List<String> seats;
-
 }
