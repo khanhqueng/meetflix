@@ -154,7 +154,6 @@ public class MovieServiceImpl implements MovieService {
                 content, page.getNumber(),page.getSize(),page.getTotalElements(),page.getTotalPages(),page.isLast()
         );
     }
-
     @Override
     public MovieResponseDto updateMovie(MovieUpdateDto updateDto, Long movieId) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(
