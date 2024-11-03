@@ -19,7 +19,7 @@ public class OrderConsumer {
 
     @RabbitListener(queues = "${rabbitmq.queue.order.name}")
     public void consume(OrderEvent event){
-        LOGGER.info(String.format("Message has been received ", event.toString()));
+        LOGGER.info(String.format("Message has been received %s", event.toString()));
         String infoSeats= String.join(",",event.getContent().getSeats());
         Map<String ,Object> attributes= Map.of(
                 "seat", infoSeats,

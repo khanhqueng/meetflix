@@ -6,6 +6,7 @@ import freemarker.template.TemplateException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,10 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     private Configuration freemakerConfiguration;
     private JavaMailSender javaMailSender;
 
-
     @Override
     public void sendSeatsInformation(String toEmail, Map<String, Object> attributes) {
         String text =getEmailContent("seats-info.ftlh", attributes);
-        sendEmail(toEmail, "[Betflix Cinema] Bạn đặt vé thành công", text);
+        sendEmail(toEmail, "[Meetflix Cinema] Bạn đặt vé thành công", text);
     }
 
     private void sendEmail(String toEmail, String subject, String text) {

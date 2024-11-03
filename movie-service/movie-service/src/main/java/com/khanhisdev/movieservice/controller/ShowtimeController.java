@@ -1,14 +1,13 @@
 package com.khanhisdev.movieservice.controller;
 
+import com.khanhisdev.commons.dto.ShowtimeForOrderDto;
 import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeForOrderRequest;
 import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeRequestDto;
-import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeForOrderDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeResponseDto;
 import com.khanhisdev.movieservice.service.ShowtimeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

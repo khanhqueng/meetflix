@@ -1,7 +1,6 @@
 package com.khanhisdev.orderservice.controller;
 
 import com.khanhisdev.orderservice.dto.Request.GetOrderedSeatsDto;
-import com.khanhisdev.orderservice.dto.Response.ShowtimeForOrderDto;
 import com.khanhisdev.orderservice.service.OrderService;
 import com.khanhisdev.orderservice.utils.CustomHeaders;
 import lombok.AllArgsConstructor;

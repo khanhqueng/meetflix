@@ -1,6 +1,5 @@
 package com.khanhisdev.orderservice.dto.Message;
 
-import com.khanhisdev.orderservice.dto.Response.ShowtimeForOrderDto;
 import lombok.Data;
 
 @Data

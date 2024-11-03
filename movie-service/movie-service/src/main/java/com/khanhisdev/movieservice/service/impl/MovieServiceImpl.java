@@ -4,6 +4,7 @@ import com.khanhisdev.movieservice.dto.Mapper.CategoryMapper;
 import com.khanhisdev.movieservice.dto.Mapper.MovieMapper;
 import com.khanhisdev.movieservice.dto.Message.CategoryMessage;
 import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
+import com.khanhisdev.movieservice.dto.RequestDto.MovieUpdateDto;
 import com.khanhisdev.movieservice.dto.RequestDto.UserRatingDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ObjectResponse;
@@ -152,6 +153,59 @@ public class MovieServiceImpl implements MovieService {
         return new ObjectResponse<MovieResponseDto>(
                 content, page.getNumber(),page.getSize(),page.getTotalElements(),page.getTotalPages(),page.isLast()
         );
+    }
+
+    @Override
+    public MovieResponseDto updateMovie(MovieUpdateDto updateDto, Long movieId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(
+                ()-> new ResourceNotFoundException("Movie", "id", movieId)
+        );
+        // check director
+        Set<Director> directors= new HashSet<>();
+        for(Director director: updateDto.getDirector()){
+            if(directorRepository.existsByName(director.getName())){
+                directors.add(directorRepository.findByName(director.getName()));
+                continue;
+            }
+            directors.add(director);
+        }
+        // check actor
+        Set<Actor> actors= new HashSet<>();
+        for(Actor actor: updateDto.getActors()){
+            if(actorRepository.existsByName(actor.getName())){
+                actors.add(actorRepository.findByName(actor.getName()));
+                continue;
+            }
+            actors.add(actor);
+        }
+        // check category
+        Set<Category> categories= new HashSet<>();
+        for(Category category: updateDto.getCategories()){
+            if(categoryRepository.existsByName(category.getName())){
+                categories.add(categoryRepository.findByName(category.getName()));
+                continue;
+            }
+            categories.add(category);
+        }
+        movie.setActors(actors);
+        movie.setDirector(directors);
+        movie.setCategories(categories);
+        movie.setName(updateDto.getName());
+        movie.setCountry(updateDto.getCountry());
+        movie.setDescription(updateDto.getDescription());
+        movie.setDurationMin(updateDto.getDurationMin());
+        movie.setRatingPoint(BigDecimal.valueOf(updateDto.getRatingPoint()));
+        movie.setReleaseDate(updateDto.getReleaseDate());
+        movie.setUrlImage(updateDto.getUrlImage());
+        return movieMapper.mapToDto(movieRepository.save(movie));
+    }
+
+    @Override
+    public void deleteMovie(Long movieId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(
+                ()-> new ResourceNotFoundException("Movie", "id", movieId)
+        );
+        movieRepository.delete(movie);
     }
 
 
