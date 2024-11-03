@@ -1,6 +1,7 @@
 package com.khanhisdev.movieservice.service;
 
 import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
+import com.khanhisdev.movieservice.dto.RequestDto.MovieUpdateDto;
 import com.khanhisdev.movieservice.dto.RequestDto.UserRatingDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ObjectResponse;
@@ -17,4 +18,6 @@ public interface MovieService {
     List<MovieResponseDto>  getMoviesByIds(List<Long > ids);
     RatingPointResponseDto ratingMovie(UserRatingDto userRatingDto);
     ObjectResponse<MovieResponseDto> findMoviesByFullSearchText(String keyword, int pageNo, int pageSize,String sortBy,String sortDir);
+    MovieResponseDto updateMovie(MovieUpdateDto updateDto, Long movieId);
+    void deleteMovie(Long movieId);
 }

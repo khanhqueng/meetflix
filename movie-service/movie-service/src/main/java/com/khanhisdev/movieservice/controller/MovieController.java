@@ -1,6 +1,7 @@
 package com.khanhisdev.movieservice.controller;
 
 import com.khanhisdev.movieservice.dto.RequestDto.MovieRequestDto;
+import com.khanhisdev.movieservice.dto.RequestDto.MovieUpdateDto;
 import com.khanhisdev.movieservice.dto.RequestDto.UserRatingDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.MovieResponseDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ObjectResponse;
@@ -72,9 +73,18 @@ public class MovieController {
             @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
             ){
         return new ResponseEntity<>(movieService.findMoviesByFullSearchText(searchText,pageNo, pageSize, sortBy, sortDir), HttpStatus.OK);
-
     }
-
+    @Operation(summary = "Update movie", description = "API for update movie")
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieResponseDto> updateMovie(@PathVariable(name = "id")Long movieId, @RequestBody MovieUpdateDto updateDto){
+        return new ResponseEntity<>(movieService.updateMovie(updateDto,movieId), HttpStatus.OK);
+    }
+    @Operation(summary = "Delete movie", description = "API for delete movie")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteMovie(@PathVariable(name = "id")Long movieId){
+        movieService.deleteMovie(movieId);
+        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
+    }
 
 
 }

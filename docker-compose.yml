@@ -69,6 +69,8 @@ services:
       - betflix-network
   email-service:
     container_name: email-service
+    env_file:
+      - "./email-service/email-service/.env"
     image: quangkhanh288/email-service
     restart: unless-stopped
     environment:

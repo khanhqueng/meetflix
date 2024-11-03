@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.betflix</groupId>
+    <artifactId>betflix</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>user-service/user-service</module>
+        <module>gateway-service/gateway-service</module>
+        <module>order-service/order-service</module>
+        <module>config-server/config-server</module>
+        <module>email-service/email-service</module>
+        <module>movie-service/movie-service</module>
+        <module>service-registry/service-registry</module>
+        <module>commons</module>
+        <!--        <module>dummy-service</module>-->
+    </modules>
+
+</project>
