@@ -1,10 +1,9 @@
 package com.khanhisdev.movieservice.service;
 
+import com.khanhisdev.commons.dto.ShowtimeForOrderDto;
 import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeForOrderRequest;
 import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeRequestDto;
-import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeForOrderDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeResponseDto;
-import org.springframework.data.util.Pair;
 
 import java.util.List;
 

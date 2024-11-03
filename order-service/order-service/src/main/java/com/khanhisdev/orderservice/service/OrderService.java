@@ -3,8 +3,7 @@ package com.khanhisdev.orderservice.service;
 import com.khanhisdev.orderservice.dto.Request.AddTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.DeleteTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.GetOrderedSeatsDto;
-import com.khanhisdev.orderservice.dto.Response.ShowtimeForOrderDto;
-
+import com.khanhisdev.commons.dto.ShowtimeForOrderDto;
 import java.util.List;
 
 public interface OrderService extends BaseRedisService<String,String,Object>{

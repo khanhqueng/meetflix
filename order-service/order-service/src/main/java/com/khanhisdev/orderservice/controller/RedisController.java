@@ -1,8 +1,8 @@
 package com.khanhisdev.orderservice.controller;
 
+import com.khanhisdev.commons.dto.ShowtimeForOrderDto;
 import com.khanhisdev.orderservice.dto.Request.AddTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.DeleteTicketRequest;
-import com.khanhisdev.orderservice.dto.Response.ShowtimeForOrderDto;
 import com.khanhisdev.orderservice.service.OrderService;
 import com.khanhisdev.orderservice.utils.CustomHeaders;
 import lombok.AllArgsConstructor;

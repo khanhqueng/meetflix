@@ -1,9 +1,9 @@
 package com.khanhisdev.movieservice.service.impl;
 
+import com.khanhisdev.commons.dto.ShowtimeForOrderDto;
 import com.khanhisdev.movieservice.dto.Mapper.ShowtimeMapper;
 import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeForOrderRequest;
 import com.khanhisdev.movieservice.dto.RequestDto.ShowtimeRequestDto;
-import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeForOrderDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeResponseDto;
 import com.khanhisdev.movieservice.entity.Movie;
 import com.khanhisdev.movieservice.entity.ProjectionRoom;

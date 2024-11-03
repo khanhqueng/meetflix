@@ -16,6 +16,7 @@ public class OrderProducer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+
     public <V> void sendMessage( V object){
         rabbitTemplate.convertAndSend(exchange,routingKey,object);
     }

@@ -1,12 +1,12 @@
 package com.khanhisdev.orderservice.service.impl;
 
+import com.khanhisdev.commons.dto.ShowtimeForOrderDto;
 import com.khanhisdev.orderservice.dto.Message.EmailContent;
 import com.khanhisdev.orderservice.dto.Message.OrderEvent;
 import com.khanhisdev.orderservice.dto.Request.AddTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.DeleteTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.GetOrderedSeatsDto;
 import com.khanhisdev.orderservice.dto.Request.GetTicketRequest;
-import com.khanhisdev.orderservice.dto.Response.ShowtimeForOrderDto;
 import com.khanhisdev.orderservice.exception.ResourceNotFoundException;
 import com.khanhisdev.orderservice.publisher.OrderProducer;
 import com.khanhisdev.orderservice.service.OrderService;
@@ -64,18 +64,18 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
                 .block();
 
         // Set content Email and send to message queue
-//        OrderEvent orderEvent= new OrderEvent();
-//        orderEvent.setStatus("PENDING");
-//        orderEvent.setMessage("Email is in pending status");
-//        EmailContent emailContent= new EmailContent();
-//        emailContent.setDesEmail(email);
-//        emailContent.setNameMovie(addTicketRequest.getMovieName());
-//        emailContent.setNameRoom(addTicketRequest.getRoomName());
-//        emailContent.setShowtime(addTicketRequest.getShowtime());
-//        emailContent.setNameTheater(addTicketRequest.getTheaterName());
-//        emailContent.setSeats(addTicketRequest.getSeats());
-//        orderEvent.setContent(emailContent);
-//        producer.sendMessage(orderEvent);
+        OrderEvent orderEvent= new OrderEvent();
+        orderEvent.setStatus("PENDING");
+        orderEvent.setMessage("Email is in pending status");
+        EmailContent emailContent= new EmailContent();
+        emailContent.setDesEmail(email);
+        emailContent.setNameMovie(addTicketRequest.getMovieName());
+        emailContent.setNameRoom(addTicketRequest.getRoomName());
+        emailContent.setShowtime(String.valueOf(addTicketRequest.getShowtime()));
+        emailContent.setNameTheater(addTicketRequest.getTheaterName());
+        emailContent.setSeats(addTicketRequest.getSeats());
+        orderEvent.setContent(emailContent);
+        producer.sendMessage(orderEvent);
     }
 
     @Override
