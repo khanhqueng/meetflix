@@ -198,7 +198,6 @@ public class MovieServiceImpl implements MovieService {
         movie.setReleaseDate(updateDto.getReleaseDate());
         movie.setUrlImage(updateDto.getUrlImage());
         return movieMapper.mapToDto(movieRepository.save(movie));
-
     }
 
     @Override
