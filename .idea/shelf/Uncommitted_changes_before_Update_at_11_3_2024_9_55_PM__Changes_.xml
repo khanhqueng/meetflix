@@ -1,9 +1,0 @@
-<changelist name="Uncommitted_changes_before_Update_at_11_3_2024_9_55_PM_[Changes]" date="1730645761697" recycled="true" deleted="true">
-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_3_2024_9_55_PM_[Changes]/shelved.patch" />
-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 11/3/2024 9:55 PM [Changes]" />
-  <binary>
-    <option name="BEFORE_PATH" value="user-service/user-service/target/classes/com/khanhisdev/userservice/config/Oauth2/AuthorizationServerConfig.class" />
-    <option name="AFTER_PATH" value="user-service/user-service/target/classes/com/khanhisdev/userservice/config/Oauth2/AuthorizationServerConfig.class" />
-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_3_2024_9_55_PM_[Changes]/AuthorizationServerConfig.class" />
-  </binary>
-</changelist>
