@@ -1,0 +1,73 @@
+Index: .idea/modules.xml
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+deleted file mode 100644
+--- a/.idea/modules.xml	(revision bb3f2d08a91d26f526fbd8d1bd93bf2151375f4c)
++++ /dev/null	(revision bb3f2d08a91d26f526fbd8d1bd93bf2151375f4c)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/Springboot-microservices.iml" filepath="$PROJECT_DIR$/.idea/Springboot-microservices.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <annotationProcessing>\r\n      <profile default=\"true\" name=\"Default\" enabled=\"true\" />\r\n      <profile name=\"Maven default annotation processors profile\" enabled=\"true\">\r\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\r\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\r\n        <outputRelativeToContentRoot value=\"true\" />\r\n        <module name=\"config-server\" />\r\n        <module name=\"order-service\" />\r\n        <module name=\"gateway-service\" />\r\n        <module name=\"service-registry\" />\r\n        <module name=\"email-service\" />\r\n      </profile>\r\n      <profile name=\"Annotation profile for user-service\" enabled=\"true\">\r\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\r\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\r\n        <outputRelativeToContentRoot value=\"true\" />\r\n        <option name=\"mapstruct.defaultComponentModel\" value=\"spring\" />\r\n        <option name=\"mapstruct.disableBuilders\" value=\"true\" />\r\n        <option name=\"mapstruct.unmappedTargetPolicy\" value=\"IGNORE\" />\r\n        <processorPath useClasspath=\"false\">\r\n          <entry name=\"$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar\" />\r\n          <entry name=\"$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar\" />\r\n          <entry name=\"$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar\" />\r\n          <entry name=\"$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar\" />\r\n        </processorPath>\r\n        <module name=\"movie-service\" />\r\n        <module name=\"user-service\" />\r\n      </profile>\r\n    </annotationProcessing>\r\n  </component>\r\n  <component name=\"JavacSettings\">\r\n    <option name=\"ADDITIONAL_OPTIONS_OVERRIDE\">\r\n      <module name=\"config-server\" options=\"-parameters\" />\r\n      <module name=\"email-service\" options=\"-parameters\" />\r\n      <module name=\"gateway-service\" options=\"-parameters\" />\r\n      <module name=\"movie-service\" options=\"-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=IGNORE -Amapstruct.disableBuilders=true\" />\r\n      <module name=\"order-service\" options=\"-parameters\" />\r\n      <module name=\"service-registry\" options=\"-parameters\" />\r\n      <module name=\"user-service\" options=\"-parameters -Amapstruct.defaultComponentModel=spring -Amapstruct.unmappedTargetPolicy=IGNORE -Amapstruct.disableBuilders=true\" />\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+--- a/.idea/compiler.xml	(revision bb3f2d08a91d26f526fbd8d1bd93bf2151375f4c)
++++ b/.idea/compiler.xml	(date 1730645388107)
+@@ -13,7 +13,7 @@
+         <module name="service-registry" />
+         <module name="email-service" />
+       </profile>
+-      <profile name="Annotation profile for user-service" enabled="true">
++      <profile name="Annotation profile for movie-service" enabled="true">
+         <sourceOutputDir name="target/generated-sources/annotations" />
+         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+         <outputRelativeToContentRoot value="true" />
+@@ -27,6 +27,24 @@
+           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+         </processorPath>
+         <module name="movie-service" />
++      </profile>
++      <profile name="Annotation profile for user-service" enabled="true">
++        <sourceOutputDir name="target/generated-sources/annotations" />
++        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
++        <outputRelativeToContentRoot value="true" />
++        <option name="mapstruct.defaultComponentModel" value="spring" />
++        <option name="mapstruct.disableBuilders" value="true" />
++        <option name="mapstruct.unmappedTargetPolicy" value="IGNORE" />
++        <processorPath useClasspath="false">
++          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
++        </processorPath>
+         <module name="user-service" />
+       </profile>
+     </annotationProcessing>
+Index: email-service/email-service/.env
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/email-service/email-service/.env b/email-service/email-service/.env
+new file mode 100644
+--- /dev/null	(date 1730631824925)
++++ b/email-service/email-service/.env	(date 1730631824925)
+@@ -0,0 +1,2 @@
++email=quangkhanh1232004@gmail.com
++password=hcagodqboofefkac
+\ No newline at end of file

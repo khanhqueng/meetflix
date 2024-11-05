@@ -1,0 +1,217 @@
+Index: movie-service/movie-service/src/main/java/com/khanhisdev/movieservice/controller/MessageController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.khanhisdev.movieservice.controller;\r\n\r\nimport org.springframework.beans.factory.annotation.Value;\r\nimport org.springframework.cloud.context.config.annotation.RefreshScope;\r\nimport org.springframework.web.bind.annotation.GetMapping;\r\nimport org.springframework.web.bind.annotation.RestController;\r\n@RefreshScope\r\n@RestController\r\npublic class MessageController {\r\n    @Value(\"${spring.boot.message}\")\r\n    private String message;\r\n\r\n    @GetMapping(\"/message\")\r\n    public String getMessage(){\r\n        return message;\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/movie-service/movie-service/src/main/java/com/khanhisdev/movieservice/controller/MessageController.java b/movie-service/movie-service/src/main/java/com/khanhisdev/movieservice/controller/MessageController.java
+--- a/movie-service/movie-service/src/main/java/com/khanhisdev/movieservice/controller/MessageController.java	
++++ b/movie-service/movie-service/src/main/java/com/khanhisdev/movieservice/controller/MessageController.java	
+@@ -7,7 +7,6 @@
+ @RefreshScope
+ @RestController
+ public class MessageController {
+-    @Value("${spring.boot.message}")
+     private String message;
+ 
+     @GetMapping("/message")
+Index: user-service/user-service/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Server Config\r\nspring.application.name=user-service\r\n# Arg\r\nmovie.host= ${MOVIE_HOSTNAME:localhost}\r\n\r\nmanagement.endpoints.web.exposure.include=*\r\n\r\nspring.profiles.active=dev\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/user-service/user-service/src/main/resources/application.properties b/user-service/user-service/src/main/resources/application.properties
+--- a/user-service/user-service/src/main/resources/application.properties	
++++ b/user-service/user-service/src/main/resources/application.properties	
+@@ -1,5 +1,6 @@
+ # Server Config
+ spring.application.name=user-service
++server.port=8092
+ # Arg
+ movie.host= ${MOVIE_HOSTNAME:localhost}
+ 
+Index: user-service/user-service/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n\txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n\t<modelVersion>4.0.0</modelVersion>\r\n\t<parent>\r\n\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t<artifactId>spring-boot-starter-parent</artifactId>\r\n\t\t<version>3.2.7</version>\r\n\t\t<relativePath/> <!-- lookup parent from repository -->\r\n\t</parent>\r\n\t<groupId>com.khanhisdev</groupId>\r\n\t<artifactId>user-service</artifactId>\r\n\t<version>0.0.1-SNAPSHOT</version>\r\n\t<name>user-service</name>\r\n\t<description>Spring Boot project as user-service</description>\r\n\t<url/>\r\n\t<licenses>\r\n\t\t<license/>\r\n\t</licenses>\r\n\t<developers>\r\n\t\t<developer/>\r\n\t</developers>\r\n\t<scm>\r\n\t\t<connection/>\r\n\t\t<developerConnection/>\r\n\t\t<tag/>\r\n\t\t<url/>\r\n\t</scm>\r\n\t<properties>\r\n\t\t<java.version>17</java.version>\r\n\t\t<spring-cloud.version>2023.0.2</spring-cloud.version>\r\n\t\t<mapstruct.version>1.5.5.Final</mapstruct.version>\r\n\t</properties>\r\n\t<dependencies>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-data-jpa</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-web</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-webflux</artifactId>\r\n\t\t</dependency>\r\n\r\n\t\t<dependency>\r\n\t\t\t<groupId>com.mysql</groupId>\r\n\t\t\t<artifactId>mysql-connector-j</artifactId>\r\n\t\t\t<scope>runtime</scope>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t<artifactId>lombok</artifactId>\r\n\t\t\t<optional>true</optional>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-test</artifactId>\r\n\t\t\t<scope>test</scope>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.modelmapper</groupId>\r\n\t\t\t<artifactId>modelmapper</artifactId>\r\n\t\t\t<version>3.1.1</version>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.mapstruct</groupId>\r\n\t\t\t<artifactId>mapstruct</artifactId>\r\n\t\t\t<version>${mapstruct.version}</version>\r\n\t\t</dependency>\r\n\t\t<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-validation</artifactId>\r\n\t\t\t<version>3.3.0</version>\r\n\t\t</dependency>\r\n<!--\t\t<dependency>-->\r\n<!--\t\t\t<groupId>org.springframework.boot</groupId>-->\r\n<!--\t\t\t<artifactId>spring-boot-starter-security</artifactId>-->\r\n<!--\t\t</dependency>-->\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-actuator</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.micrometer</groupId>\r\n\t\t\t<artifactId>micrometer-registry-prometheus</artifactId>\r\n\t\t\t<scope>runtime</scope>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t<artifactId>spring-cloud-starter-config</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t<artifactId>spring-cloud-starter-bus-amqp</artifactId>\r\n\t\t</dependency>\r\n\t\t<!--add distributed tracing -->\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.micrometer</groupId>\r\n\t\t\t<artifactId>micrometer-observation</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.micrometer</groupId>\r\n\t\t\t<artifactId>micrometer-tracing-bridge-brave</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.zipkin.reporter2</groupId>\r\n\t\t\t<artifactId>zipkin-reporter-brave</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>net.logstash.logback</groupId>\r\n\t\t\t<artifactId>logstash-logback-encoder</artifactId>\r\n\t\t\t<version>7.4</version>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-security</artifactId>\r\n\t\t</dependency>\r\n\t\t<!--Documentation-->\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springdoc</groupId>\r\n\t\t\t<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>\r\n\t\t\t<version>2.2.0</version>\r\n\t\t</dependency>\r\n<!--\t\t<dependency>-->\r\n<!--\t\t\t<groupId>org.springframework.boot</groupId>-->\r\n<!--\t\t\t<artifactId>spring-boot-starter-oauth2-client</artifactId>-->\r\n<!--\t\t</dependency>-->\r\n\r\n\r\n\t</dependencies>\r\n\t<dependencyManagement>\r\n\t\t<dependencies>\r\n\t\t\t<dependency>\r\n\t\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t\t<artifactId>spring-cloud-dependencies</artifactId>\r\n\t\t\t\t<version>${spring-cloud.version}</version>\r\n\t\t\t\t<type>pom</type>\r\n\t\t\t\t<scope>import</scope>\r\n\t\t\t</dependency>\r\n\t\t</dependencies>\r\n\t</dependencyManagement>\r\n\r\n\t<build>\r\n\t\t<plugins>\r\n\t\t\t<plugin>\r\n\t\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t\t<artifactId>spring-boot-maven-plugin</artifactId>\r\n\t\t\t\t<configuration>\r\n\t\t\t\t\t<excludes>\r\n\t\t\t\t\t\t<exclude>\r\n\t\t\t\t\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t\t\t\t\t<artifactId>lombok</artifactId>\r\n\t\t\t\t\t\t</exclude>\r\n\t\t\t\t\t</excludes>\r\n\t\t\t\t</configuration>\r\n\t\t\t</plugin>\r\n\t\t\t<plugin>\r\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\r\n\t\t\t\t<artifactId>maven-compiler-plugin</artifactId>\r\n\t\t\t\t<version>3.11.0</version>\r\n\t\t\t\t<configuration>\r\n\t\t\t\t\t<annotationProcessorPaths>\r\n\t\t\t\t\t\t<path>\r\n\t\t\t\t\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t\t\t\t\t<artifactId>lombok</artifactId>\r\n\t\t\t\t\t\t\t<version>${lombok.version}</version>\r\n\t\t\t\t\t\t</path>\r\n\t\t\t\t\t\t<path>\r\n\t\t\t\t\t\t\t<groupId>org.mapstruct</groupId>\r\n\t\t\t\t\t\t\t<artifactId>mapstruct-processor</artifactId>\r\n\t\t\t\t\t\t\t<version>1.5.5.Final</version>\r\n\t\t\t\t\t\t</path>\r\n\t\t\t\t\t\t<path>\r\n\t\t\t\t\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t\t\t\t\t<artifactId>lombok-mapstruct-binding</artifactId>\r\n\t\t\t\t\t\t\t<version>0.2.0</version>\r\n\t\t\t\t\t\t</path>\r\n\t\t\t\t\t</annotationProcessorPaths>\r\n\t\t\t\t\t<compilerArgs>\r\n\t\t\t\t\t\t<arg>\r\n\t\t\t\t\t\t\t-Amapstruct.defaultComponentModel=spring\r\n\t\t\t\t\t\t</arg>\r\n\t\t\t\t\t\t<arg>\r\n\t\t\t\t\t\t\t-Amapstruct.unmappedTargetPolicy=IGNORE\r\n\t\t\t\t\t\t</arg>\r\n\t\t\t\t\t\t<arg>\r\n\t\t\t\t\t\t\t-Amapstruct.disableBuilders=true\r\n\t\t\t\t\t\t</arg>\r\n\t\t\t\t\t</compilerArgs>\r\n\t\t\t\t</configuration>\r\n\t\t\t</plugin>\r\n\t\t</plugins>\r\n\t</build>\r\n\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/user-service/user-service/pom.xml b/user-service/user-service/pom.xml
+--- a/user-service/user-service/pom.xml	
++++ b/user-service/user-service/pom.xml	
+@@ -95,10 +95,6 @@
+ 		</dependency>
+ 		<dependency>
+ 			<groupId>org.springframework.cloud</groupId>
+-			<artifactId>spring-cloud-starter-config</artifactId>
+-		</dependency>
+-		<dependency>
+-			<groupId>org.springframework.cloud</groupId>
+ 			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+ 		</dependency>
+ 		<!--add distributed tracing -->
+Index: movie-service/movie-service/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Server Config\r\nspring.application.name=movie-service\r\n\r\nspring.profiles.active=dev\r\n\r\n#server.port=8091\r\n#spring.datasource.url=jdbc:mysql://localhost:3306/movie_db\r\n#spring.datasource.username=root\r\n#spring.datasource.password=\r\n#spring.jpa.show-sql: true\r\n#\r\n#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect\r\n#spring.jpa.hibernate.ddl-auto=update\r\n#\r\n#eureka.instance.client.serverUrl.defaultZone=http://localhost:8761/eureka/\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/movie-service/movie-service/src/main/resources/application.properties b/movie-service/movie-service/src/main/resources/application.properties
+--- a/movie-service/movie-service/src/main/resources/application.properties	
++++ b/movie-service/movie-service/src/main/resources/application.properties	
+@@ -1,6 +1,6 @@
+ #Server Config
+ spring.application.name=movie-service
+-
++server.port=8091
+ spring.profiles.active=dev
+ 
+ #server.port=8091
+Index: user-service/user-service/target/classes/application-dev.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n#Fetch Data from Config Server\r\nspring.config.import=optional:configserver:http://localhost:8888\r\n\r\n# Database Config\r\nspring.datasource.url=jdbc:mysql://localhost:3306/user_db\r\nspring.datasource.username=root\r\nspring.datasource.password=quangkhanh\r\n\r\n# Jpa Config\r\nspring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.jpa.show-sql: true\r\nspring.jpa.properties.hibernate.format_sql = true\r\n\r\n# Register Eureka Server\r\neureka.client.service-url.defaultZone=http://localhost:8761/eureka\r\neureka.client.register-with-eureka=true\r\neureka.client.fetch-registry=true\r\neureka.instance.prefer-ip-address=true\r\n\r\n# RabbitMQ Config\r\nspring.rabbitmq.host= localhost\r\nspring.rabbitmq.port= 5672\r\nspring.rabbitmq.username= guest\r\nspring.rabbitmq.password= guest\r\n\r\n# Add properties for tracing\r\nmanagement.tracing.sampling.probability=1.0\r\nlogging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]\r\nlogging.level.org.springframework.web=TRACE\r\n\r\n# Variables\r\nissuerURI=http://localhost:8092
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/user-service/user-service/target/classes/application-dev.properties b/user-service/user-service/target/classes/application-dev.properties
+--- a/user-service/user-service/target/classes/application-dev.properties	
++++ b/user-service/user-service/target/classes/application-dev.properties	
+@@ -1,6 +1,5 @@
+ 
+ #Fetch Data from Config Server
+-spring.config.import=optional:configserver:http://localhost:8888
+ 
+ # Database Config
+ spring.datasource.url=jdbc:mysql://localhost:3306/user_db
+Index: user-service/user-service/src/main/resources/application-dev.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n#Fetch Data from Config Server\r\nspring.config.import=optional:configserver:http://localhost:8888\r\n\r\n# Database Config\r\nspring.datasource.url=jdbc:mysql://localhost:3306/user_db\r\nspring.datasource.username=root\r\nspring.datasource.password=quangkhanh\r\n\r\n# Jpa Config\r\nspring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.jpa.show-sql: true\r\nspring.jpa.properties.hibernate.format_sql = true\r\n\r\n# Register Eureka Server\r\neureka.client.service-url.defaultZone=http://localhost:8761/eureka\r\neureka.client.register-with-eureka=true\r\neureka.client.fetch-registry=true\r\neureka.instance.prefer-ip-address=true\r\n\r\n# RabbitMQ Config\r\nspring.rabbitmq.host= localhost\r\nspring.rabbitmq.port= 5672\r\nspring.rabbitmq.username= guest\r\nspring.rabbitmq.password= guest\r\n\r\n# Add properties for tracing\r\nmanagement.tracing.sampling.probability=1.0\r\nlogging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]\r\nlogging.level.org.springframework.web=TRACE\r\n\r\n# Variables\r\nissuerURI=http://localhost:8092
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/user-service/user-service/src/main/resources/application-dev.properties b/user-service/user-service/src/main/resources/application-dev.properties
+--- a/user-service/user-service/src/main/resources/application-dev.properties	
++++ b/user-service/user-service/src/main/resources/application-dev.properties	
+@@ -1,6 +1,5 @@
+ 
+ #Fetch Data from Config Server
+-spring.config.import=optional:configserver:http://localhost:8888
+ 
+ # Database Config
+ spring.datasource.url=jdbc:mysql://localhost:3306/user_db
+Index: movie-service/movie-service/src/main/resources/application-dev.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Fetch Data from Config Server\r\nspring.config.import=optional:configserver:http://localhost:8888\r\nmanagement.endpoints.web.exposure.include=*\r\n\r\nspring.datasource.url=jdbc:mysql://localhost:3306/movie_db\r\nspring.datasource.username=root\r\nspring.datasource.password=quangkhanh\r\nspring.jpa.show-sql: true\r\n\r\nspring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.sql.init.mode= never\r\n\r\n# Register Eureka\r\neureka.client.service-url.defaultZone=http://localhost:8761/eureka\r\neureka.client.register-with-eureka=true\r\neureka.client.fetch-registry=true\r\neureka.instance.prefer-ip-address=true\r\n\r\n#add properties for tracing\r\nmanagement.tracing.sampling.probability=1.0\r\nlogging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]\r\nlogging.level.org.springframework.web=TRACE\r\n\r\nspring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:8092
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/movie-service/movie-service/src/main/resources/application-dev.properties b/movie-service/movie-service/src/main/resources/application-dev.properties
+--- a/movie-service/movie-service/src/main/resources/application-dev.properties	
++++ b/movie-service/movie-service/src/main/resources/application-dev.properties	
+@@ -1,5 +1,5 @@
+ #Fetch Data from Config Server
+-spring.config.import=optional:configserver:http://localhost:8888
++
+ management.endpoints.web.exposure.include=*
+ 
+ spring.datasource.url=jdbc:mysql://localhost:3306/movie_db
+Index: user-service/user-service/src/main/resources/application-prod.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n#Fetch Data from Config Server\r\nspring.config.import=optional:configserver:http://config-server:8888\r\n\r\n# Database Config\r\nspring.datasource.url=jdbc:mysql://betflix-mysql:3306/user_db\r\nspring.datasource.username=root\r\nspring.datasource.password=quangkhanh\r\n\r\n# Jpa Config\r\nspring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.jpa.show-sql: true\r\nspring.jpa.properties.hibernate.format_sql = true\r\n\r\n# Register Eureka Server\r\neureka.client.service-url.defaultZone=http://service-registry:8761/eureka\r\neureka.client.register-with-eureka=true\r\neureka.client.fetch-registry=true\r\neureka.instance.prefer-ip-address=true\r\n\r\n# RabbitMQ Config\r\nspring.rabbitmq.host= betflix-redis\r\nspring.rabbitmq.port= 5672\r\nspring.rabbitmq.username= guest\r\nspring.rabbitmq.password= guest\r\n\r\n#add properties for tracing\r\nmanagement.tracing.sampling.probability=1.0\r\nlogging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]\r\nlogging.level.org.springframework.web=TRACE\r\n\r\n# Variables\r\nissuerURI=http://user-service:8092\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/user-service/user-service/src/main/resources/application-prod.properties b/user-service/user-service/src/main/resources/application-prod.properties
+--- a/user-service/user-service/src/main/resources/application-prod.properties	
++++ b/user-service/user-service/src/main/resources/application-prod.properties	
+@@ -1,6 +1,5 @@
+ 
+ #Fetch Data from Config Server
+-spring.config.import=optional:configserver:http://config-server:8888
+ 
+ # Database Config
+ spring.datasource.url=jdbc:mysql://betflix-mysql:3306/user_db
+Index: movie-service/movie-service/src/main/resources/application-prod.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Fetch Data from Config Server\r\nspring.config.import=optional:configserver:http://config-server:8888\r\nmanagement.endpoints.web.exposure.include=*\r\n\r\nspring.datasource.url=jdbc:mysql://betflix-mysql:3306/movie_db\r\nspring.datasource.username=root\r\nspring.datasource.password=quangkhanh\r\nspring.jpa.show-sql: true\r\n\r\nspring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.sql.init.mode= never\r\n\r\n# Register Eureka\r\neureka.client.service-url.defaultZone=http://service-registry:8761/eureka\r\neureka.client.register-with-eureka=true\r\neureka.client.fetch-registry=true\r\neureka.instance.prefer-ip-address=true\r\n\r\n#add properties for tracing\r\nmanagement.tracing.sampling.probability=1.0\r\nlogging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]\r\nlogging.level.org.springframework.web=TRACE\r\n\r\nspring.security.oauth2.resourceserver.jwt.issuer-uri=http://user-service:8092
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/movie-service/movie-service/src/main/resources/application-prod.properties b/movie-service/movie-service/src/main/resources/application-prod.properties
+--- a/movie-service/movie-service/src/main/resources/application-prod.properties	
++++ b/movie-service/movie-service/src/main/resources/application-prod.properties	
+@@ -1,5 +1,4 @@
+ #Fetch Data from Config Server
+-spring.config.import=optional:configserver:http://config-server:8888
+ management.endpoints.web.exposure.include=*
+ 
+ spring.datasource.url=jdbc:mysql://betflix-mysql:3306/movie_db
+Index: movie-service/movie-service/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n\txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n\t<modelVersion>4.0.0</modelVersion>\r\n\t<parent>\r\n\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t<artifactId>spring-boot-starter-parent</artifactId>\r\n\t\t<version>3.2.7</version>\r\n\t\t<relativePath/> <!-- lookup parent from repository -->\r\n\t</parent>\r\n\t<groupId>com.khanhisdev</groupId>\r\n\t<artifactId>movie-service</artifactId>\r\n\t<version>0.0.1-SNAPSHOT</version>\r\n\t<name>movie-service</name>\r\n\t<description>Spring Boot project as movie-service</description>\r\n\t<url/>\r\n\t<licenses>\r\n\t\t<license/>\r\n\t</licenses>\r\n\t<developers>\r\n\t\t<developer/>\r\n\t</developers>\r\n\t<scm>\r\n\t\t<connection/>\r\n\t\t<developerConnection/>\r\n\t\t<tag/>\r\n\t\t<url/>\r\n\t</scm>\r\n\t<properties>\r\n\t\t<java.version>17</java.version>\r\n\t\t<spring-cloud.version>2023.0.2</spring-cloud.version>\r\n\t\t<mapstruct.version>1.5.5.Final</mapstruct.version>\r\n\t</properties>\r\n\t<dependencies>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-data-jpa</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-web</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>com.mysql</groupId>\r\n\t\t\t<artifactId>mysql-connector-j</artifactId>\r\n\t\t\t<scope>runtime</scope>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t<artifactId>lombok</artifactId>\r\n\t\t\t<optional>true</optional>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-test</artifactId>\r\n\t\t\t<scope>test</scope>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.mapstruct</groupId>\r\n\t\t\t<artifactId>mapstruct</artifactId>\r\n\t\t\t<version>${mapstruct.version}</version>\r\n\t\t</dependency>\r\n\t\t<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-validation</artifactId>\r\n\t\t\t<version>3.3.0</version>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-actuator</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.micrometer</groupId>\r\n\t\t\t<artifactId>micrometer-registry-prometheus</artifactId>\r\n\t\t\t<scope>runtime</scope>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t<artifactId>spring-cloud-starter-config</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t<artifactId>spring-cloud-starter-bus-amqp</artifactId>\r\n\t\t</dependency>\r\n\t\t<!--add distributed tracing -->\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.micrometer</groupId>\r\n\t\t\t<artifactId>micrometer-observation</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.micrometer</groupId>\r\n\t\t\t<artifactId>micrometer-tracing-bridge-brave</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.zipkin.reporter2</groupId>\r\n\t\t\t<artifactId>zipkin-reporter-brave</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>net.logstash.logback</groupId>\r\n\t\t\t<artifactId>logstash-logback-encoder</artifactId>\r\n\t\t\t<version>7.4</version>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-security</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>\r\n\t\t</dependency>\r\n\t\t<!-- Documentation -->\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springdoc</groupId>\r\n\t\t\t<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>\r\n\t\t\t<version>2.2.0</version>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>com.khanhisdev</groupId>\r\n\t\t\t<artifactId>commons</artifactId>\r\n\t\t\t<version>0.0.1-SNAPSHOT</version>\r\n\t\t</dependency>\r\n\r\n\t</dependencies>\r\n\t<dependencyManagement>\r\n\t\t<dependencies>\r\n\t\t\t<dependency>\r\n\t\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t\t<artifactId>spring-cloud-dependencies</artifactId>\r\n\t\t\t\t<version>${spring-cloud.version}</version>\r\n\t\t\t\t<type>pom</type>\r\n\t\t\t\t<scope>import</scope>\r\n\t\t\t</dependency>\r\n\t\t</dependencies>\r\n\t</dependencyManagement>\r\n\r\n\t<build>\r\n\t\t<plugins>\r\n\t\t\t<plugin>\r\n\t\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t\t<artifactId>spring-boot-maven-plugin</artifactId>\r\n\t\t\t\t<configuration>\r\n\t\t\t\t\t<excludes>\r\n\t\t\t\t\t\t<exclude>\r\n\t\t\t\t\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t\t\t\t\t<artifactId>lombok</artifactId>\r\n\t\t\t\t\t\t</exclude>\r\n\t\t\t\t\t</excludes>\r\n\t\t\t\t</configuration>\r\n\t\t\t</plugin>\r\n\t\t\t<plugin>\r\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\r\n\t\t\t\t<artifactId>maven-compiler-plugin</artifactId>\r\n\t\t\t\t<version>3.11.0</version>\r\n\t\t\t\t<configuration>\r\n\t\t\t\t\t<annotationProcessorPaths>\r\n\t\t\t\t\t\t<path>\r\n\t\t\t\t\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t\t\t\t\t<artifactId>lombok</artifactId>\r\n\t\t\t\t\t\t\t<version>${lombok.version}</version>\r\n\t\t\t\t\t\t</path>\r\n\t\t\t\t\t\t<path>\r\n\t\t\t\t\t\t\t<groupId>org.mapstruct</groupId>\r\n\t\t\t\t\t\t\t<artifactId>mapstruct-processor</artifactId>\r\n\t\t\t\t\t\t\t<version>1.5.5.Final</version>\r\n\t\t\t\t\t\t</path>\r\n\t\t\t\t\t\t<path>\r\n\t\t\t\t\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t\t\t\t\t<artifactId>lombok-mapstruct-binding</artifactId>\r\n\t\t\t\t\t\t\t<version>0.2.0</version>\r\n\t\t\t\t\t\t</path>\r\n\t\t\t\t\t</annotationProcessorPaths>\r\n\t\t\t\t\t<compilerArgs>\r\n\t\t\t\t\t\t<arg>\r\n\t\t\t\t\t\t\t-Amapstruct.defaultComponentModel=spring\r\n\t\t\t\t\t\t</arg>\r\n\t\t\t\t\t\t<arg>\r\n\t\t\t\t\t\t\t-Amapstruct.unmappedTargetPolicy=IGNORE\r\n\t\t\t\t\t\t</arg>\r\n\t\t\t\t\t\t<arg>\r\n\t\t\t\t\t\t\t-Amapstruct.disableBuilders=true\r\n\t\t\t\t\t\t</arg>\r\n\t\t\t\t\t</compilerArgs>\r\n\t\t\t\t</configuration>\r\n\t\t\t</plugin>\r\n\t\t</plugins>\r\n\t</build>\r\n\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/movie-service/movie-service/pom.xml b/movie-service/movie-service/pom.xml
+--- a/movie-service/movie-service/pom.xml	
++++ b/movie-service/movie-service/pom.xml	
+@@ -79,10 +79,10 @@
+ 			<artifactId>micrometer-registry-prometheus</artifactId>
+ 			<scope>runtime</scope>
+ 		</dependency>
+-		<dependency>
+-			<groupId>org.springframework.cloud</groupId>
+-			<artifactId>spring-cloud-starter-config</artifactId>
+-		</dependency>
++<!--		<dependency>-->
++<!--			<groupId>org.springframework.cloud</groupId>-->
++<!--			<artifactId>spring-cloud-starter-config</artifactId>-->
++<!--		</dependency>-->
+ 		<dependency>
+ 			<groupId>org.springframework.cloud</groupId>
+ 			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+Index: user-service/user-service/target/classes/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Server Config\r\nspring.application.name=user-service\r\n# Arg\r\nmovie.host= ${MOVIE_HOSTNAME:localhost}\r\n\r\nmanagement.endpoints.web.exposure.include=*\r\n\r\nspring.profiles.active=dev\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/user-service/user-service/target/classes/application.properties b/user-service/user-service/target/classes/application.properties
+--- a/user-service/user-service/target/classes/application.properties	
++++ b/user-service/user-service/target/classes/application.properties	
+@@ -1,5 +1,6 @@
+ # Server Config
+ spring.application.name=user-service
++server.port=8092
+ # Arg
+ movie.host= ${MOVIE_HOSTNAME:localhost}
+ 
+Index: user-service/user-service/target/classes/application-prod.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n#Fetch Data from Config Server\r\nspring.config.import=optional:configserver:http://config-server:8888\r\n\r\n# Database Config\r\nspring.datasource.url=jdbc:mysql://betflix-mysql:3306/user_db\r\nspring.datasource.username=root\r\nspring.datasource.password=quangkhanh\r\n\r\n# Jpa Config\r\nspring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.jpa.show-sql: true\r\nspring.jpa.properties.hibernate.format_sql = true\r\n\r\n# Register Eureka Server\r\neureka.client.service-url.defaultZone=http://service-registry:8761/eureka\r\neureka.client.register-with-eureka=true\r\neureka.client.fetch-registry=true\r\neureka.instance.prefer-ip-address=true\r\n\r\n# RabbitMQ Config\r\nspring.rabbitmq.host= betflix-redis\r\nspring.rabbitmq.port= 5672\r\nspring.rabbitmq.username= guest\r\nspring.rabbitmq.password= guest\r\n\r\n#add properties for tracing\r\nmanagement.tracing.sampling.probability=1.0\r\nlogging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]\r\nlogging.level.org.springframework.web=TRACE\r\n\r\n# Variables\r\nissuerURI=http://user-service:8092\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/user-service/user-service/target/classes/application-prod.properties b/user-service/user-service/target/classes/application-prod.properties
+--- a/user-service/user-service/target/classes/application-prod.properties	
++++ b/user-service/user-service/target/classes/application-prod.properties	
+@@ -1,6 +1,5 @@
+ 
+ #Fetch Data from Config Server
+-spring.config.import=optional:configserver:http://config-server:8888
+ 
+ # Database Config
+ spring.datasource.url=jdbc:mysql://betflix-mysql:3306/user_db
