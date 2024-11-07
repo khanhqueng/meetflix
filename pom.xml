@@ -17,6 +17,7 @@
         <module>movie-service/movie-service</module>
         <module>service-registry/service-registry</module>
         <module>commons</module>
+        <module>payment-service/payment-service</module>
         <!--        <module>dummy-service</module>-->
     </modules>
 
