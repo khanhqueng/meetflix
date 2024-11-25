@@ -7,11 +7,14 @@ import com.khanhisdev.orderservice.dto.Request.AddTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.DeleteTicketRequest;
 import com.khanhisdev.orderservice.dto.Request.GetOrderedSeatsDto;
 import com.khanhisdev.orderservice.dto.Request.GetTicketRequest;
+import com.khanhisdev.orderservice.dto.Response.SeatDto;
+import com.khanhisdev.orderservice.dto.Response.SeatsResponse;
 import com.khanhisdev.orderservice.exception.ResourceNotFoundException;
 import com.khanhisdev.orderservice.publisher.OrderProducer;
 import com.khanhisdev.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
@@ -64,28 +67,28 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
                 .block();
 
         // Set content Email and send to message queue
-        OrderEvent orderEvent= new OrderEvent();
-        orderEvent.setStatus("PENDING");
-        orderEvent.setMessage("Email is in pending status");
-        EmailContent emailContent= new EmailContent();
-        emailContent.setDesEmail(email);
-        emailContent.setNameMovie(addTicketRequest.getMovieName());
-        emailContent.setNameRoom(addTicketRequest.getRoomName());
-        emailContent.setShowtime(String.valueOf(addTicketRequest.getShowtime()));
-        emailContent.setNameTheater(addTicketRequest.getTheaterName());
-        emailContent.setSeats(addTicketRequest.getSeats());
-        orderEvent.setContent(emailContent);
-        producer.sendMessage(orderEvent);
+//        OrderEvent orderEvent= new OrderEvent();
+//        orderEvent.setStatus("PENDING");
+//        orderEvent.setMessage("Email is in pending status");
+//        EmailContent emailContent= new EmailContent();
+//        emailContent.setDesEmail(email);
+//        emailContent.setNameMovie(addTicketRequest.getMovieName());
+//        emailContent.setNameRoom(addTicketRequest.getRoomName());
+//        emailContent.setShowtime(String.valueOf(addTicketRequest.getShowtime()));
+//        emailContent.setNameTheater(addTicketRequest.getTheaterName());
+//        emailContent.setSeats(addTicketRequest.getSeats());
+//        orderEvent.setContent(emailContent);
+//        producer.sendMessage(orderEvent);
     }
 
     @Override
     public void deleteTicketInCart(String userId, DeleteTicketRequest deleteTicketRequest) {
         String key= "order:user-"+ userId;
         String fieldKey;
-        fieldKey= "TicketInfo_"+"RoomId:"+ deleteTicketRequest.getProjectionRoomId()+","
-                +"StartTime:"+ deleteTicketRequest.getShowtime()
-                +"MovieId:"+ deleteTicketRequest.getMovieId()+","
-                +"TheaterId:" + deleteTicketRequest.getTheaterId()+",";
+        fieldKey= "TicketInfo_"+"RoomId*"+ deleteTicketRequest.getProjectionRoomId()+","
+                +"StartTime*"+ deleteTicketRequest.getShowtime()+","
+                +"MovieId*"+ deleteTicketRequest.getMovieId()+","
+                +"TheaterId*" + deleteTicketRequest.getTheaterId();
         if(!this.hashExists(key,fieldKey)){
             throw new ResourceNotFoundException("Order","id",deleteTicketRequest.getProjectionRoomId());
         }
@@ -125,19 +128,34 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
     }
 
     @Override
-    public List<String> getAllOrderedSeats(GetOrderedSeatsDto dto) {
-        Set<String> keys=this.getKeyByPattern("order:user*");
-        List<String> result= new ArrayList<>();
-        String field= "TicketInfo_"+"RoomId*"+ dto.getProjectionRoomId()+","
-                +"StartTime*"+ dto.getShowtime()+","
-                +"MovieId*"+ dto.getMovieId()+","
-                +"TheaterId*" + dto.getTheaterId();
-        System.out.println(keys);
-        for (String key: keys){
-            List<String> seats= (List<String>) this.hashGet(key, field);
-            result.addAll(seats);
+    public SeatsResponse getAllOrderedSeats(GetOrderedSeatsDto dto) {
+        try{
+            Set<String> keys=this.getKeyByPattern("order:user*");
+            List<String> result= new ArrayList<>();
+            String field= "TicketInfo_"+"RoomId*"+ dto.getProjectionRoomId()+","
+                    +"StartTime*"+ dto.getShowtime()+","
+                    +"MovieId*"+ dto.getMovieId()+","
+                    +"TheaterId*" + dto.getTheaterId();
+            System.out.println(keys);
+            for (String key: keys){
+                if(this.hashGet(key,field)!=null){
+                    List<String> seats= (List<String>) this.hashGet(key, field);
+                    result.addAll(seats);
+                }
+            }
+
+            List<SeatDto> allSeats= webClient.get()
+                    .uri("http://"+movie_hostname+ ":8091/seats/"+dto.getProjectionRoomId())
+                    .retrieve()
+                    .bodyToFlux(SeatDto.class)
+                    .collectList()
+                    .block();
+            return new SeatsResponse(allSeats,result);
         }
-        return result;
+        catch (Throwable e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 

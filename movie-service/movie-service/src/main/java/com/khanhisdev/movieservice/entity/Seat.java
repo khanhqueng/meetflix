@@ -1,5 +1,6 @@
 package com.khanhisdev.movieservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,5 +19,6 @@ public class Seat {
     private String name;
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "projectionRoom_id", nullable = false)
+    @JsonIgnore
     private ProjectionRoom projectionRoom;
 }

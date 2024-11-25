@@ -36,6 +36,7 @@ public class SecurityConfig {
                                 .requestMatchers("/movie/**").permitAll()
                                 .requestMatchers("/category/**").permitAll()
                                 .requestMatchers("/projectionRoom/**").permitAll()
+                                .requestMatchers("/seats/**").permitAll()
                         .anyRequest()
                         .authenticated())
                 .exceptionHandling(exception-> exception.accessDeniedHandler(new CustomAccessDeniedHandler()))

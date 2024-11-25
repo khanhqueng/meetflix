@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 @AllArgsConstructor
-public class RedisController {
+public class OrderController {
     private final OrderService redisService;
     @PostMapping
     public ResponseEntity<String> addTicketToOrder(@RequestHeader(CustomHeaders.X_AUTH_USER_ID) String id, @RequestBody AddTicketRequest addTicketRequest){
