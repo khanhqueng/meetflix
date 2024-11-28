@@ -1,4 +1,4 @@
-package com.khanhisdev.movieservice.dto.ResponseDto;
+package com.khanhisdev.movieservice.dto.RequestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShowtimeResponseDto {
-    private Long id;
-    private LocalDateTime startTime;
-    private ProjectionRoomResponseDto projectionRoom;
+public class GetTheaterAndShowTimesDto {
+    private Long movieId;
+    private LocalDate date;
 }

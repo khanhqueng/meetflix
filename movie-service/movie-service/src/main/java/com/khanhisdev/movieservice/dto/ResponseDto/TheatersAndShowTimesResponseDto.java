@@ -1,6 +1,5 @@
 package com.khanhisdev.movieservice.dto.ResponseDto;
 
-import com.khanhisdev.movieservice.dto.RequestDto.ProjectionRoomRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +11,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TheaterResponseDto {
+public class TheatersAndShowTimesResponseDto {
     private Long id;
     private String name;
     private String address;
-    private List<ProjectionRoomResponseDto> projectionRoomList;
+    private List<ShowtimeResponseDto> showTimes;
 }

@@ -1,12 +1,16 @@
 package com.khanhisdev.movieservice.service.impl;
 
+import com.khanhisdev.movieservice.dto.Mapper.ShowtimeMapper;
 import com.khanhisdev.movieservice.dto.Mapper.TheaterMapper;
 import com.khanhisdev.movieservice.dto.RequestDto.ProjectionRoomUpdateDto;
 import com.khanhisdev.movieservice.dto.RequestDto.TheaterRequestDto;
 import com.khanhisdev.movieservice.dto.RequestDto.TheaterUpdateDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.ShowtimeResponseDto;
 import com.khanhisdev.movieservice.dto.ResponseDto.TheaterResponseDto;
+import com.khanhisdev.movieservice.dto.ResponseDto.TheatersAndShowTimesResponseDto;
 import com.khanhisdev.movieservice.entity.ProjectionRoom;
 import com.khanhisdev.movieservice.entity.Seat;
+import com.khanhisdev.movieservice.entity.Showtime;
 import com.khanhisdev.movieservice.entity.Theater;
 import com.khanhisdev.movieservice.exception.ResourceDuplicateException;
 import com.khanhisdev.movieservice.exception.ResourceNotFoundException;
@@ -17,25 +21,28 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
 @Transactional
 public class TheaterServiceImpl implements TheaterService {
     private TheaterRepository theaterRepository;
-    private TheaterMapper mapper;
+    private TheaterMapper theaterMapper;
+    private ShowtimeMapper showtimeMapper;
     private ProjectionRoomRepository projectionRoomRepository;
     @Override
     public List<TheaterResponseDto> getAllTheaters() {
-        return theaterRepository.findAll().stream().map(theater -> mapper.mapToDto(theater)).toList();
+        return theaterRepository.findAll().stream().map(theater -> theaterMapper.mapToDto(theater)).toList();
     }
 
     @Override
     public TheaterResponseDto getTheaterById(Long id) {
 
-        return mapper.mapToDto(theaterRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Theater","id",id)));
+        return theaterMapper.mapToDto(theaterRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Theater","id",id)));
     }
 
     @Override
@@ -43,7 +50,7 @@ public class TheaterServiceImpl implements TheaterService {
         if(theaterRepository.existsByName(theaterRequestDto.getName())){
             throw new ResourceDuplicateException("Theater", "name", theaterRequestDto.getName());
         }
-        Theater theater= mapper.mapToEntity(theaterRequestDto);
+        Theater theater= theaterMapper.mapToEntity(theaterRequestDto);
         for(ProjectionRoom projectionRoom : theater.getProjectionRoomList()){
             int remainder = projectionRoom.getSeats()%14;
             int row= projectionRoom.getSeats()/14+1;
@@ -71,7 +78,7 @@ public class TheaterServiceImpl implements TheaterService {
         for (ProjectionRoom projectionRoom: theater.getProjectionRoomList()){
             projectionRoom.setTheater(theater);
         }
-        return mapper.mapToDto(theaterRepository.save(theater));
+        return theaterMapper.mapToDto(theaterRepository.save(theater));
     }
 
     @Override
@@ -90,7 +97,26 @@ public class TheaterServiceImpl implements TheaterService {
         }
         theater.setProjectionRoomList(currentRoom);
         theater.setName(theaterUpdateDto.getName());
-        return mapper.mapToDto(theaterRepository.save(theater));
+        return theaterMapper.mapToDto(theaterRepository.save(theater));
+    }
+
+    @Override
+    public List<TheatersAndShowTimesResponseDto> getByMovieIdAndDate(LocalDate date, Long movieId) {
+        List<Theater> theaters = theaterRepository.findByDateAndMovieId(date,movieId).orElseThrow(
+                ()->new ResourceNotFoundException("Theater", "date or movieId", date.toString()+" "+movieId )
+        );
+        List<TheatersAndShowTimesResponseDto> response= new ArrayList<>();
+        for(Theater theater: theaters){
+            TheatersAndShowTimesResponseDto theaterWithShowTimes= theaterMapper.mapToTheaterWithShowtime(theater);
+            List<ShowtimeResponseDto> showTimes= theater.getShowtimeList().stream()
+                    .filter(showtime -> Objects.equals(showtime.getMovie().getId(), movieId)
+                            && showtime.getStartTime().toLocalDate().equals(date))
+                    .map(showtime -> showtimeMapper.mapToDto(showtime))
+                    .toList();
+            theaterWithShowTimes.setShowTimes(showTimes);
+            response.add(theaterWithShowTimes);
+        }
+        return response;
     }
 
     @Override

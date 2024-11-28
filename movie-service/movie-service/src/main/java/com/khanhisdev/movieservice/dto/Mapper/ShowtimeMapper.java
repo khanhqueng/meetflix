@@ -7,7 +7,7 @@ import com.khanhisdev.movieservice.entity.Showtime;
 import com.khanhisdev.movieservice.utils.MapperUtils;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = {MapperUtils.class})
+@Mapper(uses = {MapperUtils.class, ProjectionRoomMapper.class})
 public interface ShowtimeMapper extends GenericMapper<Showtime,ShowtimeRequestDto,ShowtimeResponseDto>{
     ShowtimeForOrderDto mapToResponseOrderDto(Showtime showtime);
 }
