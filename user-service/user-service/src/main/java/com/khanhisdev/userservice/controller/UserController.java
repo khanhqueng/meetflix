@@ -27,7 +27,7 @@ public class UserController {
     private final UserService userService;
     @Operation(summary = "Create new user", description = "API for create new user")
     @PostMapping
-    public ResponseEntity<UserDto> createUser( @Valid @RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> createUser( @RequestBody UserDto userDto){
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
     @Operation(summary = "Get all users", description = "API for get all users")

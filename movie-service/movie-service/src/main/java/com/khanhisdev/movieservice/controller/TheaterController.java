@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -37,8 +38,9 @@ public class TheaterController {
 
     @Operation(summary = "Get theater with showtime by movie id and date", description = "API for get theater by id")
     @GetMapping("/specific")
-    public ResponseEntity<List<TheatersAndShowTimesResponseDto>> getTheaterByMovieIdAndDate(@RequestBody GetTheaterAndShowTimesDto dto){
-        return new ResponseEntity<>(theaterService.getByMovieIdAndDate(dto.getDate(),dto.getMovieId()), HttpStatus.OK);
+    public ResponseEntity<List<TheatersAndShowTimesResponseDto>> getTheaterByMovieIdAndDate(@RequestParam(name = "movieId") Long movieId,
+                                                                                            @RequestParam(name = "date")LocalDate date){
+        return new ResponseEntity<>(theaterService.getByMovieIdAndDate(date,movieId), HttpStatus.OK);
     }
 
     @Operation(summary = "Add new theater", description = "API for create new theater")
