@@ -207,5 +207,10 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.delete(movie);
     }
 
+    @Override
+    public List<MovieResponseDto> getAllWithoutPaging() {
+        return movieRepository.findAll().stream().map(movie -> movieMapper.mapToDto(movie)).toList();
+    }
+
 
 }

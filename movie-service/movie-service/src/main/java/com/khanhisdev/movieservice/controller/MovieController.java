@@ -48,6 +48,10 @@ public class MovieController {
     ){
         return new ResponseEntity<>(movieService.getAllMovies(pageNo, pageSize, sortBy, sortDir), HttpStatus.OK) ;
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<MovieResponseDto>> getAllWithoutPaging(){
+        return new ResponseEntity<>(movieService.getAllWithoutPaging(), HttpStatus.OK) ;
+    }
     @Operation(summary = "Get movie by list id (used for user-services)", description = "API for get liked movie by userId")
     @GetMapping("/ids")
     public ResponseEntity<List<MovieResponseDto>> getMoviesByIds(@RequestParam List<Long> ids){

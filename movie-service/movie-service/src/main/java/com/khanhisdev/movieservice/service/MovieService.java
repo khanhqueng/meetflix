@@ -20,4 +20,5 @@ public interface MovieService {
     ObjectResponse<MovieResponseDto> findMoviesByFullSearchText(String keyword, int pageNo, int pageSize,String sortBy,String sortDir);
     MovieResponseDto updateMovie(MovieUpdateDto updateDto, Long movieId);
     void deleteMovie(Long movieId);
+    List<MovieResponseDto> getAllWithoutPaging();
 }

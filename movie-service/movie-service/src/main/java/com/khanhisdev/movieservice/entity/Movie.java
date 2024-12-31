@@ -57,7 +57,8 @@ public class Movie {
     private BigDecimal ratingPoint= BigDecimal.valueOf(0.0);
     @Column(name = "ratings")
     private Integer ratings;
-
+    @Column(name = "price", columnDefinition="integer default 50000")
+    private Integer price=50000;
 
 
 

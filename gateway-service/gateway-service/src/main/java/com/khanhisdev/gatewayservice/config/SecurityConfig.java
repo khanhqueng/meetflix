@@ -72,7 +72,7 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.GET, "api/v1/category/**").permitAll()
                         .pathMatchers(HttpMethod.POST, "api/v1/user/**").permitAll()
                         .pathMatchers(HttpMethod.GET, "api/v1/comment/movie/**").permitAll()
-                        .pathMatchers(HttpMethod.GET, "api/v1/seat/**").permitAll()
+                        .pathMatchers(HttpMethod.POST, "api/v1/seat/**").permitAll()
 
                         // api for user
                         // movie

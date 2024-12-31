@@ -9,6 +9,7 @@ import com.khanhisdev.orderservice.dto.Request.GetOrderedSeatsDto;
 import com.khanhisdev.orderservice.dto.Request.GetTicketRequest;
 import com.khanhisdev.orderservice.dto.Response.SeatDto;
 import com.khanhisdev.orderservice.dto.Response.SeatsResponse;
+import com.khanhisdev.orderservice.dto.Response.StatisticDto;
 import com.khanhisdev.orderservice.exception.ResourceNotFoundException;
 import com.khanhisdev.orderservice.publisher.OrderProducer;
 import com.khanhisdev.orderservice.service.OrderService;
@@ -28,7 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object> implements OrderService {
+public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,List<String>> implements OrderService {
     @Value("${movie.host}")
     private String movie_hostname;
     @Value("${user.host}")
@@ -38,7 +39,7 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
     @Autowired
     private OrderProducer producer;
 
-    public OrderServiceImpl(RedisTemplate<String, Object> redisTemplate, HashOperations<String, String, Object> hashOperations) {
+    public OrderServiceImpl(RedisTemplate<String, List<String>> redisTemplate, HashOperations<String, String, List<String>> hashOperations) {
         super(redisTemplate, hashOperations);
     }
 
@@ -98,9 +99,9 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
     @Override
     public List<ShowtimeForOrderDto> getShowtimeFromCart(String userId) {
         String key= "order:user-"+ userId;
-        Map<String, Object> showtime= this.getField(key);
+        Map<String, List<String>> showtime= this.getField(key);
         List<GetTicketRequest> getTicketRequests= new ArrayList<>();
-        for (Map.Entry<String, Object> entry : showtime.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : showtime.entrySet()) {
             String info= entry.getKey().split("_")[1];
             String[] specificINfo = info.split(",");
             Long roomId = Long.valueOf(specificINfo[0].split("\\*")[1]);
@@ -156,6 +157,32 @@ public class OrderServiceImpl extends BaseRedisServiceImpl<String,String,Object>
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public StatisticDto statistic() {
+        Integer users= webClient.get()
+                .uri("http://"+user_hostname+ ":8092/user/all")
+                .retrieve()
+                .bodyToFlux(Object.class)
+                .collectList()
+                .block().size();
+        Set<String> keys=this.getKeyByPattern("order:user*");
+        int totalTicket= 0;
+        for(String key: keys){
+            List<List<String>> orderedSeats= this.hashGetByFieldPrefix(key,"TicketInfo_");
+            for (List<String> list: orderedSeats){
+                totalTicket+=list.size();
+            }
+        }
+        Integer movies= webClient.get()
+                .uri("http://"+movie_hostname+ ":8091/movie/all")
+                .retrieve()
+                .bodyToFlux(Object.class)
+                .collectList()
+                .block().size();
+        int revenue= totalTicket *50000;
+        return new StatisticDto(users,totalTicket,movies,revenue);
     }
 
 

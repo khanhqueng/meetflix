@@ -2,6 +2,7 @@ package com.khanhisdev.orderservice.controller;
 
 import com.khanhisdev.orderservice.dto.Request.GetOrderedSeatsDto;
 import com.khanhisdev.orderservice.dto.Response.SeatsResponse;
+import com.khanhisdev.orderservice.dto.Response.StatisticDto;
 import com.khanhisdev.orderservice.service.OrderService;
 import com.khanhisdev.orderservice.utils.CustomHeaders;
 import lombok.AllArgsConstructor;
@@ -17,8 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SeatController {
     private final OrderService orderService;
-    @GetMapping
+    @PostMapping
     public ResponseEntity<SeatsResponse> getAllSeatsOrdered(@RequestBody GetOrderedSeatsDto getOrderedSeatsDto){
         return new ResponseEntity<>(orderService.getAllOrderedSeats(getOrderedSeatsDto), HttpStatus.OK);
     }
+
 }

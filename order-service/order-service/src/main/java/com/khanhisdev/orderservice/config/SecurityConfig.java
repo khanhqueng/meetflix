@@ -31,6 +31,7 @@ public class SecurityConfig {
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/order/**").permitAll()
                                 .requestMatchers("/seat/**").permitAll()
+                                .requestMatchers("/statistic/**").permitAll()
                                 .anyRequest()
                                 .authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
